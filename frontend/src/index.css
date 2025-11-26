@@ -1,0 +1,53 @@
+:root {
+	--bg-gradient: linear-gradient(
+		0deg,
+		rgba(2, 11, 40, 1) 0%,
+		rgba(23, 35, 70, 1) 100%
+	);
+	--box-white: rgba(255, 248, 231, 0.8);
+	--font-color-white: #f8f8f8;
+	--font-color-dark: #020b28;
+
+	--header-size: 32px;
+	--menu-item: 16px;
+	--body-text: 12px;
+	--spacing-wide: 0.05em;
+}
+
+h1 {
+	font-family: 'anton';
+	font-size: var(--header-size);
+	letter-spacing: var(--spacing-wide);
+}
+
+@font-face {
+	font-family: 'anton';
+	src: url('./assets/Anton.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FjallaOne';
+	src: url('./assets/FjallaOne.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'MerriweatherSans';
+	src: url('./assets/MerriweatherSans.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html {
+	height: 100%;
+	background: var(--bg-gradient);
+}
+
+.forrest {
+	position: absolute;
+	bottom: -150px;
+	right: 0;
+	opacity: 0.3;
+}
