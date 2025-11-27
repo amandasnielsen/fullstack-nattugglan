@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+.base-button {
+  font-family: "Anton", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  text-transform: none;
+
+  padding: 12px 20px;
+  border-radius: 10px;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+.base-button--full-width {
+  width: 100%;
+}
+
+/* primary Mörk knapp med vit text och vit border*/
+.base-button--primary {
+  background-color: transparent;       
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+
+/* secondary Ljus knapp med mörk text */
+.base-button--secondary {
+  background-color: #d9dde7;          
+  color: #001329;
+  border: 1px solid transparent;
+}
+
+/* Hover-states - bara när den inte är disabled */
+.base-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* När man håller inne knappen */
+.base-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Disabled */
+.base-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
