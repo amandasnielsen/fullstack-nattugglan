@@ -1,0 +1,39 @@
+.footer__container {
+	padding: 1em; 
+	color: white;
+	font-family: 'MerriweatherSans';
+	font-size: var(--body-text);
+	position: fixed;
+	bottom: 0; 
+  left: 0;
+  right: 0;
+  z-index: 100;
+	height: auto;
+	max-width: 1200px;
+}
+
+.footer__content {
+	max-width: 100%;
+	margin: 0 auto; 
+}
+
+.footer__span {
+	display: flex;
+	justify-content: space-between; 
+	align-items: center; 
+}
+
+.footer__contact {
+	margin: 0; 
+	line-height: 1.4;
+}
+
+.footer__media {
+  display: flex;
+  gap: .5em;
+}
+
+.footer__media img {
+  height: 30px;
+  width: 30px;
+}
