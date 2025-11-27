@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LandingPage } from '@nattugglan/landingpage';
+//import { Footer } from '@nattugglan/footer'; > lägg till på de sidor som ska ha footer
 
 
 function App() {
