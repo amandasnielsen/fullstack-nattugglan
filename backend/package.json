@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch src --exec ts-node src/index.ts"
 }
-  },
+  ,
   "keywords": [],
   "author": "",
   "license": "ISC",
