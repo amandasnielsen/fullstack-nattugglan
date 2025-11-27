@@ -57,6 +57,12 @@ html {
 	background: var(--bg-gradient);
 }
 
+.app {
+	min-height: 100vh;
+	position: relative;
+	overflow: hidden;
+}
+
 .forrest {
 	position: absolute;
 	bottom: 0;

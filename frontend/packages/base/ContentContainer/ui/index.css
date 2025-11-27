@@ -1,0 +1,16 @@
+.container__card {
+	position: absolute;
+	top: 130px;
+	left: 50%;
+	transform: translateX(-50%);
+
+	width: 80%;
+	min-height: 550px;
+	max-height: 600px;
+	background: var(--box-white);
+	border-radius: 3px;
+	overflow: scroll;
+	padding: 16px;
+	margin: 0 auto;
+	max-width: 80%;
+}
