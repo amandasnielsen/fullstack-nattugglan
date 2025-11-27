@@ -1,0 +1,11 @@
+.landing__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo__landing {
+	margin-top: 4em;
+	width: 250px;
+}

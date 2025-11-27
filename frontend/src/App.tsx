@@ -1,8 +1,17 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LandingPage } from '@nattugglan/landingpage';
+
+
 function App() {
 	return (
-		<main className="app">
-			<img className="forrest" src="./src/assets/BG-forrest.png" />
-		</main>
+		<BrowserRouter>
+			<section>
+				<img className="forrest" src="./src/assets/BG-forrest-phone.png" />
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+				</Routes>
+			</section>
+    </BrowserRouter>
 	);
 }
 
