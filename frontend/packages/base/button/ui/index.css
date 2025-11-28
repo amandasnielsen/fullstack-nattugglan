@@ -1,1 +1,85 @@
-/* hej */
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+.base-button {
+  font-family: "Anton", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  text-transform: none;
+
+  padding: 12px 20px;
+  border-radius: 10px;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+.base-button--full-width {
+  width: 100%;
+}
+
+/* --- PRIMARY --- */
+.base-button--primary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+/* --- SECONDARY --- */
+.base-button--secondary {
+  background-color: #d9dde7;
+  color: #001329;
+  border: 1px solid transparent;
+}
+
+/* --- FILTER-KNAPPAR --- */
+
+.base-button--filter,
+.base-button--filterActive {
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+
+.base-button--filter {
+  background-color: transparent;
+  color: #fff8e7;
+  border: 1px solid #fff8e7;
+}
+
+.base-button--filterActive {
+  background-color: #fff8e7;
+  color: #020b28;
+  border: 1px solid #fff8e7;
+}
+
+
+.base-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.base-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.base-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
