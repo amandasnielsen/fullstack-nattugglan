@@ -1,0 +1,43 @@
+Mötesprotokoll Daily Scrum (28 November 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Gjorde den vita boxen (komponenten) och NavBar och fixade mappar till alla pages
+* Sprint review och gå igenom NavBaren
+* Nej
+
+Person 2 (Amanda)
+* Gjorde landingpage, skapade en Router i App.tsx. Och gjorde en footer
+* Sprint review. Lägga in knapparna i landingpage
+* Nej
+
+Person 3 (Belinda)
+* Gjorde knapp-komponenter, css och gick igenom mappstrukturen
+* Ska göra kategoriknapparna till menyn, samt sprint review
+* Nej
+  
+Person 4 (Rasmus)
+* Satt med backend och strukturerade upp i filerna i den mappstrukturen vi skapat. 
+Kopplat filerna till MongoDB och lagt upp menu-items i MongoDB.
+* Sprint review. Kolla på ingredienserna i menyn. Börja kolla på Render där vi ska deploya backend.
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
+
+- Vi måste kolla på hamburgermenyns utseende
