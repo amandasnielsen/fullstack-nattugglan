@@ -1,7 +1,12 @@
 import './index.css';
-
+import { NavBar } from '@nattugglan/navbar';
 function StockPage() {
-	return <div>StockPage</div>;
+	return (
+		<>
+		<NavBar />
+		<div>StockPage</div>
+		</>
+	)
 }
 
-export default StockPage;
+export {StockPage};

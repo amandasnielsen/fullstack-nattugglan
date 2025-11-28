@@ -1,7 +1,13 @@
 import './index.css';
+import { NavBar } from '@nattugglan/navbar';
 
 function AdminAllOrdersPage() {
-	return <div>AdminAllOrdersPage</div>;
+	return (
+		<>
+		<NavBar />
+		<div>AdminAllOrdersPage</div>;
+	</>
+	) 
 }
 
-export default AdminAllOrdersPage;
+export {AdminAllOrdersPage};

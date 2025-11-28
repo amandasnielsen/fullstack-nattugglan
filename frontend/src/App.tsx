@@ -6,6 +6,9 @@ import { MyOrdersPage } from '@nattugglan/myorderspage';
 import { AboutUs } from '@nattugglan/aboutus';
 import { MapPage } from '@nattugglan/mappage';
 import { LoginPage } from '@nattugglan/loginpage';
+import { ChangeOrdersPage } from '@nattugglan/adminchangeorderspage';
+import { StockPage } from '@nattugglan/stockpage';
+import { AdminAllOrdersPage } from "@nattugglan/adminallorderspage";
 
 function App() {
 	return (
@@ -20,6 +23,9 @@ function App() {
 					<Route path="/aboutUs" element={<AboutUs />} />
 					<Route path="/maps" element={<MapPage />} />
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/allorders" element={<AdminAllOrdersPage />} />
+					<Route path="/updatemenu" element={<ChangeOrdersPage />} />
+					<Route path="/stock" element={<StockPage />} />
 				</Routes>
 			</section>
 		</BrowserRouter>
