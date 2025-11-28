@@ -49,7 +49,7 @@ export const menuSeed = [
       available: true
     },
   
-    /* VEGO */
+
   
     {
       name: "Skogsrullen Vego",
@@ -101,7 +101,7 @@ export const menuSeed = [
       available: true
     },
   
-    /* SNACKS */
+
   
     {
       name: "Tallkottar",
@@ -139,7 +139,7 @@ export const menuSeed = [
       available: true
     },
   
-    /* DRINKS */
+
   
     {
       name: "Gran-soda",
