@@ -14,7 +14,7 @@ function Footer() {
 					<div className="footer__media">
 						<img src={FacebookIcon} alt="facebook icon" />
 						<img src={InstagramIcon} alt="instagram icon" />
-						<Link to="/MapPage" className="icon__link">
+						<Link to="/maps" className="icon__link">
 							<img className="icon__map" src={MapIcon} alt="karta icon" />
 						</Link>
 					</div>
