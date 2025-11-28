@@ -8,10 +8,11 @@ Närvarande
 * Rasmus
 
 Protokoll
-…
+
+Under sprint reviewn visade vi hur vi struktrerat GitHub, projekt-board, branches och mappstruktur.
+Vi gick också igenom hur vi tänkt med frontend och backend. Vi kör på monorepo och MongoDB som databas.
+Vi visade även vår Figma-skiss som vi utgår från.
 
 
-
-- Hålls i slutet av varje vecka med teamet och beställaren / kunden
-- Feedback och tips
-- Eventuellt uppdatera product backlog (kanban-board)
+- Vi fick tips om att bryta upp större user stories i flera mindre. Så att vi inte behöver sitta på
+flera halvfärdiga user stories
