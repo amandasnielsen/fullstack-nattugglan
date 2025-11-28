@@ -1,11 +1,17 @@
 import './index.css';
 import { NavBar } from '@nattugglan/navbar';
+import { Footer } from '@nattugglan/footer';
+import { ContentContainer } from '@nattugglan/contentcontainer';
 
 function ChangeOrdersPage() {
 	return (
 		<>
 			<NavBar />
-			<div>ChangeOrdersPage</div>;
+			<Footer />
+			<h1>Ändra menyn</h1>
+			<ContentContainer>
+				<p>Text</p>
+			</ContentContainer>
 		</>
 	)
 }

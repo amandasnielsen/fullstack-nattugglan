@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LandingPage } from '@nattugglan/landingpage';
 import { MenuPage } from '@nattugglan/menupage';
-import { OrderPage } from '@nattugglan/orderpage';
+import { OrderFlowPage } from '@nattugglan/orderflowpage';
 import { MyOrdersPage } from '@nattugglan/myorderspage';
 import { AboutUs } from '@nattugglan/aboutus';
 import { MapPage } from '@nattugglan/mappage';
@@ -18,7 +18,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/menu" element={<MenuPage />} />
-					<Route path="/orderstatus" element={<OrderPage />} />
+					<Route path="/orderstatus" element={<OrderFlowPage />} />
 					<Route path="/myorders" element={<MyOrdersPage />} />
 					<Route path="/aboutUs" element={<AboutUs />} />
 					<Route path="/maps" element={<MapPage />} />
