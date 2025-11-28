@@ -55,19 +55,20 @@ h1 {
 }
 
 html {
+  background: var(--bg-gradient);
 	height: 100%;
-	background: var(--bg-gradient);
 }
 
 .app {
-	min-height: 100vh;
-	position: relative;
-	overflow: hidden;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .forrest {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	opacity: 0.2;
+  position: fixed; 
+  bottom: 0;
+  width: 100%;
+  opacity: 0.2;
+  z-index: -1;
 }
