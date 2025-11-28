@@ -1,7 +1,13 @@
 import './index.css';
+import { NavBar } from '@nattugglan/navbar';
 
 function MapPage() {
-	return <div>MapPage</div>;
+	return (
+		<>
+			<NavBar />
+			<div>MapPage</div>
+		</>
+	)
 }
 
 export { MapPage };

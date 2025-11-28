@@ -1,7 +1,13 @@
 import './index.css';
+import { NavBar } from '@nattugglan/navbar';
 
 function MyOrdersPage() {
-	return <div>MyOrdersPage</div>;
+	return (
+		<>
+			<NavBar />
+			<div>MyOrdersPage</div>
+		</>
+	)
 }
 
 export { MyOrdersPage };

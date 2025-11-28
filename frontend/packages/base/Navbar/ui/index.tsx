@@ -84,7 +84,7 @@ function NavBar() {
 					to="/login"
 					onClick={toggleMenu}
 				>
-					Logga in
+					Logga in som Admin
 				</NavLink>
 			</nav>
 		</header>

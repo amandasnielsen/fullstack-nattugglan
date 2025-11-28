@@ -1,7 +1,13 @@
 import './index.css';
+import { NavBar } from '@nattugglan/navbar';
 
 function LoginPage() {
-	return <div>LoginPage</div>;
+	return (
+		<>
+			<NavBar />
+			<div>LoginPage</div>
+		</>
+	)
 }
 
 export { LoginPage };
