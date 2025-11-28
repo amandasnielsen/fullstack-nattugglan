@@ -16,4 +16,4 @@ function AdminAllOrdersPage() {
 	)
 }
 
-export default AdminAllOrdersPage;
+export {AdminAllOrdersPage};

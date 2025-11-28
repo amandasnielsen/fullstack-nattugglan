@@ -16,4 +16,4 @@ function ChangeOrdersPage() {
 	)
 }
 
-export default ChangeOrdersPage;
+export { ChangeOrdersPage };

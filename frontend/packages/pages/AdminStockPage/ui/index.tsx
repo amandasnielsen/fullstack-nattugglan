@@ -16,4 +16,4 @@ function StockPage() {
 	)
 }
 
-export default StockPage;
+export {StockPage};
