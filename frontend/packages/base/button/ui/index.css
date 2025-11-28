@@ -1,12 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
-
 .base-button {
-  font-family: "Anton", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
-  letter-spacing: 0.03em;
+  font-family: "anton";
+	letter-spacing: var(--spacing-wide);
+  font-size: 20px;
   text-transform: none;
 
-  padding: 12px 20px;
+  padding: 12px 16px;
   border-radius: 10px;
 
   border: none;
@@ -38,12 +36,10 @@
   border: 1px solid #ffffff;
 }
 
-
 /* secondary Ljus knapp med mörk text */
 .base-button--secondary {
-  background-color: #d9dde7;          
-  color: #001329;
-  border: 1px solid transparent;
+  background-color: #ffffff92;          
+  border: 1px solid white;
 }
 
 /* Hover-states - bara när den inte är disabled */

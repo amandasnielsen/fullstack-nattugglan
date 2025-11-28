@@ -9,3 +9,26 @@
 	margin-top: 3em;
 	width: 250px;
 }
+
+.landing__button-menu {
+	margin-top: 3em;
+}
+
+.landing__button-login {
+	margin-top: 6em;
+}
+
+@media (max-height: 800px) {
+	.landing__header {
+		margin-top: 2em;
+	}
+
+	.logo__landing {
+	margin-top: 1em;
+	width: 250px;
+	}
+	
+	.landing__button-login {
+		margin-top: 2em;
+	}
+}
