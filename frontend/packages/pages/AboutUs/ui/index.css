@@ -1,0 +1,71 @@
+.aboutus {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.aboutus__title {
+  font-family: "FjallaOne", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  font-size: var(--header-size);
+  letter-spacing: var(--spacing-wide);
+  color: var(--font-color-white);
+  text-align: center;
+
+  margin-top: 120px;   
+  margin-bottom: 3px; 
+}
+
+.aboutus__card {
+}
+
+.aboutus__content {
+  font-family: "MerriweatherSans", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  font-size: var(--body-text);
+  color: var(--font-color-dark);
+  line-height: 1.4;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.aboutus__heading {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.aboutus__intro {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.aboutus__image {
+  max-width: 260px;
+  width: 100%;
+  border-radius: 4px;
+  margin: 0.75rem auto;
+}
+
+.aboutus__values {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.aboutus__values-title {
+  font-family: "MerriweatherSans", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.aboutus__values-list {
+  list-style: disc;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
