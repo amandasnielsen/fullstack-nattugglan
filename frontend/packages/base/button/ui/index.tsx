@@ -34,7 +34,6 @@ export function Button({
     .filter(Boolean)
     .join(" ");
 
-
   return (
     <button
       type={type}

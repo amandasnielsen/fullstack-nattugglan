@@ -21,7 +21,6 @@
     color 0.15s ease,
     opacity 0.15s ease;
 
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +41,6 @@
   color: #ffffff;
   border: 1px solid #ffffff;
 }
-
 
 /* secondary Ljus knapp med mörk text */
 .base-button--secondary {
@@ -85,13 +83,11 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-
 /* När man håller inne knappen */
 .base-button:active:not(:disabled) {
   transform: translateY(0);
   box-shadow: none;
 }
-
 
 /* Disabled */
 .base-button:disabled {
