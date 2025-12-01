@@ -1,32 +1,39 @@
+import React from "react";
 import "./index.css";
-import type { ReactNode } from "react";
+
 
 type ButtonVariant = "primary" | "secondary" | "filter" | "filterActive";
 
-interface ButtonProps {
-  children: ReactNode;
+
+type ButtonProps = {
+  children: React.ReactNode;
   variant?: ButtonVariant;
   fullWidth?: boolean;
   onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
-}
+  className?: string;
+};
 
-export const Button = ({
+
+export function Button({
   children,
   variant = "primary",
   fullWidth = true,
   onClick,
   type = "button",
   disabled = false,
-}: ButtonProps) => {
+  className = "",
+}: ButtonProps) {
   const classes = [
     "base-button",
     `base-button--${variant}`,
     fullWidth ? "base-button--full-width" : "",
+    className,
   ]
     .filter(Boolean)
     .join(" ");
+
 
   return (
     <button
@@ -38,6 +45,4 @@ export const Button = ({
       {children}
     </button>
   );
-};
-
-export default Button;
+}
