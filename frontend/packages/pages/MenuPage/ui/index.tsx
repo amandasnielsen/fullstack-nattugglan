@@ -14,7 +14,7 @@ function MenuPage() {
   const totalPrice = useCartStore((state) => state.totalPrice);
 
   const handleCheckout = () => {
-    console.log('Gå till kassan. Totalt pris:', totalPrice);
+    console.log('Gå till kassan.', totalPrice);
   };
 
   return (

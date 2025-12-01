@@ -29,34 +29,37 @@ function NavBar() {
 
       <div className="navbar__icons-right">
         
-        <NavLink 
-          to="/cart"
-          className="navbar__cart-link"
-        >
-          <img 
-            src={CartIcon} 
-            className="navbar__cart-icon" 
-            alt="Kundkorg" 
-          />
+        <div className="navbar__icons-right">
+        
+					{totalQuantity > 0 && (
+						<NavLink 
+							to="/cart"
+							className="navbar__cart-link"
+						>
+							<img 
+								src={CartIcon} 
+								className="navbar__cart-icon" 
+								alt="Kundkorg" 
+							/>
 
-          {totalQuantity > 0 && (
-            <span className="navbar__cart-badge">
-              {totalQuantity}
-            </span>
-          )}
-        </NavLink>
+							<span className="navbar__cart-badge">
+								{totalQuantity}
+							</span>
+						</NavLink>
+					)}
 
-        <div
-          className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
-          onClick={toggleMenu}
-          aria-label={menuOpen ? 'Stäng Meny' : 'Öppna Meny'}
-          role="button"
-        >
-          <div className="bar bar1"></div>
-          <div className="bar bar2"></div>
-          <div className="bar bar3"></div>
-        </div>
-			</div>
+					<div
+						className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
+						onClick={toggleMenu}
+						aria-label={menuOpen ? 'Stäng Meny' : 'Öppna Meny'}
+						role="button"
+					>
+						<div className="bar bar1"></div>
+						<div className="bar bar2"></div>
+						<div className="bar bar3"></div>
+					</div>
+				</div>
+      </div>
 
 			<nav className={`navbar__menu ${menuOpen ? 'visible' : ''}`}>
 				<div className="navbar__menu-top">
