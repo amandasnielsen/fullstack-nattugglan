@@ -1,0 +1,40 @@
+Mötesprotokoll Daily Scrum (1 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Hade sprint review och sedan gjorde jag viewn för admin i hamburgermenyn. Kommenterade ut det och avvaktar tills vi har en admin-user
+* Göra en sprint planning för veckan och sedan välja en user story
+* Nej
+
+Person 2 (Amanda)
+* Hade sprint review. Sen satt jag med grundstyling för våra pages och gjorde klart landningssidan
+* Sprint planning och sen välja en user story utifrån det
+* Nej
+
+Person 3 (Belinda)
+* Hade sprint review och gjorde knapp-komponenter
+* Sprint planning och sen skapa error-sidor, och kanske en Om oss-sida i veckan
+* Nej
+  
+Person 4 (Rasmus)
+* Efter sprint reviewn så gjorde jag GET-funktionen för menyn och den funkar i insomnia
+* Köra en sprint planning och sedan plocka en user story
+* Vi har klassråd 10, annars inget
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
