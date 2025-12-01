@@ -1,0 +1,16 @@
+Mötesprotokoll Sprint Planning (1 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+- Denna veckan vill vi koppla ihop backend med frontend
+- Fokusera på att få till bokningslogiken
+- Vi väljer de user stories som had med bokningsflödet att göra
+- Även göra en Om oss-sida (utifrån Figma) som MVP
+- Tillsammans komma överens om vilken typ av storage-funktion vi ska ha. Blir nog Zustand
