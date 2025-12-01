@@ -15,6 +15,11 @@
   width: 70px;
 }
 
+.navbar__icons-right {
+	display: flex;
+	align-items: center;
+}
+
 .navbar__menuIcon {
   width: 35px;
   height: 30px;
@@ -25,6 +30,40 @@
   gap: 0.4rem;
   z-index: 1001; 
 	margin-right: .5rem;
+}
+
+.navbar__cart-link {
+	position: relative;
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	color: var(--box-white);
+	margin-right: 2rem;
+}
+
+.navbar__cart-icon {
+	width: 40px;
+	opacity: 0.8;
+}
+
+.navbar__cart-badge {
+	position: absolute;
+	bottom: -6px;      
+	right: -6px;  
+	background-color: #020B28;
+	color: var(--font-color-white);
+	font-family: 'MerriweatherSans';
+	font-size: .8rem;
+	min-width: 24px; 
+	height: 24px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 4px;
+	line-height: 1;
+	z-index: 10;
 }
 
 .bar {

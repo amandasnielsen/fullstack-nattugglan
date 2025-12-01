@@ -1,0 +1,75 @@
+.menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.loading__message {
+	text-align: center;
+	margin-top: 1em;
+	font-size: 1.5em;
+	font-family: 'MerriweatherSans';
+  color: var(--font-color-dark);
+}
+
+.menu__item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #000000;
+}
+
+.item__details {
+  flex-grow: 1;
+  margin-right: 15px; 
+}
+
+.item__name {
+  font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+  font-size: var(--menu-item);
+  margin-bottom: .8em;
+  color: var(--font-color-dark);
+}
+
+.item__description {
+  font-size: .8rem;
+  font-family: 'MerriweatherSans';
+  color: var(--font-color-dark);
+  margin-top: 5px;
+}
+
+.item__price-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 15px;
+  min-width: 100px;
+}
+
+.item__price {
+  font-weight: bold;
+  font-size: 1.1rem;
+  font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+  margin-bottom: .8em;
+  color: var(--font-color-dark);
+}
+
+
+.button__checkout-wrapper {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 70px; 
+  z-index: 990; 
+}
+
+.button__checkout {
+  width: 280px; 
+  padding: 15px 20px;
+}

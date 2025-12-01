@@ -16,4 +16,4 @@ function CartPage() {
 	)
 }
 
-export default CartPage;
+export { CartPage };

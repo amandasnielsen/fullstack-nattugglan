@@ -1,14 +1,6 @@
 import { create } from "zustand";
 import { fetchMenuData } from "@nattugglan/menupage/data/fetchMenu";
-
-interface MenuItem {
-  id: string;
-  name: string;
-  ingredients: string[];
-  price: number;
-  category: string;
-  available: boolean;
-}
+import type { MenuItem } from '../types/types';
 
 interface MenuState {
   menu: MenuItem[];

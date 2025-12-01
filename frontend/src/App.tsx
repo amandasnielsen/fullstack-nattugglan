@@ -9,6 +9,8 @@ import { LoginPage } from '@nattugglan/loginpage';
 import { ChangeOrdersPage } from '@nattugglan/adminchangeorderspage';
 import { StockPage } from '@nattugglan/stockpage';
 import { AdminAllOrdersPage } from "@nattugglan/adminallorderspage";
+import { CartPage } from "@nattugglan/cartpage";
+import { PaymentPage } from "@nattugglan/paymentpage";
 
 function App() {
 	return (
@@ -18,6 +20,8 @@ function App() {
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/menu" element={<MenuPage />} />
+					<Route path="/cart" element={<CartPage />} />
+					<Route path="/payment" element={<PaymentPage />} />
 					<Route path="/orderstatus" element={<OrderFlowPage />} />
 					<Route path="/myorders" element={<MyOrdersPage />} />
 					<Route path="/aboutUs" element={<AboutUs />} />
