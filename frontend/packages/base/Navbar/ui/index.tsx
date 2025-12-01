@@ -1,10 +1,15 @@
 import './index.css';
 import Logo from './assets/logo.png';
+import CartIcon from './assets/cart.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { useCartStore } from '../../../core/cartStore';
+
 function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
+  const totalQuantity = useCartStore((state) => state.totalQuantity);
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -22,15 +27,35 @@ function NavBar() {
 				</NavLink>
 			</div>
 
-			<div
-				className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
-				onClick={toggleMenu}
-				aria-label={menuOpen ? 'Stäng Meny' : 'Öppna Meny'}
-				role="button"
-			>
-				<div className="bar bar1"></div>
-				<div className="bar bar2"></div>
-				<div className="bar bar3"></div>
+      <div className="navbar__icons-right">
+        
+        <NavLink 
+          to="/cart"
+          className="navbar__cart-link"
+        >
+          <img 
+            src={CartIcon} 
+            className="navbar__cart-icon" 
+            alt="Kundkorg" 
+          />
+
+          {totalQuantity > 0 && (
+            <span className="navbar__cart-badge">
+              {totalQuantity}
+            </span>
+          )}
+        </NavLink>
+
+        <div
+          className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
+          onClick={toggleMenu}
+          aria-label={menuOpen ? 'Stäng Meny' : 'Öppna Meny'}
+          role="button"
+        >
+          <div className="bar bar1"></div>
+          <div className="bar bar2"></div>
+          <div className="bar bar3"></div>
+        </div>
 			</div>
 
 			<nav className={`navbar__menu ${menuOpen ? 'visible' : ''}`}>

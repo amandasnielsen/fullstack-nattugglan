@@ -1,0 +1,62 @@
+/* Dummy-styling */
+
+.menu-list {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.menu-item-card {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #000000;
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-name {
+  font-family: 'anton';
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: var(--font-color-dark);
+}
+
+.item-description {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.item-price-and-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 15px;
+  min-width: 100px;
+}
+
+.item-price {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--font-color-dark);
+}
+
+.button__checkout-wrapper {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 90px; 
+  z-index: 990; 
+}
+
+.button__checkout {
+  width: 70%; 
+  padding: 15px 20px;
+}

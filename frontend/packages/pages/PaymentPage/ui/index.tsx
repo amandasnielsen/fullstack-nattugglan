@@ -16,4 +16,4 @@ function PaymentPage() {
 	)
 }
 
-export default PaymentPage;
+export { PaymentPage };
