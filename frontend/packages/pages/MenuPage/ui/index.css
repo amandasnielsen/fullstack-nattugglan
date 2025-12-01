@@ -1,7 +1,6 @@
 .menu__list {
   display: flex;
   flex-direction: column;
-  gap: 1em;
 }
 
 .loading__message {
@@ -16,8 +15,12 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: 1em;
+  padding-bottom: .5em;
   border-bottom: 1px solid #000000;
+}
+
+.menu__item-card:last-child {
+  border-bottom: none; 
 }
 
 .item__details {
@@ -29,7 +32,7 @@
   font-family: 'anton';
   letter-spacing: var(--spacing-wide);
   font-size: var(--menu-item);
-  margin-bottom: .8em;
+  margin-bottom: .5em;
   color: var(--font-color-dark);
 }
 
@@ -37,7 +40,6 @@
   font-size: .8rem;
   font-family: 'MerriweatherSans';
   color: var(--font-color-dark);
-  margin-top: 5px;
 }
 
 .item__price-control {
@@ -53,7 +55,7 @@
   font-size: 1.1rem;
   font-family: 'anton';
   letter-spacing: var(--spacing-wide);
-  margin-bottom: .8em;
+  margin-bottom: .5em;
   color: var(--font-color-dark);
 }
 

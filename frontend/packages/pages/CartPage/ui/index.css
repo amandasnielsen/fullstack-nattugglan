@@ -27,14 +27,6 @@
   padding: 16px;
 }
 
-.menu__item-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-bottom: 1em;
-  border-bottom: 1px solid #000000;
-}
-
 .item__details {
   flex-grow: 1;
   margin-right: 15px; 
@@ -44,7 +36,7 @@
   font-family: 'anton';
   letter-spacing: var(--spacing-wide);
   font-size: var(--menu-item);
-  margin-bottom: 0.8em;
+  margin-bottom: .5em;
   color: var(--font-color-dark);
 }
 
@@ -52,7 +44,6 @@
   font-size: .8rem;
   font-family: 'MerriweatherSans';
   color: var(--font-color-dark);
-  margin-top: 5px;
 }
 
 .item__price-control {
