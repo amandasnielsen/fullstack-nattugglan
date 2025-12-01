@@ -7,7 +7,7 @@
 .loading__message {
 	text-align: center;
 	margin-top: 1em;
-	font-size: 1.5em;
+	font-size: 1em;
 	font-family: 'MerriweatherSans';
   color: var(--font-color-dark);
 }
@@ -57,7 +57,6 @@
   color: var(--font-color-dark);
 }
 
-
 .button__checkout-wrapper {
   position: fixed; 
   bottom: 0;
@@ -65,7 +64,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-bottom: 70px; 
+  margin-bottom: 70px; 
   z-index: 990; 
 }
 

@@ -24,7 +24,7 @@ function MenuPage() {
   }, [fetchMenu]);
 
   const handleCheckout = () => {
-    navigate('/payment');
+    navigate('/cart');
   };
 
   return (
