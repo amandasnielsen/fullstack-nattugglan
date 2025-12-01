@@ -32,7 +32,7 @@ function App() {
 					<Route path="/updatemenu" element={<ChangeOrdersPage />} />
 					<Route path="/stock" element={<StockPage />} />
 					<Route path="/payment" element={<PaymentPage />} />
-					<Route path="/order" element={<OrderPage />} />
+					<Route path="/order/:orderNumber" element={<OrderPage />} />
 				</Routes>
 			</section>
 		</BrowserRouter>

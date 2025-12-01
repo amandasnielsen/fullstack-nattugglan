@@ -29,11 +29,11 @@
 	padding: 2rem 0;
 }
 
-.paymnet__input-label {
+.payment__input-label {
 	font-size: var(--body-text);
 }
 
-.paymnet__input-number {
+.payment__input-number {
 	width: 80%;
 	height: 2.5rem;
 	border-radius: 10px;
@@ -46,7 +46,7 @@
 	color: var(--font-color-dark);
 }
 
-.paymnet__total {
+.payment__total {
 	margin-top: auto;
 	font-family: anton;
 	font-size: var(--header-size);
@@ -57,8 +57,15 @@
 	color: var(--font-color-dark);
 	font-size: 0.7rem;
 }
+.payment__buttonContainer {
+	width: 100%;
+	margin-top: auto;
+	display: flex;
+	justify-content: center;
+}
 
 .payment__button {
+	width: 70%;
 	margin-top: auto;
 	margin-bottom: 4.5rem;
 }
