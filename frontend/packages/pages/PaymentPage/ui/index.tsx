@@ -7,82 +7,35 @@ import payment from './assets/payment.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-// när api o store finns
-// importera och byt ut useMockStore till den riktiga
-// api byts ut till ett post anrop, om apiet returnerar något så kan man spara de till state eller navigera vidare baserat på svaret
-// kan ta bort localphone helt om man litar på storen
-
-// ---- typer ----
-interface CartItem {
-	id: string;
-	name: string;
-	price: number;
-}
-
-interface Order {
-	orderNumber: string;
-	phoneNumber: string;
-	item: CartItem[];
-	createdAt: string;
-}
-
-// --- Mockad zustand store ---
-const useMockStore = () => {
-	const [cartItems, setCartItems] = useState<CartItem[]>([
-		{ id: '1', name: 'Pizza', price: 100 },
-		{ id: '2', name: 'Sallad', price: 50 },
-	]);
-
-	const [phoneNumber, setPhoneNumber] = useState('');
-
-	const clearCart = () => setCartItems([]);
-
-	return { cartItems, phoneNumber, setPhoneNumber, clearCart };
-};
+import { useCartStore } from '@nattugglan/core';
+import type { OrderInterface } from '@nattugglan/core';
 
 function PaymentPage() {
-	// hämta cartItems, phoneNumber, clearCart från zustandstore
 	const navigate = useNavigate();
-
-	const { cartItems, phoneNumber, setPhoneNumber, clearCart } = useMockStore();
-	const [localPhone, setLocalPhone] = useState('');
-	const mockTotal: number = cartItems.reduce(
-		(sum, item) => sum + item.price,
-		0
-	);
+	const { items, totalPrice, clearCart } = useCartStore();
+	const [phoneNumber, setPhoneNumber] = useState('');
 
 	const handlePayment = async () => {
-		const finalPhone: string = localPhone || phoneNumber;
-		if (!finalPhone) {
+		if (!phoneNumber) {
 			alert('Ange telefonnummer innan du betalar');
 			return;
 		}
 
-		// Lägg in kundkorgen här
-		if (cartItems.length === 0) {
+		if (items.length === 0) {
 			alert('Kundkorgen är tom');
 			return;
 		}
 
 		const orderNumber: string = uuidv4().slice(0, 5);
-		const order: Order = {
+		const order: OrderInterface = {
 			orderNumber,
-			phoneNumber: finalPhone,
-			item: cartItems,
+			phoneNumber,
+			items: items,
 			createdAt: new Date().toISOString(),
 		};
 
 		try {
-			// mock api- svar
-			await new Promise<void>((resolve) => setTimeout(resolve, 500));
-			console.log('Mock api skickar order: ', order);
-
-			// await fetch('/api/orders', {
-			// 	mehtod: 'POST',
-			// 	headers: {'Content-type': 'application/json'},
-			// 	body: JSON.stringify(order)
-			// });
+			// lägg in api post anropet här
 
 			clearCart();
 
@@ -107,7 +60,7 @@ function PaymentPage() {
 						alt="bild på betalningsloga"
 					/>
 					<div className="payment__input">
-						<label className="paymnet__input-label">
+						<label className="payment__input-label">
 							Fyll i telefonnummer:
 						</label>
 						<input
@@ -117,7 +70,7 @@ function PaymentPage() {
 							onChange={(e) => setPhoneNumber(e.target.value)}
 						/>
 					</div>
-					<p className="payment__total">Total: {mockTotal}</p>
+					<p className="payment__total">Total: {totalPrice}</p>
 					<NavLink
 						className={({ isActive }) =>
 							isActive ? 'payment__menuLink active-link' : 'payment__menuLink'
