@@ -3,57 +3,79 @@ import { NavBar } from '@nattugglan/navbar';
 import { Footer } from '@nattugglan/footer';
 import { Button } from '@nattugglan/button';
 import { ContentContainer } from '@nattugglan/contentcontainer';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
 
-import { useCartStore } from '../../../core/cartStore'; 
+// Hämta State-hantering
+import { useMenuStore } from '../../../core/state/menuStore';
+import { useCartStore } from '../../../core/state/cartStore'; 
+
 import QuantityControl from '../../../base/QuantityControl/ui'; 
-import { dummyMenu } from '../dummyMenu'; 
+
 
 function MenuPage() {
   
   const totalQuantity = useCartStore((state) => state.totalQuantity);
   const totalPrice = useCartStore((state) => state.totalPrice);
 
+  const menu = useMenuStore((state) => state.menu);
+  const fetchMenu = useMenuStore((state) => state.fetchMenu);
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchMenu();
+  }, [fetchMenu]);
+
   const handleCheckout = () => {
-    console.log('Gå till kassan.', totalPrice);
+    navigate('/payment');
   };
 
   return (
     <>
       <NavBar />
       
-      <h1 className="menu-header">Fuel the night!</h1> 
+      <h1>Fuel the night!</h1> 
       
       <ContentContainer>
         <div className="menu-list">
-          {dummyMenu.map((item) => {
-
-            return (
-              <div key={item.id} className="menu-item-card">
-                <div className="item-details">
-                  <h3 className="item-name">{item.name}</h3>
-                  <p className="item-description">{item.description}</p>
-                </div>
-                
-                <div className="item-price-and-control">
-                  <span className="item-price">{item.price}:-</span>
-                  
-                  <QuantityControl item={item} /> 
+          
+          {!menu || menu.length === 0 ? (
+            <p className="loading__message">Laddar menyn eller menyn är tom...</p>
+          ) : (
+            menu.map((item) => {
               
+              const description = item.ingredients.join(', ');
+
+              return (
+                <div key={item._id} className="menu-item-card">
+                  <div className="item-details">
+                    <h3 className="item-name">{item.name}</h3>
+                    <p className="item-description">{description}</p>
+                  </div>
+                  
+                  <div className="item-price-and-control">
+                    <span className="item-price">{item.price}:-</span>
+                    
+                    <QuantityControl item={item} /> 
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
+          
         </div>
       </ContentContainer>
       
       <div className="button__checkout-wrapper">
         <Button
-          fullWidth={true}
+          fullWidth={false}
           onClick={handleCheckout}
           disabled={totalQuantity === 0}
           className="button__checkout"
-					variant='secondary'
+          variant='secondary'
         >
+          {/* Endast priset visas nu */}
           Beställ - {totalPrice} kr
         </Button>
       </div>

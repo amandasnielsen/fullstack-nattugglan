@@ -4,7 +4,7 @@ import CartIcon from './assets/cart.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { useCartStore } from '../../../core/cartStore';
+import { useCartStore } from '../../../core/state/cartStore';
 
 function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);

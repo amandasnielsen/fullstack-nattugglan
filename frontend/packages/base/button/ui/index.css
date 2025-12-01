@@ -1,14 +1,17 @@
 .base-button {
   font-family: "anton";
-	letter-spacing: var(--spacing-wide);
+  letter-spacing: var(--spacing-wide);
   font-size: 20px;
   text-transform: none;
+
 
   padding: 12px 16px;
   border-radius: 10px;
 
+
   border: none;
   outline: none;
+
 
   cursor: pointer;
   transition:
@@ -22,16 +25,19 @@
   align-items: center;
   justify-content: center;
 
+
   box-sizing: border-box;
 }
+
 
 .base-button--full-width {
   width: 100%;
 }
 
+
 /* primary Mörk knapp med vit text och vit border*/
 .base-button--primary {
-  background-color: transparent;       
+  background-color: transparent;      
   color: #ffffff;
   border: 1px solid #ffffff;
 }
@@ -42,7 +48,36 @@
   border: 1px solid white;
 }
 
-/* Hover-states - bara när den inte är disabled */
+/* --- FILTER-KNAPPAR (Visa allt / Kött / Vego / Dryck / Tillbehör) --- */
+.base-button--filter,
+.base-button--filterActive {
+  font-family: "MerriweatherSans", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+
+
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+
+/* Inaktiv: transparent med ljus text/border */
+.base-button--filter {
+  background-color: transparent;
+  color: #fff8e7;
+  border: 1px solid #fff8e7;
+}
+
+
+/* Aktiv: fylld med FFF8E7 och mörk text */
+.base-button--filterActive {
+  background-color: #fff8e7;
+  color: #020b28;
+  border: 1px solid #fff8e7;
+}
+
+
 .base-button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);

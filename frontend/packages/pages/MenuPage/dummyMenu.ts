@@ -1,4 +1,4 @@
-import type { MenuItem } from '../../../packages/core/cartStore'; 
+import type { MenuItem } from '../../core/state/cartStore'; 
 
 export const dummyMenu: MenuItem[] = [
   {

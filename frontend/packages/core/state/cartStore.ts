@@ -1,26 +1,18 @@
 import { create } from 'zustand';
+import type { MenuItem } from '../types/types';
 
-// Typ för ett menyobjekt
-export type MenuItem = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-};
-
-// Typ för en artikel i kundvagnen
 export type CartItem = MenuItem & {
   quantity: number;
 };
 
-// Typ för storens tillstånd
 interface CartState {
   items: CartItem[];
   totalQuantity: number;
   totalPrice: number;
+  
   addItem: (item: MenuItem) => void;
-  removeItem: (id: string) => void;
-  updateItemQuantity: (id: string, newQuantity: number) => void;
+  removeItem: (_id: string) => void;
+  updateItemQuantity: (_id: string, newQuantity: number) => void;
 }
 
 // Beräkningsfunktioner
@@ -36,23 +28,19 @@ export const useCartStore = create<CartState>((set) => ({
   totalQuantity: 0,
   totalPrice: 0,
 
-  // Lägg till en ny artikel eller öka antalet för en befintlig
+  // Lägg till en ny artikel eller öka antalet för en befintlig item
   addItem: (item) => {
     set((state) => {
-      const existingItem = state.items.find((i) => i.id === item.id);
+      const existingItem = state.items.find((i) => i._id === item._id);
       let newItems: CartItem[];
 
       if (existingItem) {
-        // Om artikeln finns, öka antalet
         newItems = state.items.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i._id === item._id ? { ...i, quantity: i.quantity + 1 } : i
         );
       } else {
-        // Om artikeln är ny, lägg till den med 1
         newItems = [...state.items, { ...item, quantity: 1 }];
       }
-
-      // Uppdatera totaler
       return {
         items: newItems,
         ...calculateTotals(newItems),
@@ -61,24 +49,20 @@ export const useCartStore = create<CartState>((set) => ({
   },
 
   // Ta bort en artikel helt, eller minska antalet till noll
-  removeItem: (id) => {
+  removeItem: (_id) => {
     set((state) => {
-      const existingItem = state.items.find((i) => i.id === id);
+      const existingItem = state.items.find((i) => i._id === _id);
       let newItems: CartItem[] = state.items;
 
       if (existingItem) {
         if (existingItem.quantity > 1) {
-          // Minska antalet
           newItems = state.items.map((i) =>
-            i.id === id ? { ...i, quantity: i.quantity - 1 } : i
+            i._id === _id ? { ...i, quantity: i.quantity - 1 } : i
           );
         } else {
-          // Ta bort helt om antalet är 1
-          newItems = state.items.filter((i) => i.id !== id);
+          newItems = state.items.filter((i) => i._id !== _id);
         }
       }
-
-      // Uppdatera totalet
       return {
         items: newItems,
         ...calculateTotals(newItems),
@@ -86,22 +70,19 @@ export const useCartStore = create<CartState>((set) => ({
     });
   },
 
-  // Uppdatera kvantitet direkt (används inte i +/- logiken, men bra att ha)
-  updateItemQuantity: (id, newQuantity) => {
+  // Uppdatera kvantitet direkt
+  updateItemQuantity: (_id, newQuantity) => {
     set((state) => {
       let newItems: CartItem[];
 
       if (newQuantity <= 0) {
-        // Ta bort artikeln om antalet är 0 eller mindre
-        newItems = state.items.filter((i) => i.id !== id);
+        newItems = state.items.filter((i) => i._id !== _id);
       } else {
-        // Uppdatera antalet
         newItems = state.items.map((i) =>
-          i.id === id ? { ...i, quantity: newQuantity } : i
+          i._id === _id ? { ...i, quantity: newQuantity } : i
         );
       }
 
-      // Uppdatera totalet
       return {
         items: newItems,
         ...calculateTotals(newItems),

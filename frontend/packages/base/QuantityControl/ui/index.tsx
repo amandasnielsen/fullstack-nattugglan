@@ -1,6 +1,6 @@
 import './index.css';
 import React from 'react';
-import { useCartStore, type MenuItem } from '../../../core/cartStore'; 
+import { useCartStore, type MenuItem } from '../../../core/state/cartStore'; 
 
 interface QuantityControlProps {
   item: MenuItem; 
@@ -11,11 +11,11 @@ const QuantityControl: React.FC<QuantityControlProps> = ({ item }) => {
   const removeItem = useCartStore((state) => state.removeItem);
   
   const quantity = useCartStore(
-    (state) => state.items.find((i) => i.id === item.id)?.quantity || 0
+    (state) => state.items.find((i) => i._id === item._id)?.quantity || 0 
   );
 
   const handleDecrease = () => {
-    removeItem(item.id);
+    removeItem(item._id);
   };
 
   const handleIncrease = () => {
