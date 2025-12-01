@@ -1,6 +1,6 @@
 import './index.css';
 import React from 'react';
-import { useCartStore, type MenuItem } from '../../../core/state/cartStore'; 
+import { useCartStore, type MenuItem } from '@nattugglan/core'; 
 
 interface QuantityControlProps {
   item: MenuItem; 
@@ -39,4 +39,4 @@ const QuantityControl: React.FC<QuantityControlProps> = ({ item }) => {
   );
 };
 
-export default QuantityControl;
+export { QuantityControl };

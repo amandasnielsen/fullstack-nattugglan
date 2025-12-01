@@ -1,38 +1,46 @@
-/* Dummy-styling */
-
-.menu-list {
-	display: flex;
-	flex-direction: column;
-	gap: 1em;
+.menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
-.menu-item-card {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 1em;
-	border-bottom: 1px solid #000000;
-}
-
-.item-details {
-  flex-grow: 1;
-}
-
-.item-name {
-  font-family: 'anton';
-	letter-spacing: var(--spacing-wide);
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-  color: var(--font-color-dark);
-}
-
-.item-description {
-  font-size: .8rem;
+.loading__message {
+	text-align: center;
+	margin-top: 1em;
+	font-size: 1.5em;
 	font-family: 'MerriweatherSans';
   color: var(--font-color-dark);
 }
 
-.item-price-and-control {
+.menu__item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #000000;
+}
+
+.item__details {
+  flex-grow: 1;
+  margin-right: 15px; 
+}
+
+.item__name {
+  font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+  font-size: var(--menu-item);
+  margin-bottom: .8em;
+  color: var(--font-color-dark);
+}
+
+.item__description {
+  font-size: .8rem;
+  font-family: 'MerriweatherSans';
+  color: var(--font-color-dark);
+  margin-top: 5px;
+}
+
+.item__price-control {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -40,14 +48,15 @@
   min-width: 100px;
 }
 
-.item-price {
+.item__price {
   font-weight: bold;
   font-size: 1.1rem;
-  margin-bottom: 12px;
+  font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+  margin-bottom: .8em;
   color: var(--font-color-dark);
-	font-family: 'anton';
-	letter-spacing: var(--spacing-wide);
 }
+
 
 .button__checkout-wrapper {
   position: fixed; 

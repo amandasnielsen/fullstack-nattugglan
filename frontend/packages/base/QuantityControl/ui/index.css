@@ -13,9 +13,9 @@
 	border-radius: 50%;
 	cursor: pointer;
 	font-weight: bold;
-	font-size: 1rem;
-	width: 30px;
-	height: 100%;
+	font-size: .8rem;
+	width: 24px;
+	height: 24px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
