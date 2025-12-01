@@ -3,14 +3,14 @@
 .menu-list {
 	display: flex;
 	flex-direction: column;
-	gap: 15px;
+	gap: 1em;
 }
 
 .menu-item-card {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px 0;
+	padding-bottom: 1em;
 	border-bottom: 1px solid #000000;
 }
 
@@ -20,14 +20,16 @@
 
 .item-name {
   font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
   font-size: 1.2rem;
   margin-bottom: 5px;
   color: var(--font-color-dark);
 }
 
 .item-description {
-  font-size: 0.85rem;
-  color: #666;
+  font-size: .8rem;
+	font-family: 'MerriweatherSans';
+  color: var(--font-color-dark);
 }
 
 .item-price-and-control {
@@ -41,8 +43,10 @@
 .item-price {
   font-weight: bold;
   font-size: 1.1rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: var(--font-color-dark);
+	font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
 }
 
 .button__checkout-wrapper {

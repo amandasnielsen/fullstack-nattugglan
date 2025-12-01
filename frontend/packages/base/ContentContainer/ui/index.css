@@ -1,7 +1,7 @@
 .container__card {
   position: absolute;
   left: 50%;
-  top: 170px;
+  top: 180px;
   transform: translateX(-50%);
   width: 80%;
   max-width: 600px;
