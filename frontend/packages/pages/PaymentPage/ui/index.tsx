@@ -15,11 +15,14 @@ function PaymentPage() {
 	const { items, totalPrice, clearCart } = useCartStore();
 	const [phoneNumber, setPhoneNumber] = useState('');
 
+	const API_URL = 'http://localhost:3000';
+
 	const handlePayment = async () => {
 		if (!phoneNumber) {
 			alert('Ange telefonnummer innan du betalar');
 			return;
 		}
+		1;
 
 		if (items.length === 0) {
 			alert('Kundkorgen är tom');
@@ -29,13 +32,29 @@ function PaymentPage() {
 		const orderNumber: string = uuidv4().slice(0, 5);
 		const order: OrderInterface = {
 			orderNumber,
-			phoneNumber,
+			totalPrice,
 			items: items,
 			createdAt: new Date().toISOString(),
 		};
 
 		try {
-			// lägg in api post anropet här
+			console.log('Skickar order: ', order);
+
+			const response = await fetch(`${API_URL}/api/order`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(order),
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.message || `Serverfel: ${response.status}`);
+			}
+
+			const result = await response.json();
+			console.log('Order sparad: ', result);
 
 			clearCart();
 
@@ -44,8 +63,6 @@ function PaymentPage() {
 			console.error('Fel vid betalning: ', error);
 			alert('Något gick fel, försök igen');
 		}
-		console.log('betalat!');
-		console.log(order);
 	};
 
 	return (

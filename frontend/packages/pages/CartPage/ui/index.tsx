@@ -18,9 +18,9 @@ function CartPage() {
 	return (
 		<div className="cart__page">
 			<NavBar />
-			
-			<h1>Varukorg</h1> 
-			
+
+			<h1>Varukorg</h1>
+
 			<ContentContainer>
 				{totalQuantity === 0 ? (
 					<p className="empty__message">Din varukorg är tom.</p>
@@ -32,26 +32,23 @@ function CartPage() {
 
 							return (
 								<div key={cartItem._id} className="menu__item-card">
-										
 									<div className="item__details">
 										<h3 className="item__name">{cartItem.name}</h3>
 										<p className="item__description">{description}</p>
 									</div>
-									
-									<div className="item__price-control">
-										<span className="item__price">{itemTotal} kr</span> 
-										<QuantityControl item={cartItem as any} /> 
-									</div>
 
+									<div className="item__price-control">
+										<span className="item__price">{itemTotal} kr</span>
+										<QuantityControl item={cartItem as any} />
+									</div>
 								</div>
 							);
 						})}
 					</div>
 				)}
 			</ContentContainer>
-				
-			<div className="cart__summary-wrapper">
 
+			<div className="cart__summary-wrapper">
 				<h2 className="total__label">Totalt: {totalPrice} kr</h2>
 
 				<Button
@@ -59,7 +56,7 @@ function CartPage() {
 					onClick={handleCheckout}
 					disabled={totalQuantity === 0}
 					className="order__button"
-					variant='secondary'
+					variant="secondary"
 				>
 					Beställ
 				</Button>
