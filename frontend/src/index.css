@@ -68,6 +68,7 @@ html {
   position: fixed; 
   bottom: 0;
   width: 100%;
-  opacity: 0.2;
+	height: 100%;
+  opacity: 0.1;
   z-index: -1;
 }
