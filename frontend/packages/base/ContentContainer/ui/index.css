@@ -1,20 +1,21 @@
 .container__card {
-  position: absolute;
-  left: 50%;
-  top: 180px;
-  transform: translateX(-50%);
-  width: 80%;
-  max-width: 600px;
-  min-height: 60vh; 
-  max-height: min(560px, calc(100vh - 170px - 170px)); 
-  overflow: auto; 
-  background: var(--box-white);
-  border-radius: 3px;
-  padding: 16px;
+	position: absolute;
+	left: 50%;
+	top: 170px;
+	transform: translateX(-50%);
+	width: 80%;
+	height: 100%;
+	max-width: 600px;
+	min-height: 60vh;
+	max-height: min(560px, calc(100vh - 170px - 170px));
+	overflow: auto;
+	background: var(--box-white);
+	border-radius: 3px;
+	padding: 16px;
 }
 
 @media (max-height: 800px) {
-  .container__card {
-    min-height: 50vh; 
-  }
+	.container__card {
+		min-height: 50vh;
+	}
 }

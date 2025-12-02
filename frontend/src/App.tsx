@@ -8,9 +8,10 @@ import { MapPage } from '@nattugglan/mappage';
 import { LoginPage } from '@nattugglan/loginpage';
 import { ChangeOrdersPage } from '@nattugglan/adminchangeorderspage';
 import { StockPage } from '@nattugglan/stockpage';
-import { AdminAllOrdersPage } from "@nattugglan/adminallorderspage";
-import { CartPage } from "@nattugglan/cartpage";
-import { PaymentPage } from "@nattugglan/paymentpage";
+import { AdminAllOrdersPage } from '@nattugglan/adminallorderspage';
+import { PaymentPage } from '@nattugglan/paymentpage';
+import { OrderPage } from '@nattugglan/orderpage';
+import { CartPage } from '@nattugglan/cartpage';
 
 function App() {
 	return (
@@ -30,6 +31,8 @@ function App() {
 					<Route path="/allorders" element={<AdminAllOrdersPage />} />
 					<Route path="/updatemenu" element={<ChangeOrdersPage />} />
 					<Route path="/stock" element={<StockPage />} />
+					<Route path="/payment" element={<PaymentPage />} />
+					<Route path="/order/:orderNumber" element={<OrderPage />} />
 				</Routes>
 			</section>
 		</BrowserRouter>
