@@ -74,3 +74,9 @@
   width: 280px; 
   padding: 15px 20px;
 }
+
+@media (min-width: 900px) {
+  .button__checkout-wrapper {
+		margin-bottom: 125px;
+	}
+}

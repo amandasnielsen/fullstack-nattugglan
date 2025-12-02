@@ -3,8 +3,8 @@ import { NavBar } from "@nattugglan/navbar";
 import { Footer } from "@nattugglan/footer";
 import { ContentContainer } from "@nattugglan/contentcontainer";
 
-import NorthernLight from "../../../../src/assets/northern-light.png";
-import TakeawayBag from "../../../../src/assets/takeaway-bag.png";
+import NorthernLight from "./assets/northern-light.png";
+import TakeawayBag from "./assets/takeaway-bag.png";
 
 function AboutUs() {
   return (

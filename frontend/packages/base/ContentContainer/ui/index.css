@@ -5,7 +5,7 @@
 	transform: translateX(-50%);
 	width: 80%;
 	height: 100%;
-	max-width: 600px;
+	max-width: 700px;
 	min-height: 60vh;
 	max-height: min(560px, calc(100vh - 170px - 170px));
 	overflow: auto;
@@ -17,5 +17,12 @@
 @media (max-height: 800px) {
 	.container__card {
 		min-height: 50vh;
+	}
+}
+
+@media (min-width: 900px) {
+  .container__card {
+		max-height: 200px;
+		top: 160px
 	}
 }
