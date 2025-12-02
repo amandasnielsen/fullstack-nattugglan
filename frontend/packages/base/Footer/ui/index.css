@@ -1,7 +1,7 @@
 /* #region footer-phone */
 .footer__container-phone {
 	padding: 1.5em; 
-	color: white;
+	color: var(--font-color-white);
 	font-family: 'MerriweatherSans';
 	font-size: var(--body-text);
 	position: fixed;
@@ -43,8 +43,8 @@
 /* #region footer-desktop */
 
 .footer__container-desktop {
-	padding: 2em; 
-	color: white;
+	padding: 1.6em; 
+	color: var(--font-color-white);
 	font-family: 'anton';
 	letter-spacing: var(--spacing-wide);
 	position: fixed;
@@ -52,7 +52,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-	height: auto;
+	/*height: auto;*/
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -63,7 +63,7 @@
 	display: flex;
 	justify-content: space-between; 
 	align-items: center;
-	gap: 18em;
+	width: 1200px;
 }
 
 .footer__info {
