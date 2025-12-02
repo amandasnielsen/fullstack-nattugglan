@@ -16,14 +16,14 @@ Var och en svarar på frågorna nedan, 1 person antecknar
 *  Finns det några hinder?
 
 Person 1 (Lisa)
-* 
-* 
-* 
+* Frontend till paymentpage. Den ligger i dev
+* Fortsätta kolla igenom backend och fixa POST-anrop för beställning
+* Nej
 
 Person 2 (Amanda)
-* 
-* 
-* 
+* Gjorde klart funktionen för att lägga till i varukorgen och cart-page
+* Bugfix i styling för meny och cart
+* Sitter på tåget i eftermiddag. Men jag är med på discord
 
 Person 3 (Belinda)
 * 
@@ -31,9 +31,9 @@ Person 3 (Belinda)
 * 
   
 Person 4 (Rasmus)
-* 
-* 
-* 
+* Skapade GET-anropet för att hämta menyn och pushade till dev. SAmt började planera admin
+* Fortsätta med admin-user
+* Nej, inte än
 
 
 # Övrigt
