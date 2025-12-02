@@ -1,0 +1,109 @@
+.menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.empty__message {
+  text-align: center;
+  margin-top: 1em;
+  font-size: 1em;
+  font-family: 'MerriweatherSans';
+  color: var(--font-color-dark);
+}
+
+.cart__page .container__card {
+  position: absolute;
+  left: 50%;
+  top: 170px;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  min-height: 55vh;
+  max-height: 55vh;
+  overflow: auto;
+  background: var(--box-white);
+  border-radius: 3px;
+  padding: 16px;
+}
+
+.item__details {
+  flex-grow: 1;
+  margin-right: 15px; 
+}
+
+.item__name {
+  font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+  font-size: var(--menu-item);
+  margin-bottom: .5em;
+  color: var(--font-color-dark);
+}
+
+.item__description {
+  font-size: .8rem;
+  font-family: 'MerriweatherSans';
+  color: var(--font-color-dark);
+}
+
+.item__price-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 15px;
+  min-width: 100px;
+}
+
+.item__price {
+  font-weight: bold;
+  font-size: 1.1rem;
+  font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+  margin-bottom: 0.8em; 
+  color: var(--font-color-dark);
+}
+
+.total__label {
+	font-family: 'anton';
+	font-size: 2rem;
+	color: var(--font-color-dark); 
+	position: absolute;
+	bottom: .5em;
+	text-align: center;
+}
+
+.cart__summary-wrapper {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 70px;
+  z-index: 990; 
+}
+
+.total__label {
+  font-family: 'anton';
+  font-size: 1.8rem;
+  color: var(--font-color-white);
+	letter-spacing: var(--spacing-wide);
+  position: static; 
+  bottom: auto;
+  text-align: center;
+  margin-bottom: 15px; 
+  margin-top: 0;
+}
+
+.order__button {
+  width: 280px;
+  padding: 15px 20px;
+}
+
+@media (max-height: 800px) {
+  .cart__page .container__card {
+    min-height: 40vh;
+  	max-height: 40vh;
+  }
+}
