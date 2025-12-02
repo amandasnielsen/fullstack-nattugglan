@@ -1,3 +1,5 @@
+import type { CartItem } from '@nattugglan/core';
+
 export type MenuItem = {
 	_id: string;
 	name: string;
@@ -9,7 +11,7 @@ export type MenuItem = {
 
 export interface OrderInterface {
 	orderNumber: string;
-	phoneNumber: string;
-	items: any[];
+	totalPrice: number;
+	items: CartItem[];
 	createdAt: string;
 }
