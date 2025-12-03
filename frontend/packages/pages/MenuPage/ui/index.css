@@ -1,5 +1,5 @@
 .menu__list {
-  display: grid;
+  display: block;
 }
 
 .loading__message {
@@ -30,10 +30,22 @@
   max-height: 60vh;
 }
 
+.category__title {
+  font-family: 'anton';
+  font-size: 1.2rem; 
+	text-align: center;
+  letter-spacing: var(--spacing-wide);
+  color: var(--font-color-dark);
+  margin-bottom: .5em; 
+	padding-bottom: .5em;
+	border-bottom: 1px solid #000000;
+}
+
 .menu__item-card {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+	padding-top: .5em;
   padding-bottom: .5em;
   border-bottom: 1px solid #000000;
 }
@@ -130,46 +142,4 @@
     min-height: 40vh;
     max-height: 40vh;
   }
-}
-
-
-/* --- Desktop Layout (min-width: 700px) --- */
-
-@media (min-width: 700px) {
-    
-    /* 1. Aktivera Grid i listan */
-    .menu__list {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Två jämna kolumner */
-        gap: 3em 1em; /* Ökad horisontell marginal (3em) för luft mellan kolumner */
-        width: 100%; 
-        
-        /* Nollställ marginaler som kan ha kommit från mobilvyn */
-        margin: 0;
-        padding: 0;
-    }
-
-    /* 2. ContentContainer kan bli bredare */
-    .container__card {
-        /* Låt den vara lite bredare på stora skärmar för att ge Grid plats */
-        max-width: 80%; 
-    }
-
-    /* 3. Åsidosätt det enskilda kortet */
-    .menu__item-card {
-        display: flex; 
-        margin: 0; 
-        
-        /* Korrigera vertikal avgränsning */
-        border-bottom: 1px solid #000000; /* Behåll linjen för varje kort */
-        padding-bottom: 1em; /* Behåll avståndet till linjen */
-    }
-    
-    /* 4. Fixa inre element: Se till att .item__details fyller sin kolumn */
-    .item__details {
-        flex-grow: 1;
-        /* Ge lite mer marginal på höger sida för att hindra text från att överlappa */
-        margin-right: 20px; 
-    }
-
 }

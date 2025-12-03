@@ -87,7 +87,7 @@ function PaymentPage() {
 							onChange={(e) => setPhoneNumber(e.target.value)}
 						/>
 					</div>
-					<p className="payment__total">Total: {totalPrice}</p>
+					<p className="payment__total">Totalt: {totalPrice} kr</p>
 					<NavLink
 						className={({ isActive }) =>
 							isActive ? 'payment__menuLink active-link' : 'payment__menuLink'
