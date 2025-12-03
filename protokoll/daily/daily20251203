@@ -1,0 +1,40 @@
+Mötesprotokoll Daily Scrum (3 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Gjorde backend för POST-anropet för att skapa en order
+* Ska skapa orderbekräftelsen så att kunden får se den
+* Nej
+
+Person 2 (Amanda)
+* Lite media-querys för footer och knappar. Sen testade jag en ny bakgrundsbild
+* Skapa filtreringsfunktionen på meny-sidan
+* Nej
+
+Person 3 (Belinda)
+* Jag gjorde klart MapPage
+* Skapa LogIn-page för admin
+* Nej
+  
+Person 4 (Rasmus)
+* Skapade ett inlogg för admin som är pushad till databasen
+* Dubbelkolla att admin fungerar och se över valideringen
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
