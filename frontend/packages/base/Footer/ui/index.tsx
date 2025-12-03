@@ -29,11 +29,11 @@ function Footer() {
 						<div className="footer__info">
 							<div className="footer__info-box">
 								<h4>Adress</h4>
-								<p>Lingonstigen<br/>Jokkmokk</p>
+								<p>Läkargatan 2C<br/>Jokkmokk</p>
 							</div>
 							<div className="footer__info-box">
 								<h4>Kontakt</h4>
-								<p>070 - 123 45 67<br/><u>nattugglan@gmail.com</u></p>
+								<p>070 - 123 45 67<br/><a className="footer__mail" href="mailto:nattugglan@gmail.com">nattugglan@gmail.com</a></p>
 							</div>
 							<div className="footer__info-box">
 								<h4>Öppettider</h4>

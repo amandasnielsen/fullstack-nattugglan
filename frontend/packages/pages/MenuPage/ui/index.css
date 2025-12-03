@@ -1,14 +1,33 @@
 .menu__list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
 }
 
 .loading__message {
-	text-align: center;
-	margin-top: 1em;
-	font-size: 1em;
-	font-family: 'MerriweatherSans';
+  text-align: center;
+  margin-top: 1em;
+  font-size: 1em;
+  font-family: 'MerriweatherSans';
   color: var(--font-color-dark);
+}
+
+.filter__bar {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.filter__button {
+  width: auto; 
+  padding: 8px 10px;
+  font-size: 0.7rem;
+  font-family: 'MerriweatherSans'; 
+  width: 100px;
+}
+
+.menu__page .container__card {
+  max-height: 60vh;
 }
 
 .menu__item-card {
@@ -32,12 +51,18 @@
   font-family: 'anton';
   letter-spacing: var(--spacing-wide);
   font-size: var(--menu-item);
-  margin-bottom: .5em;
+  margin-bottom: .3em;
   color: var(--font-color-dark);
 }
 
+.item__vego-icon {
+  width: 18px; 
+  height: auto;
+  margin-left: .3em; 
+}
+
 .item__description {
-  font-size: .8rem;
+  font-size: .7rem;
   font-family: 'MerriweatherSans';
   color: var(--font-color-dark);
 }
@@ -52,10 +77,10 @@
 
 .item__price {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: var(--menu-item);
   font-family: 'anton';
   letter-spacing: var(--spacing-wide);
-  margin-bottom: .5em;
+  margin-bottom: .3em;
   color: var(--font-color-dark);
 }
 
@@ -77,6 +102,74 @@
 
 @media (min-width: 900px) {
   .button__checkout-wrapper {
-		margin-bottom: 125px;
-	}
+    margin-bottom: 125px;
+  }
+
+  .filter__bar {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+}
+
+@media (min-width: 900px) {
+  .menu__page .container__card {
+    min-height: 60vh;
+    max-height: 60vh;
+  }
+}
+
+@media (max-height: 1100px) {
+  .menu__page .container__card {
+    min-height: 50vh;
+    max-height: 50vh;
+  }
+}
+
+@media (max-height: 800px) {
+  .menu__page .container__card {
+    min-height: 40vh;
+    max-height: 40vh;
+  }
+}
+
+
+/* --- Desktop Layout (min-width: 700px) --- */
+
+@media (min-width: 700px) {
+    
+    /* 1. Aktivera Grid i listan */
+    .menu__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Två jämna kolumner */
+        gap: 3em 1em; /* Ökad horisontell marginal (3em) för luft mellan kolumner */
+        width: 100%; 
+        
+        /* Nollställ marginaler som kan ha kommit från mobilvyn */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 2. ContentContainer kan bli bredare */
+    .container__card {
+        /* Låt den vara lite bredare på stora skärmar för att ge Grid plats */
+        max-width: 80%; 
+    }
+
+    /* 3. Åsidosätt det enskilda kortet */
+    .menu__item-card {
+        display: flex; 
+        margin: 0; 
+        
+        /* Korrigera vertikal avgränsning */
+        border-bottom: 1px solid #000000; /* Behåll linjen för varje kort */
+        padding-bottom: 1em; /* Behåll avståndet till linjen */
+    }
+    
+    /* 4. Fixa inre element: Se till att .item__details fyller sin kolumn */
+    .item__details {
+        flex-grow: 1;
+        /* Ge lite mer marginal på höger sida för att hindra text från att överlappa */
+        margin-right: 20px; 
+    }
+
 }

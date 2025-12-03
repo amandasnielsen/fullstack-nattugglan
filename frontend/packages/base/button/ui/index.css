@@ -51,8 +51,7 @@
 /* --- FILTER-KNAPPAR (Visa allt / Kött / Vego / Dryck / Tillbehör) --- */
 .base-button--filter,
 .base-button--filterActive {
-  font-family: "MerriweatherSans", system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif;
+  font-family: "MerriweatherSans";
   font-size: 0.85rem;
   letter-spacing: 0.03em;
 

@@ -1,4 +1,5 @@
 import './index.css';
+import Leaf from '../assets/leaf.png';
 import { NavBar } from '@nattugglan/navbar';
 import { Footer } from '@nattugglan/footer';
 import { Button } from '@nattugglan/button';
@@ -6,9 +7,20 @@ import { QuantityControl } from '@nattugglan/quantitycontrol';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 import { useMenuStore, useCartStore } from '@nattugglan/core';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+
+const CATEGORIES = [
+	'Visa allt',
+	'Kött',
+	'Vego',
+	'Snacks',
+	'Dricka'
+]
 
 function MenuPage() {
+
+	const [activeCategory, setActiveCategory] = useState<string>('Visa allt');
+
 	const totalQuantity = useCartStore((state) => state.totalQuantity);
 	const totalPrice = useCartStore((state) => state.totalPrice);
 
@@ -25,24 +37,55 @@ function MenuPage() {
 		navigate('/cart');
 	};
 
+	const filteredMenu = useMemo(() => {
+    if (activeCategory === 'Visa allt') {
+      return menu;
+    }
+    return menu.filter(item => item.category.toUpperCase() === activeCategory.toUpperCase());
+  }, [menu, activeCategory]);
+
 	return (
-		<>
+		<section className="menu__page">
 			<NavBar />
 
 			<h1>Fuel the night!</h1>
+
+      <div className="filter__bar-wrapper">
+        <div className="filter__bar">
+          {CATEGORIES.map(category => (
+            <Button
+              key={category}
+              fullWidth={false}
+              variant={activeCategory === category ? 'filterActive' : 'filter'}
+              onClick={() => setActiveCategory(category)}
+              className="filter__button"
+            >
+              {category}
+            </Button>
+          ))}
+        </div>
+      </div>
 
 			<ContentContainer>
 				<div className="menu__list">
 					{!menu || menu.length === 0 ? (
 						<p className="loading__message">Laddar menyn...</p>
 					) : (
-						menu.map((item) => {
+						filteredMenu.map((item) => {
 							const description = item.ingredients.join(', ');
 
 							return (
 								<div key={item._id} className="menu__item-card">
 									<div className="item__details">
-										<h3 className="item__name">{item.name}</h3>
+										<h3 className="item__name">{item.name}
+											{item.category.toUpperCase() === 'VEGO' && (
+												<img 
+                          src={Leaf} 
+                          alt="Vegansk ikon" 
+                          className="item__vego-icon"
+                        />
+											)}
+										</h3>
 										<p className="item__description">{description}</p>
 									</div>
 
@@ -71,7 +114,7 @@ function MenuPage() {
 			</div>
 
 			<Footer />
-		</>
+		</section>
 	);
 }
 

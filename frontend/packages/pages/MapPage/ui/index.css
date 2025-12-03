@@ -3,24 +3,9 @@
   position: relative;
   overflow: hidden;
 }
-
-.map__title {
-  font-family: "FjallaOne", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
-  font-size: var(--header-size);
-  letter-spacing: var(--spacing-wide);
-  color: var(--font-color-white);
-  text-align: center;
-  margin-top: 120px;
-  margin-bottom: 3px;
-}
-
-.map__card {
-}
-
 .map__content {
-  font-family: "Anton", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  font-family: "Anton";
+	letter-spacing: var(--spacing-wide);
   font-size: var(--body-text);
   color: var(--font-color-dark);
   line-height: 1.4;
