@@ -1,14 +1,15 @@
 .container__card {
-	position: absolute;
-	left: 50%;
-	top: 170px;
-	transform: translateX(-50%);
-	width: 80%;
-	height: 100%;
-	max-width: 700px;
-	min-height: 60vh;
-	max-height: min(560px, calc(100vh - 170px - 170px));
-	overflow: auto;
+	position: static !important; 
+  transform: none !important;
+  top: auto !important;
+  left: auto !important;
+  margin: auto; 
+  width: 80%; 
+  max-width: 600px;
+  height: auto !important;
+  min-height: 0;
+  max-height: 70vh; 
+  overflow: auto;
 	background: var(--box-white);
 	border-radius: 3px;
 	padding: 16px;

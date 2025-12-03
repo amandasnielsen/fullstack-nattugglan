@@ -15,7 +15,7 @@
 	--font-color-dark: #020b28;
 
 	--header-size: 32px;
-	--menu-item: 16px;
+	--menu-item: 14px;
 	--body-text: 12px;
 	--spacing-wide: 0.08em;
 }
@@ -25,7 +25,8 @@ h1 {
 	font-size: var(--header-size);
 	letter-spacing: var(--spacing-wide);
 	color: var(--font-color-white);
-	margin-top: 3.5em;
+	margin-top: 3em;
+	margin-bottom: .3em;
 	font-weight: 500;
 	text-align: center;
 	position: relative;
@@ -72,9 +73,12 @@ html {
 
 .forrest {
   position: fixed; 
-  bottom: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-	height: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center bottom;
   opacity: 0.12;
   z-index: -1;
 }

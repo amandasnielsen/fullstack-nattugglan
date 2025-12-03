@@ -17,8 +17,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<section>
-				{/*<img className="forrest" src="./src/assets/BG-forrest-phone.png" />*/}
-				<img className="forrest" src="./src/assets/BG-forrest-new.jpg" />
+				<img className="forrest" src="./src/assets/BG-forrest.jpg" />
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/menu" element={<MenuPage />} />
