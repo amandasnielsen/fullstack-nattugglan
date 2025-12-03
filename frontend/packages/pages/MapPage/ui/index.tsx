@@ -5,7 +5,7 @@ import { ContentContainer } from "@nattugglan/contentcontainer";
 
 
 const MAP_EMBED_SRC =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1962.2617456376518!2d19.84084381698775!3d66.60458971867705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x45d7b6d55bf1511b%3A0xbd8a38c3347c9393!2sL%C3%A4kargatan%202C%2C%20962%2031%20Jokkmokk!5e0!3m2!1ssv!2sse!4v1764598512139!5m2!1ssv!2sse";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d792.1505001233404!2d19.801145354504925!3d66.60386375794627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x45d7b731718258f9%3A0xfedb8d6e87f34ccf!2sLingonstigen%2019%2C%20962%2033%20Jokkmokk!5e0!3m2!1ssv!2sse!4v1764759967267!5m2!1ssv!2sse";
 
 function MapPage() {
   return (
@@ -31,7 +31,7 @@ function MapPage() {
             </div>
 
             <p className="map__text">
-              Läkargatan 2C,
+              Lingonstigen 19,
               <br />
               962 31 Jokkmokk
             </p>
