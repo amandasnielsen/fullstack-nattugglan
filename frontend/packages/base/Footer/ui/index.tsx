@@ -37,7 +37,7 @@ function Footer() {
 							</div>
 							<div className="footer__info-box">
 								<h4>Öppettider</h4>
-								<p>Alla dagar 00 - 07</p>
+								<p>Alla dagar 23 - 07</p>
 							</div>
 						</div>
 					</div>
