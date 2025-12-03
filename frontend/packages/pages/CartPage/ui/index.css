@@ -107,3 +107,15 @@
   	max-height: 40vh;
   }
 }
+
+@media (min-width: 900px) {
+  .cart__summary-wrapper {
+		margin-bottom: 125px;
+	}
+
+	.cart__page .container__card {
+		max-height: 200px;
+		top: 160px;
+		max-width: 500px;
+	}
+}
