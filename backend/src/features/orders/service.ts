@@ -1,12 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { createOrder } from './repository';
+import { createOrder, findOrderById } from './repository';
 import {
 	OrderInterface,
 	CartItem,
 } from '../../core/database/models/order.model';
 
 interface NewOrderInput {
-	orderNumber: string;
 	items: CartItem[];
 	totalPrice: number;
 }
@@ -14,9 +13,13 @@ interface NewOrderInput {
 export const placeOrder = async (
 	input: NewOrderInput
 ): Promise<OrderInterface> => {
+	const orderNumber = uuidv4().slice(0, 5).toLocaleUpperCase();
+	const guestId = uuidv4().slice(0, 3).toLocaleUpperCase();
+
 	const orderData = {
 		...input,
-		guestId: uuidv4(),
+		orderNumber: orderNumber,
+		guestId: guestId,
 		createdAt: new Date(),
 		status: 'Pending',
 	};
@@ -28,4 +31,8 @@ export const placeOrder = async (
 	const newOrder = await createOrder(orderDataForRepo);
 
 	return newOrder;
+};
+
+export const getOrderByID = async (orderNumber: string) => {
+	return await findOrderById(orderNumber);
 };

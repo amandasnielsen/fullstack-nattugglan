@@ -6,7 +6,6 @@ import { Button } from '@nattugglan/button';
 import payment from './assets/payment.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useCartStore } from '@nattugglan/core';
 import type { OrderInterface } from '@nattugglan/core';
 
@@ -29,9 +28,7 @@ function PaymentPage() {
 			return;
 		}
 
-		const orderNumber: string = uuidv4().slice(0, 5);
 		const order: OrderInterface = {
-			orderNumber,
 			totalPrice,
 			items: items,
 			createdAt: new Date().toISOString(),
@@ -43,6 +40,7 @@ function PaymentPage() {
 			const response = await fetch(`${API_URL}/api/order`, {
 				method: 'POST',
 				headers: {
+					//lägg till guest ID-cookien här, och api nyckeln
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(order),
@@ -55,6 +53,7 @@ function PaymentPage() {
 
 			const result = await response.json();
 			console.log('Order sparad: ', result);
+			const orderNumber = result.orderNumber;
 
 			clearCart();
 
