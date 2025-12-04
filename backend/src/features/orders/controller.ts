@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
 import { handleNewOrder } from './handler';
+import { getOrderByID } from './service';
+
+interface OrderParams {
+	orderNumber: string;
+}
 
 export const postOrder = async (req: Request, res: Response): Promise<void> => {
 	try {
@@ -8,11 +13,38 @@ export const postOrder = async (req: Request, res: Response): Promise<void> => {
 		res.status(201).json({
 			message: 'Beställning skapad',
 			orderNumber: newOrder.orderNumber,
+			guestId: newOrder.guestId,
 			status: newOrder.status,
-			orderId: newOrder._id,
+			order: newOrder.items,
 		});
 	} catch (error: any) {
 		console.error('Fel vid POST /orders:', error);
+
+		const errorMessage: any = error.message || 'Ett oväntat serverfel uppstod';
+		const statusCode = errorMessage.includes('400') ? 400 : 500;
+
+		res.status(statusCode).json({
+			message: errorMessage.replace('400: ', ''),
+			error: 'ORDER_CREATION_FAILED',
+		});
+	}
+};
+
+export const getOrderDetails = async (
+	req: Request<OrderParams>,
+	res: Response
+) => {
+	try {
+		const orderNumber: string = req.params.orderNumber;
+		if (orderNumber === undefined || orderNumber === '')
+			return res.status(404).json({ message: 'Order not found' });
+
+		const order = await getOrderByID(orderNumber);
+		if (!order) return res.status(404).json({ message: 'Order not found' });
+
+		res.status(200).json(order);
+	} catch (error: any) {
+		console.error('Fel vid GET /orders:', error);
 
 		const errorMessage: any = error.message || 'Ett oväntat serverfel uppstod';
 		const statusCode = errorMessage.includes('400') ? 400 : 500;

@@ -3,7 +3,7 @@ import { NavBar } from '@nattugglan/navbar';
 import { Footer } from '@nattugglan/footer';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 
-function OrderFlowPage() {
+function OrderStatusPage() {
 	return (
 		<>
 			<NavBar />
@@ -13,7 +13,7 @@ function OrderFlowPage() {
 				<p>Text</p>
 			</ContentContainer>
 		</>
-	)
+	);
 }
 
-export { OrderFlowPage };
+export { OrderStatusPage };

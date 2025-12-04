@@ -10,3 +10,7 @@ export const createOrder = async (
 	await newOrder.save();
 	return newOrder;
 };
+
+export const findOrderById = async (orderNumber: string) => {
+	return await OrderModel.findOne({ orderNumber });
+};
