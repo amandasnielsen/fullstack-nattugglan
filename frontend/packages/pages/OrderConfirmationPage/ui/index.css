@@ -2,9 +2,24 @@
 	width: 100%;
 	font-family: 'anton';
 	color: var(--font-color-dark);
+
+	flex: 1;
+	gap: 0.5rem;
+}
+
+.ConfirmationPage .container__card {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
+
+	min-height: 55vh;
+	max-height: 60vh;
+}
+
+.ConfirmationPage__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
 }
 
 .Confirmation__ordnr {
@@ -37,10 +52,12 @@
 }
 
 .item__totalprice {
+	margin-top: auto;
 	text-align: end;
 }
 
 .Confirmation__info {
+	margin-top: auto;
 	border-top: 1px solid var(--font-color-dark);
 	padding-top: 0.5rem;
 	margin-top: 1rem;
@@ -57,7 +74,6 @@
 }
 
 .Confirmation__info-bottom {
-	margin-top: auto;
 	display: flex;
 	justify-content: space-between;
 }
