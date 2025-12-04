@@ -5,7 +5,7 @@ import { getMenu } from "../../features/menu/controller";
 import { requireApiKey } from "../middleware/apiKey";
 import { requireAuth, requireAdmin } from "../middleware/auth";
 import { UserModel } from "../database/models/user.model";
-import { postOrder } from '../../features/orders/controller';
+import { postOrder,getOrderDetails } from '../../features/orders/controller';
 
 
 const router = Router();
@@ -23,7 +23,10 @@ router.get("/debug/users", async (req, res) => {
 
 //USER ROUTES
 router.get('/menu', getMenu);
-router.use('/order', postOrder);
+
+//Orders
+router.post('/order', postOrder);
+router.get('/order/:orderNumber', getOrderDetails)
 
 
 export default router;
