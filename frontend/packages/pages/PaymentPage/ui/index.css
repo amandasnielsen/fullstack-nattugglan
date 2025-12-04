@@ -2,6 +2,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: space-between;
+	flex: 1;
+
+	font-family: 'MerriweatherSans';
 }
 
 .payment__img {
@@ -10,9 +14,12 @@
 }
 
 .paymentpage .container__card {
+	display: flex;
+	flex-direction: column;
+
 	max-width: 400px;
-	min-height: 50vh;
-  max-height: 50vh;
+	min-height: 55vh;
+	max-height: 60vh;
 }
 
 .payment__input {
@@ -38,7 +45,7 @@
 	background: var(--font-color-white);
 
 	padding: 0 1rem;
-	font-family: MerriweatherSans;
+	font-family: 'MerriweatherSans';
 	color: var(--font-color-dark);
 }
 
@@ -55,25 +62,25 @@
 	font-size: 0.8rem;
 }
 .payment__buttonContainer {
-	position: fixed; 
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 70px; 
-  z-index: 990; 
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 80px;
+	z-index: 990;
 }
 
 .payment__button {
-	width: 280px; 
-  padding: 15px 20px;
+	width: 280px;
+	padding: 15px 20px;
 }
 
 @media (min-width: 900px) {
-  .payment__buttonContainer {
-    margin-bottom: 125px;
-  }
+	.payment__buttonContainer {
+		margin-bottom: 125px;
+	}
 
 	.paymentpage .container__card {
 		min-height: 45vh;

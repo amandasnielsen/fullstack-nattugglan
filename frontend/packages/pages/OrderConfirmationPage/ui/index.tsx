@@ -87,28 +87,30 @@ function OrderConfirmationPage() {
 	});
 
 	return (
-		<>
+		<section className="ConfirmationPage">
 			<NavBar />
 			<Footer />
 			<h1>Orderbekräftelse</h1>
 			<ContentContainer>
-				<section className="ConfirmationPage">
-					<h3 className="Confirmation__ordnr">Order #{orderNumber}</h3>
-					<section className="Confirmation__itemList">
-						{sortedCategories.map((categoryName) => (
-							<div key={categoryName} className="item__cards">
-								<h3 className="item__categoryName">{categoryName}</h3>
-								{itemsByCategory[categoryName].map((item, index) => (
-									<div key={index} className="item__items">
-										<p>{item.name}</p>
-										<p>
-											{item.quantity}st {item.price}:-
-										</p>
-									</div>
-								))}
-							</div>
-						))}
-					</section>
+				<section className="ConfirmationPage__content">
+					<div>
+						<h3 className="Confirmation__ordnr">Order #{orderNumber}</h3>
+						<section className="Confirmation__itemList">
+							{sortedCategories.map((categoryName) => (
+								<div key={categoryName} className="item__cards">
+									<h3 className="item__categoryName">{categoryName}</h3>
+									{itemsByCategory[categoryName].map((item, index) => (
+										<div key={index} className="item__items">
+											<p>{item.name}</p>
+											<p>
+												{item.quantity}st {item.price}:-
+											</p>
+										</div>
+									))}
+								</div>
+							))}
+						</section>
+					</div>
 					<p className="item__totalprice">Totalt: {totalPrice}:-</p>
 					<article className="Confirmation__info">
 						<section className="Confirmation__info-top">
@@ -127,7 +129,7 @@ function OrderConfirmationPage() {
 					</article>
 				</section>
 			</ContentContainer>
-		</>
+		</section>
 	);
 }
 
