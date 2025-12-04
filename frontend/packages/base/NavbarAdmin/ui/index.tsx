@@ -1,14 +1,10 @@
 import './index.css';
 import Logo from './assets/logo.png';
-import CartIcon from './assets/cart.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useCartStore } from '@nattugglan/core';
 
 function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
-
-  const totalQuantity = useCartStore((state) => state.totalQuantity);
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -26,24 +22,6 @@ function NavBar() {
 				<div className="navbar__icons-right">
 					
 					<div className="navbar__icons-right">
-					
-						{totalQuantity > 0 && (
-							<NavLink 
-								to="/cart"
-								className="navbar__cart-link"
-							>
-								<img 
-									src={CartIcon} 
-									className="navbar__cart-icon" 
-									alt="Kundkorg" 
-								/>
-
-								<span className="navbar__cart-badge">
-									{totalQuantity}
-								</span>
-							</NavLink>
-						)}
-
 						<div
 							className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
 							onClick={toggleMenu}
@@ -264,27 +242,6 @@ function NavBar() {
 				</NavLink>
 				<button className="navbar__logout">Logga ut</button>
 			</div>*/}
-
-			{/*<section className="cart__desktop">
-				<div className="navbar__desktop-cart">			
-					{totalQuantity > 0 && (
-						<NavLink 
-							to="/cart"
-							className="navbar__cart-link"
-						>
-							<img 
-								src={CartIcon} 
-								className="navbar__cart-icon" 
-								alt="Kundkorg" 
-							/>
-
-							<span className="navbar__cart-badge">
-								{totalQuantity}
-							</span>
-						</NavLink>
-					)}
-				</div>
-			</section>*/}
 		</section>
 	);
 }
