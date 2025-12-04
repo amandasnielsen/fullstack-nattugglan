@@ -4,6 +4,7 @@ import { Footer } from "@nattugglan/footer";
 import { Button } from "@nattugglan/button";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from "@nattugglan/core/state/authStore";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -28,7 +29,7 @@ function LoginPage() {
         return;
       }
 
-      localStorage.setItem("adminToken", data.token);
+      useAuthStore.getState().setToken(data.token);
 
       alert("Logged in!");
 
