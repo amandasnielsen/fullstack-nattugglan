@@ -1,0 +1,42 @@
+Mötesprotokoll Daily Scrum (4 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Gjorde orderconfirmation-page. Både frontend och backend. Pushat till dev
+* Oklart, kolla över vad vi kan börja på
+* Nej
+
+Person 2 (Amanda)
+* Gjorde filtreringsfunktionen för menyn. Började med navbar för desktop
+* Fixa navbar för desktop för admin
+* Nej
+
+Person 3 (Belinda)
+* Gjorde klart Login-page för admin
+* Började animera ugglan för Laddningssidan och Error-page
+* Nej
+  
+Person 4 (Rasmus)
+* Är nog färdig med admin-login. Funkar bra med admin
+* Ska mergea in admin i dev och koppla ihop med login-sidan
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
+
+Sprint Review imorgon. Vi tar ett möte vid 14 och går igenom vad vi ska ta upp.
