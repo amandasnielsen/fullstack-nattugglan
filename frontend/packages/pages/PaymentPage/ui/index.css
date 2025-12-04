@@ -11,6 +11,8 @@
 
 .paymentpage .container__card {
 	max-width: 400px;
+	min-height: 50vh;
+  max-height: 50vh;
 }
 
 .payment__input {
@@ -74,9 +76,7 @@
   }
 
 	.paymentpage .container__card {
-		min-height: 350px;
-		max-height: 350px;
-		max-width: 400px;
+		min-height: 45vh;
+		max-height: 45vh;
 	}
-	
 }

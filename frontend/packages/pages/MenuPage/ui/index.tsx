@@ -17,9 +17,7 @@ const CATEGORIES = [
   'Dricka'
 ]
 
-// Hjälptyp för att gruppera menyn
 type GroupedMenu = Record<string, MenuItem[]>;
-
 
 function MenuPage() {
 

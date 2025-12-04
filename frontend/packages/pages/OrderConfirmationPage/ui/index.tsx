@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import fetchOrderDetails from '../data/fetchOrderDetail';
 import { useState, useEffect } from 'react';
 import type { CartItem } from '@nattugglan/core';
-import { Button } from '@nattugglan/button';
 
 interface orderDetailInterface {
 	orderNumber: string;

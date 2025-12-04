@@ -15,6 +15,7 @@
   flex-wrap: wrap; 
   gap: 8px;
   justify-content: center;
+	padding: .5em;
   margin-bottom: 1em;
 }
 
@@ -137,9 +138,9 @@
   }
 }
 
-@media (max-height: 800px) {
+@media (max-height: 900px) {
   .menu__page .container__card {
-    min-height: 40vh;
-    max-height: 40vh;
+    min-height: 35vh;
+    max-height: 35vh;
   }
 }
