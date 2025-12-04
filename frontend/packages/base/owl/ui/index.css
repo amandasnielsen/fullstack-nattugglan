@@ -8,6 +8,7 @@
   z-index: 9999;
 }
 
+
 .owl-loader__bg {
   position: absolute;
   inset: 0;
@@ -16,8 +17,9 @@
   object-fit: cover;
 }
 
+
 .owl-loader__image {
   position: relative;
-  width: clamp(180px, 35vw, 260px);
+  width: 230px; 
   height: auto;
 }

@@ -1,12 +1,11 @@
-import React from "react";
-import OwlLoaderGif from "../assets/owl-loader.gif";
-import ForestBg from "../assets/BG-forrest-phone.png";
-import "./OwlLoader.css";
+import "./index.css";
+import OwlLoaderGif from "./assets/owl-loader.gif";
+import ForestBg from "../../../../src/assets/BG-forrest.png";
 
 function OwlLoader() {
   return (
     <div className="owl-loader">
-      {/* Samma bakgrund som resten */}
+      {/* bakgrundsbild */}
       <img
         src={ForestBg}
         alt=""
@@ -14,7 +13,7 @@ function OwlLoader() {
         className="owl-loader__bg"
       />
 
-      {/* Ugglan i mitten */}
+      {/* ugglan i mitten */}
       <img
         src={OwlLoaderGif}
         alt="Nattugglan som flaxar med vingarna"
