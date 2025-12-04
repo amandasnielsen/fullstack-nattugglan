@@ -6,7 +6,6 @@ import { Button } from '@nattugglan/button';
 import payment from './assets/payment.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useCartStore } from '@nattugglan/core';
 import type { OrderInterface } from '@nattugglan/core';
 
@@ -15,27 +14,46 @@ function PaymentPage() {
 	const { items, totalPrice, clearCart } = useCartStore();
 	const [phoneNumber, setPhoneNumber] = useState('');
 
+	const API_URL = 'http://localhost:3000';
+
 	const handlePayment = async () => {
 		if (!phoneNumber) {
 			alert('Ange telefonnummer innan du betalar');
 			return;
 		}
+		1;
 
 		if (items.length === 0) {
 			alert('Kundkorgen är tom');
 			return;
 		}
 
-		const orderNumber: string = uuidv4().slice(0, 5);
 		const order: OrderInterface = {
-			orderNumber,
-			phoneNumber,
+			totalPrice,
 			items: items,
 			createdAt: new Date().toISOString(),
 		};
 
 		try {
-			// lägg in api post anropet här
+			console.log('Skickar order: ', order);
+
+			const response = await fetch(`${API_URL}/api/order`, {
+				method: 'POST',
+				headers: {
+					//lägg till guest ID-cookien här, och api nyckeln
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(order),
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.message || `Serverfel: ${response.status}`);
+			}
+
+			const result = await response.json();
+			console.log('Order sparad: ', result);
+			const orderNumber = result.orderNumber;
 
 			clearCart();
 
@@ -44,8 +62,6 @@ function PaymentPage() {
 			console.error('Fel vid betalning: ', error);
 			alert('Något gick fel, försök igen');
 		}
-		console.log('betalat!');
-		console.log(order);
 	};
 
 	return (
@@ -70,7 +86,7 @@ function PaymentPage() {
 							onChange={(e) => setPhoneNumber(e.target.value)}
 						/>
 					</div>
-					<p className="payment__total">Total: {totalPrice}</p>
+					<p className="payment__total">Totalt: {totalPrice} kr</p>
 					<NavLink
 						className={({ isActive }) =>
 							isActive ? 'payment__menuLink active-link' : 'payment__menuLink'
