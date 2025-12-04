@@ -11,6 +11,7 @@ router.post("/auth/login", requireApiKey, login);
 router.get("/menu", requireApiKey, getMenu);
 router.post("/menu", requireApiKey, requireAuth, requireAdmin);
 
+//*DEBUGGING, RADERA * \\
 router.get("/debug/users", async (req, res) => {
     const users = await UserModel.find();
     res.json(users);
