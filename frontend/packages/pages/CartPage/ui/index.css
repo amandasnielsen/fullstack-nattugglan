@@ -69,8 +69,8 @@
 	}
 
 	.cart__page .container__card {
-		min-height: 300px;
-		max-height: 300px;
+		min-height: 50vh;
+		max-height: 50vh;
 		max-width: 400px;
 	}
 }

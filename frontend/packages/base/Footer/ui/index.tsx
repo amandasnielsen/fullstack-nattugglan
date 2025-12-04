@@ -29,7 +29,7 @@ function Footer() {
 						<div className="footer__info">
 							<div className="footer__info-box">
 								<h4>Adress</h4>
-								<p>Läkargatan 2C<br/>Jokkmokk</p>
+								<p>Lingonstigen 19<br/>Jokkmokk</p>
 							</div>
 							<div className="footer__info-box">
 								<h4>Kontakt</h4>

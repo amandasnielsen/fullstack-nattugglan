@@ -11,6 +11,8 @@
 
 .paymentpage .container__card {
 	max-width: 400px;
+	min-height: 50vh;
+  max-height: 50vh;
 }
 
 .payment__input {
@@ -73,10 +75,12 @@
     margin-bottom: 125px;
   }
 
-	.paymentpage .container__card {
-		min-height: 350px;
-		max-height: 350px;
-		max-width: 400px;
+	.payment__input {
+		margin-bottom: 2rem;
+		margin-top: 2rem;
 	}
-	
+
+	.paymentpage .container__card {
+		max-height: 45vh;
+	}
 }

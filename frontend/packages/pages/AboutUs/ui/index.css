@@ -55,6 +55,9 @@
 
 @media (min-width: 900px) {
 	.aboutus .container__card {
-		max-height: 450px;
+		max-height: 500px;
+		max-width: 600px;
 	}
+
+	
 }
