@@ -1,8 +1,9 @@
-
 import express from "express";
 import cors from "cors";
 import router from "./core/router/router";
 import { requireApiKey } from "./core/middleware/apiKey";
+
+const app = express();
 
 
 app.use(requireApiKey);
