@@ -6,7 +6,6 @@ import { requireApiKey } from "./core/middleware/apiKey";
 const app = express();
 
 
-app.use(requireApiKey);
 app.use(cors());
 app.use(express.json());
 
