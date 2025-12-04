@@ -75,12 +75,8 @@
     margin-bottom: 125px;
   }
 
-	.payment__input {
-		margin-bottom: 2rem;
-		margin-top: 2rem;
-	}
-
 	.paymentpage .container__card {
+		min-height: 45vh;
 		max-height: 45vh;
 	}
 }
