@@ -1,0 +1,23 @@
+.owl-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.owl-loader__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.owl-loader__image {
+  position: relative;
+  width: clamp(180px, 35vw, 260px);
+  height: auto;
+}
