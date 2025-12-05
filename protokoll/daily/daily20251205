@@ -1,0 +1,40 @@
+Mötesprotokoll Daily Scrum (5 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Började med att kunna ändra i sin beställning efter den är lagd. Lite styling-fix
+* Fortsätta med ändra beställnings-funktionen
+* Nej
+
+Person 2 (Amanda)
+* Satt med NavBaren och fixade desktop viewn
+* Dela upp NavBaren, en för kund och en för admin. Kolla om man kan blockera vissa sidor för vissa användare
+* Nej
+
+Person 3 (Belinda)
+* Gjorde animeringen för ugglan på laddnings-sidan
+* Göra error-page och not-found-page med animering
+* Nej
+
+Person 4 (Rasmus)
+* Kopplade ihop backend med frontend för admin login. Samt en del bugfixar
+* Fortsätta med admin-specifika anropen
+* Nej. Behöver gå efter lunch
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
