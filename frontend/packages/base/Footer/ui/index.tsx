@@ -11,7 +11,8 @@ function Footer() {
 			<section className="footer__container-phone">	
 				<div className="footer__content">
 					<span className="footer__span">
-						<p className="footer__contact">Frågor? Ring gärna!<br/>070 - 123 45 67</p>
+						<p className="footer__contact">Frågor? Ring!<br/>070 - 123 45 67</p>
+						<p className="footer__hours">Öppettider<br/>23 - 07</p>
 						<div className="footer__media">
 							<img src={FacebookIcon} alt="facebook icon" />
 							<img src={InstagramIcon} alt="instagram icon" />
