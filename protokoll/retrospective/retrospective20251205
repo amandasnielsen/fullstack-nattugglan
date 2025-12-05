@@ -1,0 +1,40 @@
+Mötesprotokoll Sprint Retrospective (5 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan
+
+* Vad ska jag börja göra?
+* Vad ska jag sluta göra?
+* Vad ska jag fortsätta göra?
+
+Person 1 (Lisa)
+* Börja planera upp mina user stories bättre när jag väljer en
+* Jag ska sluta lägga in felmeddelanden till AI direkt, och försöka förstå själv först
+* Jag ska fortsätta lägga all min kod i separata dokument och skriva kommentarer till. Jag lär mig väldigt mycket av det
+
+Person 2 (Amanda)
+* Försöka strukturera upp mappar och filer innan jag börjar med en funktion eller kod
+* Sluta göra flera saker samtidigt, skriv upp bugar och små fix jag ser, och gör en sak i taget
+* Fortsätta försöka sluta fråga AI så snabbt, och sitta mer själv och testa
+
+Person 3 (Belinda)
+* Försöka börja testa koden mer lokalt innan jag pushar upp det
+* Sluta mergea till dev utan en pull request, så alla kan se
+* Fortsätta skriva tydlig och ren kod
+
+Person 4 (Rasmus)
+* Börja gå på morgonpromenader istället för att sätta mig vid datorn direkt på morgonen.
+  Försöka rita upp hur mappstrukren och hur allt hänger ihop när jag koder, i och med den nya mappstrukturen
+* Sluta gå och lägga mig så himla sent
+* Jag vill fortsätta bryta ner user storier till mindre. Mycket enklare att hantera
+
+
+# Övrigt
