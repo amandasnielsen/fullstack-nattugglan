@@ -1,4 +1,3 @@
-import './index.css';
 import Logo from './assets/logo.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -14,9 +13,7 @@ function NavBarAdmin() {
 		<section className="navbar">
 			<header className="navbar__container-phone">
 				<div>
-					<NavLink to="/menu">
 						<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
-					</NavLink>
 				</div>
 
 				<div className="navbar__icons-right">
@@ -41,74 +38,7 @@ function NavBarAdmin() {
 							className={({ isActive }) =>
 								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
 							}
-							to="/menu"
-							onClick={toggleMenu}
-						>
-							Meny
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/orderstatus"
-							onClick={toggleMenu}
-						>
-							Orderstatus
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/myorders"
-							onClick={toggleMenu}
-						>
-							Tidigare Beställningar
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/aboutUs"
-							onClick={toggleMenu}
-						>
-							Om oss
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/maps"
-							onClick={toggleMenu}
-						>
-							Vart finns vi?
-						</NavLink>
-					</div>
-					<NavLink
-						className={({ isActive }) =>
-							isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-						}
-						to="/login"
-						onClick={toggleMenu}
-					>
-						Logga in som Admin
-					</NavLink>
-				</nav>
-
-				{/* länkar till när man kan logga in som admin
-				
-				alla beställningar
-				uppdatera menyn
-				lagerstatus
-
-				logga ut
-				
-				<nav className={`navbar__menu ${menuOpen ? 'visible' : ''}`}>
-					<div className="navbar__menu-top">
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/adminallorderspage"
+							to="/allorders"
 							onClick={toggleMenu}
 						>
 							Alla Beställningar
@@ -126,122 +56,54 @@ function NavBarAdmin() {
 							className={({ isActive }) =>
 								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
 							}
-							to="/stockpage"
+							to="/stock"
 							onClick={toggleMenu}
 						>
 							Lagerstatus
 						</NavLink>
 					</div>
-				<button className="navbar__logout">Logga ut</button>
+				<a className="navbar__menuLinks">Logga ut</a>
 				</nav>
-				*/}
 
 			</header>
 
 			<header className="navbar__container-desktop">
 				<section className="navbar__container-span">
 					<div>
-						<NavLink to="/menu">
 							<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
-						</NavLink>
 					</div>
 					<div className="navbar__desktop-group">
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-							}
-							to="/menu"
-							onClick={toggleMenu}
-						>
-							Meny
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-							}
-							to="/orderstatus"
-							onClick={toggleMenu}
-						>
-							Orderstatus
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-							}
-							to="/myorders"
-							onClick={toggleMenu}
-						>
-							Beställningar
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-							}
-							to="/aboutUs"
-							onClick={toggleMenu}
-						>
-							Om oss
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-							}
-							to="/maps"
-							onClick={toggleMenu}
-						>
-							Vart finns vi?
-						</NavLink>
-						<NavLink
+					<NavLink
 						className={({ isActive }) =>
 							isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
 						}
-						to="/login"
+						to="/allorders"
 						onClick={toggleMenu}
 					>
-						Admin
+						Alla Beställningar
 					</NavLink>
-					</div>
+					<NavLink
+						className={({ isActive }) =>
+							isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+						}
+						to="/updatemenu"
+						onClick={toggleMenu}
+					>
+						Uppdatera Menyn
+					</NavLink>
+					<NavLink
+						className={({ isActive }) =>
+							isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+						}
+						to="/stock"
+						onClick={toggleMenu}
+					>
+						Lagerstatus
+					</NavLink>
+				</div>
+				<a className="navbar__desktop-links button__logout">Logga ut</a>
 				</section>
 			</header>
-
-		{/* Admin view på navbar desktop
-
-				alla beställningar
-				uppdatera menyn
-				lagerstatus
-
-				logga ut
-		
-			<div className="navbar__desktop-group">
-				<NavLink
-					className={({ isActive }) =>
-						isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-					}
-					to="/adminallorderspage"
-					onClick={toggleMenu}
-				>
-					Alla Beställningar
-				</NavLink>
-				<NavLink
-					className={({ isActive }) =>
-						isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-					}
-					to="/updatemenu"
-					onClick={toggleMenu}
-				>
-					Uppdatera Menyn
-				</NavLink>
-				<NavLink
-					className={({ isActive }) =>
-						isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-					}
-					to="/stockpage"
-					onClick={toggleMenu}
-				>
-					Lagerstatus
-				</NavLink>
-				<button className="navbar__logout">Logga ut</button>
-			</div>*/}
 		</section>
 	);
 }

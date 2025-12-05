@@ -10,7 +10,7 @@ import { ChangeOrdersPage } from '@nattugglan/adminchangeorderspage';
 import { StockPage } from '@nattugglan/stockpage';
 import { AdminAllOrdersPage } from '@nattugglan/adminallorderspage';
 import { PaymentPage } from '@nattugglan/paymentpage';
-import { OrderConfirmationPage } from '../packages/pages/OrderConfirmationPage';
+import { OrderConfirmationPage } from '@nattugglan/orderconfirmationpage';
 import { CartPage } from '@nattugglan/cartpage';
 
 function App() {
