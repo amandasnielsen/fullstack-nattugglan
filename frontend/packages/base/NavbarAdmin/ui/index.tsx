@@ -3,7 +3,7 @@ import Logo from './assets/logo.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-function NavBar() {
+function NavBarAdmin() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
 	const toggleMenu = () => {
@@ -246,4 +246,4 @@ function NavBar() {
 	);
 }
 
-export { NavBar };
+export { NavBarAdmin };

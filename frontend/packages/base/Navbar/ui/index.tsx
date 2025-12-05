@@ -81,7 +81,7 @@ function NavBar() {
 							to="/myorders"
 							onClick={toggleMenu}
 						>
-							Tidigare Beställningar
+							Mina Beställningar
 						</NavLink>
 						<NavLink
 							className={({ isActive }) =>
