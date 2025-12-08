@@ -25,7 +25,15 @@
 .order__header {
 	display: flex;
   justify-content: space-between;
-	margin-bottom: .5rem;
+	margin-bottom: .5em;
+}
+
+.order__header-two {
+	display: flex;
+  justify-content: space-between;
+	margin-bottom: 1em;
+	font-family: 'MerriweatherSans';
+  font-size: 0.8em;
 }
 
 .order__products-list {

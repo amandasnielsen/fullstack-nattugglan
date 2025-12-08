@@ -6,7 +6,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 
-type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Delivered' | 'Cancelled';
+type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
 
 interface OrderItem {
   name: string;
@@ -15,23 +15,40 @@ interface OrderItem {
 
 interface Order {
   _id: string; 
-	name: string,
   orderNumber: string;
   status: OrderStatus;
   totalPrice: number;
   items: OrderItem[];
+  name: string;
+  createdAt: string; 
 }
 
+// de kategorier som syns på sidan
 const STATUS_ORDER: OrderStatus[] = [
   'Pending', 
   'Confirmed', 
-  'Ready', 
-  'Delivered', 
+  'Ready',
+	'Done', 
   'Cancelled'
 ];
 
-const STATUS_OPTIONS: OrderStatus[] = STATUS_ORDER.filter(s => s !== 'Cancelled'); 
+// vad som går att ändra till i backend
+const STATUS_OPTIONS: OrderStatus[] = [
+	'Confirmed', 
+	'Ready', 
+	'Done',
+	'Cancelled'
+]; 
 
+// formaterar datumet som i orderbekräftelsen
+const formatOrderDate = (dateString: string): string => {
+	const dateObject = new Date(dateString);
+	return dateObject.toLocaleDateString('sv-SE', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	});
+};
 
 function AdminAllOrdersPage() {
   const [orders, setOrders] = useState<Order[] | null>(null);
@@ -80,15 +97,42 @@ function AdminAllOrdersPage() {
     fetchOrders();
   }, [token, navigate, logout]);
 
-  // Funktion för att hantera statusändring (simulerad)
-  const handleStatusChange = (orderId: string, newStatus: OrderStatus) => {
-    console.log(`Ändrar order ${orderId} till status: ${newStatus}`);
+  const handleStatusChange = async (orderId: string, orderNumber: string, newStatus: OrderStatus) => {
+    if (!token) return;
 
-    setOrders(prevOrders => 
-      prevOrders ? prevOrders.map(order => 
-        order._id === orderId ? { ...order, status: newStatus } : order
-      ) : null
-    );
+    try {
+        const response = await fetch(`http://localhost:3000/api/admin/orders/${orderNumber}/status`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newStatus }),
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            logout();
+            navigate('/access-denied');
+            return;
+        }
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
+        }
+
+        // Uppdatera det lokala state med den nya statusen
+        setOrders(prevOrders => 
+            prevOrders ? prevOrders.map(order => 
+                order._id === orderId ? { ...order, status: newStatus } : order
+            ) : null
+        );
+        console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
+
+    } catch (error: any) {
+        console.error("Fel vid statusuppdatering:", error);
+        alert(`Fel: ${error.message}. Kontrollera konsolen.`);
+    }
   };
 
 
@@ -100,11 +144,10 @@ function AdminAllOrdersPage() {
       'Pending': [], 
       'Confirmed': [], 
       'Ready': [], 
-      'Delivered': [], 
+      'Done': [], 
       'Cancelled': [],
     };
 
-    // Använder reduce för att fylla den fördefinierade strukturen
     const grouped = orders.reduce((acc, order) => {
       if (acc[order.status]) { 
         (acc[order.status] as Order[]).push(order);
@@ -135,7 +178,7 @@ function AdminAllOrdersPage() {
             
           {STATUS_ORDER.map(statusKey => (
             <div key={statusKey} className="order__group">
-                
+
               {groupedOrders[statusKey] && groupedOrders[statusKey].length > 0 && (
                 <h2 className="group__title">{statusKey}</h2>
               )}
@@ -144,39 +187,51 @@ function AdminAllOrdersPage() {
                 {groupedOrders[statusKey]?.map(order => (
                   <div key={order._id} className="order__card">
 
-                    <div className="order__header">
-                      <span className="order__number">Order #{order.orderNumber} - {order.name}</span>
-                      <span className={`order__status order__status--${order.status}`}>{order.status}</span>
-                    </div>
+                    <div className="order__header">			
+                   		<span className="order__number">Order #{order.orderNumber}</span>
+                     	<span className={`order__status order__status--${order.status}`}>{order.status}</span>                   
+										 </div>
+
+										<div className="order__header-two">
+                     	<span className="order__name">Namn: {order.name}</span>                     
+											<span className="order__date">{formatOrderDate(order.createdAt)}</span>
+                   	</div>
 
                     <div className="order__products-list"> 
                       {order.items.map((item, index) => (
-												<div key={index} className="order__product-item">
-												<span>{item.name}</span>
-												<span className="product__quantity">x{item.quantity}</span>
-												</div>
+                          <div key={index} className="order__product-item">
+                            <span>{item.name}</span>
+                            <span className="product__quantity">x{item.quantity}</span>
+                          </div>
                       ))}
                     </div>
 
                     <div className="order__details-footer">
-											<p className="order__price">Totalt: {order.totalPrice} kr</p>
-											<div className="order__action">
-												{(order.status !== 'Delivered' && order.status !== 'Cancelled') && (
-													<select 
-														className="status__dropdown"
-														value={order.status}
-														onChange={(e) => 
-															handleStatusChange(order._id, e.target.value as OrderStatus)
-														}
-													>
-														{STATUS_OPTIONS.map(option => (
-															<option key={option} value={option}>
-																{option}
-															</option>
-														))}
-													</select>
-												)}
-											</div>
+                        <p className="order__price">Totalt: {order.totalPrice} kr</p>
+                        
+                        <div className="order__action">
+                            {(order.status !== 'Done' && order.status !== 'Cancelled') && (
+															<select 
+																className="status__dropdown"
+																value={order.status}
+																onChange={(e) => 
+																	handleStatusChange(order._id, order.orderNumber, e.target.value as OrderStatus)
+																}
+															>
+																<option value={order.status}>
+																	{order.status}
+																</option>
+
+																{STATUS_OPTIONS.map(option => (
+																	order.status !== option && (
+																		<option key={option} value={option}>
+																				{option}
+																		</option>
+																	)
+																))}
+															</select>
+                            )}
+                        </div>
                     </div>
                   </div>
                 ))}
@@ -192,3 +247,6 @@ function AdminAllOrdersPage() {
 }
 
 export {AdminAllOrdersPage};
+
+
+
