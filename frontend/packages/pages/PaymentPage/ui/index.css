@@ -2,35 +2,49 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-.payment__img {
-	width: 150px;
-	padding: 0;
+	justify-content: space-between;
+	flex: 1;
+	font-family: 'MerriweatherSans';
 }
 
 .paymentpage .container__card {
+	display: flex;
+	flex-direction: column;
+
 	max-width: 400px;
-	min-height: 50vh;
-  max-height: 50vh;
+	min-height: 55vh;
+	max-height: 60vh;
+}
+
+.payment__boxContent h3 {
+	width: 100%;
+	text-align: center;
+	font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
+	font-weight: 200;
+	font-size: var(--header-size);
+	border-bottom: 1px solid var(--font-color-dark);
 }
 
 .payment__input {
-	width: 100%;
+	width: 90%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 0.5rem;
-	margin-bottom: 1rem;
+	margin-top: 1rem;
 }
 
 .payment__input-label {
+	width: 100%;
 	font-size: var(--body-text);
+	justify-self: flex-start;
 }
 
-.payment__input-number {
-	width: 80%;
+.payment__input-number,
+.payment__input-name {
+	width: 100%;
 	height: 2.5rem;
 	border-radius: 10px;
 	border: none;
@@ -38,42 +52,51 @@
 	background: var(--font-color-white);
 
 	padding: 0 1rem;
-	font-family: MerriweatherSans;
+	font-family: 'MerriweatherSans';
 	color: var(--font-color-dark);
 }
 
-.payment__total {
+.paymnet__contentBottom {
+	width: 100%;
 	margin-top: auto;
-	font-family: anton;
-	font-size: var(--header-size);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.payment__total {
+	width: 100%;
 	margin-bottom: 1rem;
+	text-align: center;
+	font-family: 'anton';
+	font-size: var(--header-size);
+	border-bottom: 1px solid var(--font-color-dark);
 }
 
 .payment__menuLink {
-	margin-top: auto;
 	color: var(--font-color-dark);
 	font-size: 0.8rem;
 }
 .payment__buttonContainer {
-	position: fixed; 
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 70px; 
-  z-index: 990; 
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 80px;
+	z-index: 990;
 }
 
 .payment__button {
-	width: 280px; 
-  padding: 15px 20px;
+	width: 280px;
+	padding: 15px 20px;
 }
 
 @media (min-width: 900px) {
-  .payment__buttonContainer {
-    margin-bottom: 125px;
-  }
+	.payment__buttonContainer {
+		margin-bottom: 125px;
+	}
 
 	.paymentpage .container__card {
 		min-height: 45vh;

@@ -14,6 +14,7 @@ interface orderDetailInterface {
 	items: CartItem[];
 	status: 'Pending' | 'Confirmed' | 'Ready' | 'Delivered' | 'Cancelled';
 	createdAt: string;
+	name: string;
 }
 
 interface OrderNumberParams {
@@ -54,10 +55,6 @@ function OrderConfirmationPage() {
 			});
 	}, [orderNumber]);
 
-	useEffect(() => {
-		console.log('orderdata: ', orderData);
-	}, [orderData]);
-
 	if (isLoading || !orderData) {
 		return <div>Hämtar order...</div>;
 	}
@@ -65,7 +62,7 @@ function OrderConfirmationPage() {
 		return <div>Fel vid hämtning av order..</div>;
 	}
 
-	const { guestId, totalPrice, items, status, createdAt } =
+	const { guestId, totalPrice, items, status, createdAt, name } =
 		orderData as orderDetailInterface;
 
 	const itemsByCategory = items.reduce<GroupedItems>((acc, item) => {
@@ -87,28 +84,32 @@ function OrderConfirmationPage() {
 	});
 
 	return (
-		<>
+		<section className="ConfirmationPage">
 			<NavBar />
 			<Footer />
 			<h1>Orderbekräftelse</h1>
 			<ContentContainer>
-				<section className="ConfirmationPage">
-					<h3 className="Confirmation__ordnr">Order #{orderNumber}</h3>
-					<section className="Confirmation__itemList">
-						{sortedCategories.map((categoryName) => (
-							<div key={categoryName} className="item__cards">
-								<h3 className="item__categoryName">{categoryName}</h3>
-								{itemsByCategory[categoryName].map((item, index) => (
-									<div key={index} className="item__items">
-										<p>{item.name}</p>
-										<p>
-											{item.quantity}st {item.price}:-
-										</p>
-									</div>
-								))}
-							</div>
-						))}
-					</section>
+				<section className="ConfirmationPage__content">
+					<div>
+						<h3 className="Confirmation__ordnr">
+							Order #{orderNumber} {name}
+						</h3>
+						<section className="Confirmation__itemList">
+							{sortedCategories.map((categoryName) => (
+								<div key={categoryName} className="item__cards">
+									<h3 className="item__categoryName">{categoryName}</h3>
+									{itemsByCategory[categoryName].map((item, index) => (
+										<div key={index} className="item__items">
+											<p>{item.name}</p>
+											<p>
+												{item.quantity}st {item.price}:-
+											</p>
+										</div>
+									))}
+								</div>
+							))}
+						</section>
+					</div>
 					<p className="item__totalprice">Totalt: {totalPrice}:-</p>
 					<article className="Confirmation__info">
 						<section className="Confirmation__info-top">
@@ -127,7 +128,7 @@ function OrderConfirmationPage() {
 					</article>
 				</section>
 			</ContentContainer>
-		</>
+		</section>
 	);
 }
 

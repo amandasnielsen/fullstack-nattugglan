@@ -1,38 +1,59 @@
 import { v4 as uuidv4 } from 'uuid';
-import { createOrder, findOrderById } from './repository';
+import {
+	createOrder,
+	findOrderById,
+	findOrderByNameAndPhone,
+	NewOrderData,
+} from './repository';
 import {
 	OrderInterface,
 	CartItem,
 } from '../../core/database/models/order.model';
 
-interface NewOrderInput {
+//input från frontend
+export interface NewOrderInput {
 	items: CartItem[];
 	totalPrice: number;
+	name: string;
+	phoneNumber: string;
 }
 
+//place order
 export const placeOrder = async (
 	input: NewOrderInput
 ): Promise<OrderInterface> => {
+	//generera ordernummer
 	const orderNumber = uuidv4().slice(0, 5).toLocaleUpperCase();
-	const guestId = uuidv4().slice(0, 3).toLocaleUpperCase();
 
-	const orderData = {
+	//kontrollera om de finns en tidigare order med samma name+phone
+	let guestId: string;
+	const existingOrder = await findOrderByNameAndPhone(
+		input.name,
+		input.phoneNumber
+	);
+
+	if (existingOrder) {
+		guestId = existingOrder.guestId;
+	} else {
+		guestId = uuidv4().slice(0, 4).toLocaleUpperCase();
+	}
+
+	//skapa orderdata för mongoose
+	const orderData: NewOrderData = {
 		...input,
-		orderNumber: orderNumber,
-		guestId: guestId,
+		phoneNumber: input.phoneNumber.replace(/\s+/g, ''),
+		orderNumber,
+		guestId,
 		createdAt: new Date(),
 		status: 'Pending',
 	};
 
-	const orderDataForRepo: Omit<OrderInterface, '_id'> = orderData as Omit<
-		OrderInterface,
-		'_id'
-	>;
-	const newOrder = await createOrder(orderDataForRepo);
-
+	//skapa och spara order
+	const newOrder = await createOrder(orderData);
 	return newOrder;
 };
 
+//hämta order via orderNumber
 export const getOrderByID = async (orderNumber: string) => {
 	return await findOrderById(orderNumber);
 };

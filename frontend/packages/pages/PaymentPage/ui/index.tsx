@@ -3,25 +3,38 @@ import { NavBar } from '@nattugglan/navbar';
 import { Footer } from '@nattugglan/footer';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 import { Button } from '@nattugglan/button';
-import payment from './assets/payment.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useCartStore } from '@nattugglan/core';
 import type { OrderInterface } from '@nattugglan/core';
+import { validateName, validatePhone } from '../data/validation';
 
 function PaymentPage() {
 	const navigate = useNavigate();
 	const { items, totalPrice, clearCart } = useCartStore();
-	const [phoneNumber, setPhoneNumber] = useState('');
+	const [mobileNumber, setmobileNumber] = useState('');
+	const [name, setName] = useState('');
+	const [errors, setErrors] = useState<string[]>([]);
 
 	const API_URL = 'http://localhost:3000';
 
 	const handlePayment = async () => {
-		if (!phoneNumber) {
-			alert('Ange telefonnummer innan du betalar');
+		const newErrors: string[] = [];
+		if (!validateName(name)) {
+			newErrors.push('Namnet är ogiltigt');
+		}
+		if (!validatePhone(mobileNumber)) {
+			newErrors.push('Telefonnummret är ogiltigt');
+		}
+
+		if (newErrors.length > 0) {
+			setErrors(newErrors);
 			return;
 		}
-		1;
+
+		if (newErrors.length === 0) {
+			console.log('Allt är ok!');
+		}
 
 		if (items.length === 0) {
 			alert('Kundkorgen är tom');
@@ -29,14 +42,14 @@ function PaymentPage() {
 		}
 
 		const order: OrderInterface = {
+			name: name,
+			phoneNumber: mobileNumber,
 			totalPrice,
 			items: items,
 			createdAt: new Date().toISOString(),
 		};
 
 		try {
-			console.log('Skickar order: ', order);
-
 			const response = await fetch(`${API_URL}/api/order`, {
 				method: 'POST',
 				headers: {
@@ -52,7 +65,6 @@ function PaymentPage() {
 			}
 
 			const result = await response.json();
-			console.log('Order sparad: ', result);
 			const orderNumber = result.orderNumber;
 
 			clearCart();
@@ -70,31 +82,44 @@ function PaymentPage() {
 			<h1>Betala</h1>
 			<ContentContainer>
 				<article className="payment__boxContent">
-					<img
-						className="payment__img"
-						src={payment}
-						alt="bild på betalningsloga"
-					/>
+					<h3>Info</h3>
 					<div className="payment__input">
+						<label className="payment__input-label">Namn:</label>
+						<input
+							className="payment__input-name"
+							type="text"
+							placeholder="Anna Andersson"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
 						<label className="payment__input-label">
 							Fyll i telefonnummer:
 						</label>
 						<input
 							className="payment__input-number"
 							type="tel"
-							value={phoneNumber}
-							onChange={(e) => setPhoneNumber(e.target.value)}
+							placeholder="076 000 00 00"
+							value={mobileNumber}
+							onChange={(e) => setmobileNumber(e.target.value)}
 						/>
+
+						{errors.map((err, i) => (
+							<p key={i} style={{ color: 'red' }}>
+								{err}
+							</p>
+						))}
 					</div>
-					<p className="payment__total">Totalt: {totalPrice} kr</p>
-					<NavLink
-						className={({ isActive }) =>
-							isActive ? 'payment__menuLink active-link' : 'payment__menuLink'
-						}
-						to="/menu"
-					>
-						Tillbaka till meny
-					</NavLink>
+					<div className="paymnet__contentBottom">
+						<p className="payment__total">Totalt: {totalPrice} kr</p>
+						<NavLink
+							className={({ isActive }) =>
+								isActive ? 'payment__menuLink active-link' : 'payment__menuLink'
+							}
+							to="/menu"
+						>
+							Tillbaka till meny
+						</NavLink>
+					</div>
 				</article>
 			</ContentContainer>
 			<div className="payment__buttonContainer">
