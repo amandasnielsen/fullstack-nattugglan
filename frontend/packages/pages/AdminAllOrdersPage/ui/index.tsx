@@ -210,7 +210,18 @@ function AdminAllOrdersPage() {
         (acc[order.status as OrderStatus]).push(order);
       }
       return acc;
-    }, initialGroups); 
+    }, initialGroups);
+
+		// sortera på nyaste ordrar först
+		(Object.keys(grouped) as OrderStatus[]).forEach(statusKey => {
+      const group = grouped[statusKey];
+
+      group.sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return dateB - dateA; 
+      });
+    });
     
     return grouped;
   }, [orders]);
