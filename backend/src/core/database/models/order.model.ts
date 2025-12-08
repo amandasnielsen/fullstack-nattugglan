@@ -26,6 +26,8 @@ export interface OrderInterface extends Document {
 	items: CartItem[];
 	totalPrice: number;
 	createdAt: Date;
+	name: string;
+	phoneNumber: string;
 	status: 'Pending' | 'Confirmed' | 'Ready' | 'Delivered' | 'Cancelled';
 }
 
@@ -35,6 +37,8 @@ const OrderSchema: Schema = new Schema({
 	items: { type: [cartItemSchema], required: true },
 	totalPrice: { type: Number, required: true },
 	createdAt: { type: Date, default: Date.now },
+	name: { type: String, reqired: true },
+	phoneNumber: { type: String, required: true },
 	status: {
 		type: String,
 		enum: ['Pending', 'Confirmed', 'Ready', 'Delivered', 'Cancelled'],

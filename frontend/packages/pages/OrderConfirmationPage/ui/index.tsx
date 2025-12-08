@@ -14,6 +14,7 @@ interface orderDetailInterface {
 	items: CartItem[];
 	status: 'Pending' | 'Confirmed' | 'Ready' | 'Delivered' | 'Cancelled';
 	createdAt: string;
+	name: string;
 }
 
 interface OrderNumberParams {
@@ -54,10 +55,6 @@ function OrderConfirmationPage() {
 			});
 	}, [orderNumber]);
 
-	useEffect(() => {
-		console.log('orderdata: ', orderData);
-	}, [orderData]);
-
 	if (isLoading || !orderData) {
 		return <div>Hämtar order...</div>;
 	}
@@ -65,7 +62,7 @@ function OrderConfirmationPage() {
 		return <div>Fel vid hämtning av order..</div>;
 	}
 
-	const { guestId, totalPrice, items, status, createdAt } =
+	const { guestId, totalPrice, items, status, createdAt, name } =
 		orderData as orderDetailInterface;
 
 	const itemsByCategory = items.reduce<GroupedItems>((acc, item) => {
@@ -94,7 +91,9 @@ function OrderConfirmationPage() {
 			<ContentContainer>
 				<section className="ConfirmationPage__content">
 					<div>
-						<h3 className="Confirmation__ordnr">Order #{orderNumber}</h3>
+						<h3 className="Confirmation__ordnr">
+							Order #{orderNumber} {name}
+						</h3>
 						<section className="Confirmation__itemList">
 							{sortedCategories.map((categoryName) => (
 								<div key={categoryName} className="item__cards">

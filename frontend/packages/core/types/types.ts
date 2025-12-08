@@ -10,6 +10,8 @@ export type MenuItem = {
 };
 
 export interface OrderInterface {
+	name: string;
+	phoneNumber: string;
 	totalPrice: number;
 	items: CartItem[];
 	createdAt: string;
