@@ -6,8 +6,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 import { StatusDropdown } from '@nattugglan/statusdropdown';
+import { Button } from '@nattugglan/button'; 
 
 type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
+type FilterStatus = OrderStatus | 'All';
 
 interface OrderItem {
   name: string;
@@ -24,49 +26,56 @@ interface Order {
   createdAt: string; 
 }
 
-// de kategorier som syns på sidan
+// de kategorier som syns på sidan och i sorteringen
 const STATUS_ORDER: OrderStatus[] = [
   'Pending', 
   'Confirmed', 
   'Ready',
-	'Done', 
+  'Done', 
   'Cancelled'
 ];
 
+// alternativ för filterknapparna
+const FILTER_OPTIONS: FilterStatus[] = ['All', ...STATUS_ORDER];
+
 // vad som går att ändra till i backend
 const STATUS_OPTIONS: OrderStatus[] = [
-	'Confirmed', 
-	'Ready', 
-	'Done',
-	'Cancelled'
+  'Confirmed', 
+  'Ready', 
+  'Done',
+  'Cancelled'
 ];
 
-const STATUS_DISPLAY_NAMES: Record<OrderStatus, string> = {
-	'Pending': 'Pending',
-	'Confirmed': 'Confirmed',
-	'Ready': 'Ready for pickup',
-	'Done': 'Done',
-	'Cancelled': 'Cancelled',
+// mappning för rubriker
+const STATUS_DISPLAY_NAMES: Record<FilterStatus, string> = {
+  'All': 'Visa Alla',
+  'Pending': 'Pending',
+  'Confirmed': 'Confirmed',
+  'Ready': 'Ready for pickup', // Den uppdaterade titeln
+  'Done': 'Done',
+  'Cancelled': 'Cancelled',
 };
 
 // formaterar datumet som i orderbekräftelsen
 const formatOrderDate = (dateString: string): string => {
-	const dateObject = new Date(dateString);
-	return dateObject.toLocaleDateString('sv-SE', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+  const dateObject = new Date(dateString);
+  return dateObject.toLocaleDateString('sv-SE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 };
 
 function AdminAllOrdersPage() {
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<FilterStatus>('All'); 
   
   const token = useAuthStore(state => state.token);
   const logout = useAuthStore(state => state.logout); 
   const navigate = useNavigate();
 
+  // hämtar ordrar från backend
   useEffect(() => {
     const fetchOrders = async () => {
       if (!token) {
@@ -110,42 +119,40 @@ function AdminAllOrdersPage() {
     if (!token) return;
 
     try {
-        const response = await fetch(`http://localhost:3000/api/admin/orders/${orderNumber}/status`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ status: newStatus }),
-        });
+			const response = await fetch(`http://localhost:3000/api/admin/orders/${orderNumber}/status`, {
+				method: 'PUT',
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ status: newStatus }),
+			});
 
-        if (response.status === 401 || response.status === 403) {
-            logout();
-            navigate('/access-denied');
-            return;
-        }
+			if (response.status === 401 || response.status === 403) {
+				logout();
+				navigate('/access-denied');
+				return;
+			}
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
-        }
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
+			}
 
-        // Uppdatera det lokala state med den nya statusen
-        setOrders(prevOrders => 
-            prevOrders ? prevOrders.map(order => 
-                order._id === orderId ? { ...order, status: newStatus } : order
-            ) : null
-        );
-        console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
+			setOrders(prevOrders => 
+				prevOrders ? prevOrders.map(order => 
+					order._id === orderId ? { ...order, status: newStatus } : order
+				) : null
+			);
+			console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
 
     } catch (error: any) {
-        console.error("Fel vid statusuppdatering:", error);
-        alert(`Fel: ${error.message}. Kontrollera konsolen.`);
+			console.error("Fel vid statusuppdatering:", error);
     }
   };
 
 
-  // Gruppera och sortera ordrarna (pending först)
+  // gruppera och sortera ordrarna (pending först)
   const groupedOrders = useMemo(() => {
     if (!orders) return {} as Record<OrderStatus, Order[]>;
 
@@ -158,8 +165,8 @@ function AdminAllOrdersPage() {
     };
 
     const grouped = orders.reduce((acc, order) => {
-      if (acc[order.status]) { 
-        (acc[order.status] as Order[]).push(order);
+      if (acc[order.status as OrderStatus]) { 
+        (acc[order.status as OrderStatus]).push(order);
       }
       return acc;
     }, initialGroups); 
@@ -182,61 +189,89 @@ function AdminAllOrdersPage() {
     <section className="allorders__page">
       <NavBarAdmin />
       <h1>Alla beställningar</h1>
+
+			<div className="filter__bar-orders">
+				{FILTER_OPTIONS.map(filterKey => (
+					<Button
+						key={filterKey}
+						variant={activeFilter === filterKey ? 'filterActive' : 'filter'}
+						fullWidth={false}
+						onClick={() => setActiveFilter(filterKey)}
+						className="filter__button-orders"
+					>
+						{STATUS_DISPLAY_NAMES[filterKey]}
+					</Button>
+				))}
+			</div>
+
       <ContentContainer>
+        
         <div className="orders__container">
             
-          {STATUS_ORDER.map(statusKey => (
-            <div key={statusKey} className="order__group">
+          {STATUS_ORDER.map(statusKey => {
+            const ordersInGroup = groupedOrders[statusKey];
+            const shouldRenderGroup = (
+              activeFilter === 'All' || activeFilter === statusKey
+            ) && ordersInGroup && ordersInGroup.length > 0;
+            
+            if (!shouldRenderGroup) {
+              return null;
+            }
+            
+            return (
+              <div key={statusKey} className="order__group">
 
-              {groupedOrders[statusKey] && groupedOrders[statusKey].length > 0 && (
                 <h2 className="group__title">
-									{STATUS_DISPLAY_NAMES[statusKey]}
-								</h2>
-              )}
+                  {STATUS_DISPLAY_NAMES[statusKey]}
+                  <span className="order__count">
+                    &nbsp;– {ordersInGroup.length} st 
+                  </span>
+                </h2>
 
-              <div className="order__list">
-                {groupedOrders[statusKey]?.map(order => (
-                  <div key={order._id} className="order__card">
+                <div className="order__list">
+                  {ordersInGroup.map(order => (
+                    <div key={order._id} className="order__card">
 
-                    <div className="order__header">			
-                   		<span className="order__number">Order #{order.orderNumber}</span>
-                     	<span className={`order__status order__status--${order.status}`}>{order.status}</span>                   
-										 </div>
+                      <div className="order__header">     
+                        <span className="order__number">Order #{order.orderNumber}</span>
+                        <span className={`order__status order__status--${order.status}`}>{order.status}</span>                   
+                      </div>
 
-										<div className="order__header-two">
-                     	<span className="order__name">Namn: {order.name}</span>                     
-											<span className="order__date">{formatOrderDate(order.createdAt)}</span>
-                   	</div>
+                      <div className="order__header-two">
+                        <span className="order__name">Namn: {order.name}</span>                     
+                        <span className="order__date">{formatOrderDate(order.createdAt)}</span>
+                      </div>
 
-                    <div className="order__products-list"> 
-                      {order.items.map((item, index) => (
-                          <div key={index} className="order__product-item">
-                            <span>{item.name}</span>
-                            <span className="product__quantity">x{item.quantity}</span>
-                          </div>
-                      ))}
+                      <div className="order__products-list"> 
+                        {order.items.map((item, index) => (
+                            <div key={index} className="order__product-item">
+                              <span>{item.name}</span>
+                              <span className="product__quantity">x{item.quantity}</span>
+                            </div>
+                        ))}
+                      </div>
+
+                      <div className="order__details-footer">
+                        <p className="order__price">Totalt: {order.totalPrice} kr</p>
+                        
+                        <div className="order__action">
+                          {(order.status !== 'Done' && order.status !== 'Cancelled') && (
+                            <StatusDropdown 
+                              currentStatus={order.status}
+                              orderId={order._id}
+                              orderNumber={order.orderNumber}
+                              onStatusChange={handleStatusChange}
+                              options={STATUS_OPTIONS} 
+                            />
+                          )}
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="order__details-footer">
-											<p className="order__price">Totalt: {order.totalPrice} kr</p>
-											
-											<div className="order__action">
-												{(order.status !== 'Done' && order.status !== 'Cancelled') && (
-													<StatusDropdown 
-														currentStatus={order.status}
-														orderId={order._id}
-														orderNumber={order.orderNumber}
-														onStatusChange={handleStatusChange}
-														options={STATUS_OPTIONS} 
-													/>
-												)}
-											</div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
             
         </div>
       </ContentContainer>
@@ -246,6 +281,3 @@ function AdminAllOrdersPage() {
 }
 
 export {AdminAllOrdersPage};
-
-
-

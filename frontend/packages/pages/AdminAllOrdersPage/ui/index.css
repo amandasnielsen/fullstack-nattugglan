@@ -4,13 +4,14 @@
 }
 
 .allorders__page .container__card {
-	max-height: 65vh;
+	min-height: 60vh;
+	max-height: 60vh;
 }
 
 .group__title {
 	font-size: 1.3rem;
-	text-align: center;
 	margin-bottom: .5em;
+	text-align: center;
 }
 
 .order__card {
@@ -34,17 +35,6 @@
 	margin-bottom: 1em;
 	font-family: 'MerriweatherSans-Bold';
   font-size: 0.8em;
-}
-
-@media (max-width: 450px) {
-	.order__header-two {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.order__name {
-		margin-bottom: .5em;
-	}
 }
 
 .order__products-list {
@@ -73,4 +63,38 @@
 	margin: 0; 
 	font-weight: bold;
 	font-size: 1em;
+}
+
+.filter__bar-orders {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: center;
+	margin-bottom: 2em;
+}
+
+.filter__button-orders {
+	width: auto;
+	padding: 8px 10px;
+	font-size: 0.7rem;
+	font-family: 'MerriweatherSans';
+	width: auto;
+}
+
+@media (max-height: 800px) {
+  .allorders__page .container__card {
+    min-height: 35vh;
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 450px) {
+	.order__header-two {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.order__name {
+		margin-bottom: .5em;
+	}
 }
