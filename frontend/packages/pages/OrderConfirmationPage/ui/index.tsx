@@ -54,6 +54,12 @@ function OrderConfirmationPage() {
 			.then((data) => {
 				setOrderData(data);
 				setEditableItems(data.items);
+				const total = data.items.reduce(
+					(sum: number, i: CartItem) => sum + i.price * i.quantity,
+					0
+				);
+				setOriginalTotal(total);
+				setNewTotal(total);
 				setIsLoading(false);
 			})
 			.catch((error: any) => {
@@ -69,17 +75,14 @@ function OrderConfirmationPage() {
 			item._id === id ? { ...item, quantity: newQty } : item
 		);
 		setEditableItems(updatedItems);
-
-		const newTotalPrice = updatedItems.reduce(
+		const total = updatedItems.reduce(
 			(sum, i) => sum + i.price * i.quantity,
 			0
 		);
-		setNewTotal(newTotalPrice);
+		setNewTotal(total);
 	};
 
 	const changeOrder = () => {
-		if (!orderData) return;
-		setOriginalTotal(orderData.totalPrice);
 		setIsChange(true);
 		setShowPaymentMessage(false);
 	};
@@ -134,7 +137,7 @@ function OrderConfirmationPage() {
 	const renderPaymentMessage = () => {
 		if (!orderData || !showPaymentMessage) return null;
 
-		const difference = orderData.totalPrice - originalTotal;
+		const difference = newTotal - originalTotal;
 		if (difference > 0)
 			return (
 				<p className="paymentMessage">
@@ -199,27 +202,34 @@ function OrderConfirmationPage() {
 									{itemsByCategory[categoryName].map((item, index) => (
 										<div key={index} className="item__items">
 											<p>{item.name}</p>
-											<p>
-												{item.quantity}st {item.price}:-
-											</p>
+											{!isChange && (
+												<p>
+													{item.quantity}st {item.price}:-
+												</p>
+											)}
 											{/* Visa ändringar endast om man är i ändringsläge */}
 											{isChange && (
-												<div className="qty-buttons">
-													<button
-														onClick={() =>
-															updateLocalQuantity(item._id, item.quantity - 1)
-														}
-													>
-														-
-													</button>
-													<span>{item.quantity}</span>
-													<button
-														onClick={() =>
-															updateLocalQuantity(item._id, item.quantity + 1)
-														}
-													>
-														+
-													</button>
+												<div className="change__container">
+													<p>{item.price}:-</p>
+													<div className="change__button-container">
+														<button
+															className="quantity__button"
+															onClick={() =>
+																updateLocalQuantity(item._id, item.quantity - 1)
+															}
+														>
+															-
+														</button>
+														<span>{item.quantity}</span>
+														<button
+															className="quantity__button"
+															onClick={() =>
+																updateLocalQuantity(item._id, item.quantity + 1)
+															}
+														>
+															+
+														</button>
+													</div>
 												</div>
 											)}
 										</div>

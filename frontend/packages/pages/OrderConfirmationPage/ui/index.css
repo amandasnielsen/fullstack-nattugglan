@@ -97,6 +97,17 @@
 	text-align: end;
 }
 
+.change__container {
+	display: flex;
+	gap: 1rem;
+}
+
+.change__button-container {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
 .paymentMessage {
 	color: var(--font-color-white);
 	padding: 1rem;
