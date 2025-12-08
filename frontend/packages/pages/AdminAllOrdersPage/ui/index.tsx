@@ -6,7 +6,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 import { StatusDropdown } from '@nattugglan/statusdropdown';
-import { Button } from '@nattugglan/button'; 
+import { Button } from '@nattugglan/button';
 
 type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
 type FilterStatus = OrderStatus | 'All';
@@ -23,10 +23,17 @@ interface Order {
   totalPrice: number;
   items: OrderItem[];
   name: string;
-  createdAt: string; 
+  createdAt: string;
+	cancellationReason?: string;
 }
 
-// de kategorier som syns på sidan och i sorteringen
+interface CancelModalState {
+	isOpen: boolean;
+	orderId: string | null;
+	orderNumber: string | null;
+	currentComment: string;
+}
+
 const STATUS_ORDER: OrderStatus[] = [
   'Pending', 
   'Confirmed', 
@@ -35,10 +42,8 @@ const STATUS_ORDER: OrderStatus[] = [
   'Cancelled'
 ];
 
-// alternativ för filterknapparna
 const FILTER_OPTIONS: FilterStatus[] = ['All', ...STATUS_ORDER];
 
-// vad som går att ändra till i backend
 const STATUS_OPTIONS: OrderStatus[] = [
   'Confirmed', 
   'Ready', 
@@ -46,12 +51,11 @@ const STATUS_OPTIONS: OrderStatus[] = [
   'Cancelled'
 ];
 
-// mappning för rubriker
 const STATUS_DISPLAY_NAMES: Record<FilterStatus, string> = {
   'All': 'Visa Alla',
   'Pending': 'Pending',
   'Confirmed': 'Confirmed',
-  'Ready': 'Ready for pickup', // Den uppdaterade titeln
+  'Ready': 'Ready for pickup',
   'Done': 'Done',
   'Cancelled': 'Cancelled',
 };
@@ -69,8 +73,14 @@ const formatOrderDate = (dateString: string): string => {
 function AdminAllOrdersPage() {
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<FilterStatus>('All'); 
-  
+  const [activeFilter, setActiveFilter] = useState<FilterStatus>('All');
+  const [cancelModal, setCancelModal] = useState<CancelModalState>({
+		isOpen: false,
+		orderId: null,
+		orderNumber: null,
+		currentComment: '',
+  });
+
   const token = useAuthStore(state => state.token);
   const logout = useAuthStore(state => state.logout); 
   const navigate = useNavigate();
@@ -115,53 +125,84 @@ function AdminAllOrdersPage() {
     fetchOrders();
   }, [token, navigate, logout]);
 
-  const handleStatusChange = async (orderId: string, orderNumber: string, newStatus: OrderStatus) => {
-    if (!token) return;
 
-    try {
-			const response = await fetch(`http://localhost:3000/api/admin/orders/${orderNumber}/status`, {
-				method: 'PUT',
-				headers: {
-					'Authorization': `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ status: newStatus }),
-			});
-
-			if (response.status === 401 || response.status === 403) {
-				logout();
-				navigate('/access-denied');
-				return;
-			}
-
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
-			}
-
-			setOrders(prevOrders => 
-				prevOrders ? prevOrders.map(order => 
-					order._id === orderId ? { ...order, status: newStatus } : order
-				) : null
-			);
-			console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
-
-    } catch (error: any) {
-			console.error("Fel vid statusuppdatering:", error);
+  const confirmCancel = () => {
+    if (!cancelModal.currentComment) {
+			return;
     }
+
+    if (cancelModal.orderId && cancelModal.orderNumber) {
+			handleStatusChange(
+				cancelModal.orderId,
+				cancelModal.orderNumber,
+				'Cancelled',
+				cancelModal.currentComment
+			);
+    }
+    setCancelModal({ isOpen: false, orderId: null, orderNumber: null, currentComment: '' });
   };
 
+  const handleStatusChange = async (orderId: string, orderNumber: string, newStatus: OrderStatus, comment?: string) => {
+    if (!token) return;
+
+    if (newStatus === 'Cancelled' && !comment) {
+      setCancelModal({
+        isOpen: true,
+        orderId,
+        orderNumber,
+        currentComment: '',
+      });
+      return;
+    }
+
+    try {
+      const requestBody: { status: OrderStatus; comment?: string } = { status: newStatus };
+      if (newStatus === 'Cancelled' && comment) {
+        requestBody.comment = comment;
+      }
+
+      const response = await fetch(`http://localhost:3000/api/admin/orders/${orderNumber}/status`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody), 
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        logout();
+        navigate('/access-denied');
+        return;
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
+      }
+      
+      const updatedOrder: Order = await response.json(); 
+
+      setOrders(prevOrders => 
+        prevOrders ? prevOrders.map(order => 
+          order._id === orderId ? updatedOrder : order
+        ) : null
+      );
+    
+      console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
+
+    } catch (error: any) {
+      console.error("Fel vid statusuppdatering:", error);
+    }
+  };
 
   // gruppera och sortera ordrarna (pending först)
   const groupedOrders = useMemo(() => {
     if (!orders) return {} as Record<OrderStatus, Order[]>;
 
     const initialGroups: Record<OrderStatus, Order[]> = {
-      'Pending': [], 
-      'Confirmed': [], 
-      'Ready': [], 
-      'Done': [], 
-      'Cancelled': [],
+      'Pending': [], 'Confirmed': [], 'Ready': [], 
+      'Done': [], 'Cancelled': [],
     };
 
     const grouped = orders.reduce((acc, order) => {
@@ -190,7 +231,7 @@ function AdminAllOrdersPage() {
       <NavBarAdmin />
       <h1>Alla beställningar</h1>
 
-			<div className="filter__bar-orders">
+      <div className="filter__bar-orders">
 				{FILTER_OPTIONS.map(filterKey => (
 					<Button
 						key={filterKey}
@@ -202,14 +243,14 @@ function AdminAllOrdersPage() {
 						{STATUS_DISPLAY_NAMES[filterKey]}
 					</Button>
 				))}
-			</div>
-
+      </div>
+      
       <ContentContainer>
-        
         <div className="orders__container">
             
           {STATUS_ORDER.map(statusKey => {
             const ordersInGroup = groupedOrders[statusKey];
+
             const shouldRenderGroup = (
               activeFilter === 'All' || activeFilter === statusKey
             ) && ordersInGroup && ordersInGroup.length > 0;
@@ -266,6 +307,14 @@ function AdminAllOrdersPage() {
                           )}
                         </div>
                       </div>
+
+											{order.status === 'Cancelled' && order.cancellationReason && (
+												<div className="cancellation__reason">
+													<p className="reason__label">Orsak:</p>
+													<p className="reason__text">{order.cancellationReason}</p>
+												</div>
+											)}
+
                     </div>
                   ))}
                 </div>
@@ -276,6 +325,35 @@ function AdminAllOrdersPage() {
         </div>
       </ContentContainer>
       <Footer />
+
+      {cancelModal.isOpen && (
+				<div className="modal__overlay">
+					<div className="modal__content">
+						<h2>Avbryt Order #{cancelModal.orderNumber}</h2>
+						<textarea
+							placeholder="Ange anledning..."
+							value={cancelModal.currentComment}
+							onChange={(e) => setCancelModal(p => ({ ...p, currentComment: e.target.value }))}
+						/>
+						<div className="modal__actions">
+							<Button 
+								fullWidth={false}
+								className="cancel"
+								onClick={() => setCancelModal({ isOpen: false, orderId: null, orderNumber: null, currentComment: '' })}
+							>
+								Avbryt
+							</Button>
+							<Button 
+								fullWidth={false}
+								className="confirm"
+								onClick={confirmCancel}
+							>
+								Bekräfta
+							</Button>
+						</div>
+					</div>
+				</div>
+      )}
     </section>
   );
 }

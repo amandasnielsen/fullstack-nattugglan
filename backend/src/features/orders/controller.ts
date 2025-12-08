@@ -78,9 +78,9 @@ export const putOrderStatus = async (
   ) => {
 	try {
 	  const { orderNumber } = req.params;
-	  const { status } = req.body;
+	  const { status, comment } = req.body;
   
-	  const updated = await updateOrderStatus(orderNumber, status);
+	  const updated = await updateOrderStatus(orderNumber, status, comment);
 	  if (!updated) return res.status(404).json({ message: "Order not found" });
   
 	  res.json(updated);

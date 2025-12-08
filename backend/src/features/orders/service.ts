@@ -67,16 +67,26 @@ export const findAllOrders = async () => {
   return await findAllOrdersRepo();
 };
 
-export async function updateOrderStatus(orderNumber: string, status: string) {
+export async function updateOrderStatus(orderNumber: string, status: string, comment?: string) {
   const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
 
   if (!allowed.includes(status)) {
     throw new Error("Invalid status");
   }
 
+  const updateData: any = { status };
+
+  if (status === "Cancelled" && !comment) {
+    throw new Error("Kommentar krävs för att avbryta ordern.");
+  }
+
+  if (status === "Cancelled" && comment) {
+    updateData.cancellationReason = comment; 
+  }
+
   const order = await OrderModel.findOneAndUpdate(
     { orderNumber },
-    { status },
+    updateData, // Använd updateData objektet
     { new: true }
   );
 

@@ -81,6 +81,90 @@
 	width: auto;
 }
 
+.modal__overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999; 
+}
+
+.modal__content {
+	background-color: white;
+	padding: 25px;
+	border-radius: 8px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	width: 80%;
+	max-width: 400px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	z-index: 10000;
+}
+
+.modal__content h2 {
+	font-size: 1.2em;
+	font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
+}
+
+.modal__content textarea {
+	width: 100%;
+	min-height: 100px;
+	padding: 1em;
+	border: 1px solid #585858;
+	border-radius: 3px;
+	resize: vertical;
+	font-family: 'MerriweatherSans';
+  font-size: 0.8em;
+}
+
+.modal__actions {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+.modal__actions .cancel {
+	border: 1px solid #585858;
+	height: 40px;
+	color: black;
+	font-size: .9em;
+}
+
+.modal__actions .confirm {
+	background-color: black;
+	height: 40px;
+	color: white;
+	font-size: .9em;
+}
+
+.cancellation__reason {
+	margin-top: 1em;
+	padding: 10px;
+}
+
+.reason__label {
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-size: 0.8em;
+	font-family: 'MerriweatherSans-Bold';
+}
+
+.reason__text {
+	font-style: italic;
+	font-size: 0.8em;
+	margin: 0;
+	color: #333;
+	font-family: 'MerriweatherSans';
+}
+
 @media (max-height: 800px) {
   .allorders__page .container__card {
     min-height: 35vh;
