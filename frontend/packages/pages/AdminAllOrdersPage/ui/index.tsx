@@ -39,7 +39,15 @@ const STATUS_OPTIONS: OrderStatus[] = [
 	'Ready', 
 	'Done',
 	'Cancelled'
-]; 
+];
+
+const STATUS_DISPLAY_NAMES: Record<OrderStatus, string> = {
+	'Pending': 'Pending',
+	'Confirmed': 'Confirmed',
+	'Ready': 'Ready for pickup',
+	'Done': 'Done',
+	'Cancelled': 'Cancelled',
+};
 
 // formaterar datumet som i orderbekräftelsen
 const formatOrderDate = (dateString: string): string => {
@@ -137,7 +145,7 @@ function AdminAllOrdersPage() {
   };
 
 
-  // Gruppera och sortera ordrarna (Pending först)
+  // Gruppera och sortera ordrarna (pending först)
   const groupedOrders = useMemo(() => {
     if (!orders) return {} as Record<OrderStatus, Order[]>;
 
@@ -181,7 +189,9 @@ function AdminAllOrdersPage() {
             <div key={statusKey} className="order__group">
 
               {groupedOrders[statusKey] && groupedOrders[statusKey].length > 0 && (
-                <h2 className="group__title">{statusKey}</h2>
+                <h2 className="group__title">
+									{STATUS_DISPLAY_NAMES[statusKey]}
+								</h2>
               )}
 
               <div className="order__list">

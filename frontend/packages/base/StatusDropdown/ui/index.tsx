@@ -48,6 +48,7 @@ const StatusDropdown: React.FC<StatusDropdownProps> = ({
         aria-expanded={isOpen}
       >
         Ändra status
+				<span className="dropdown__arrow">&#9660;</span>
       </button>
 
       {isOpen && (

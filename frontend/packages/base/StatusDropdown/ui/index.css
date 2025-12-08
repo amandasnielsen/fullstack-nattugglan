@@ -5,15 +5,20 @@
 }
 
 .dropdown__toggle {
-	padding: 8px 15px;
+	padding: 8px 10px;
 	border: 1px solid #585858;
 	border-radius: 3px;
 	background-color: transparent;
 	cursor: pointer;
-	font-size: 0.8em;
+	font-size: 0.7em;
 	font-family: 'MerriweatherSans';
 	letter-spacing: normal;
 	width: 120px;
+}
+
+.dropdown__arrow {
+	color: #585858;
+	margin-left: .3em;
 }
 
 .dropdown__menu {
@@ -33,8 +38,8 @@
 .dropdown__item {
 	padding: 10px 15px;
 	cursor: pointer;
-	font-size: 0.8em;
-	font-family: 'MerriweatherSans', sans-serif;
+	font-size: 0.7em;
+	font-family: 'MerriweatherSans';
 	transition: background-color 0.15s ease;
 }
 
