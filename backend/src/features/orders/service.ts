@@ -4,6 +4,7 @@ import {
 	findOrderById,
 	findOrderByNameAndPhone,
 	NewOrderData,
+	findAllOrders as findAllOrdersRepo,
 } from './repository';
 import {
 	OrderInterface,
@@ -56,4 +57,9 @@ export const placeOrder = async (
 //hämta order via orderNumber
 export const getOrderByID = async (orderNumber: string) => {
 	return await findOrderById(orderNumber);
+};
+
+// hämta alla ordrar för admin
+export const findAllOrders = async () => {
+  return await findAllOrdersRepo();
 };

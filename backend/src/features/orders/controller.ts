@@ -1,10 +1,23 @@
 import { Request, Response } from 'express';
 import { handleNewOrder } from './handler';
-import { getOrderByID } from './service';
+import { getOrderByID, findAllOrders } from './service';
 
 interface OrderParams {
 	orderNumber: string;
 }
+
+export const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const orders = await findAllOrders(); 
+    res.status(200).json(orders);
+  } catch (error: any) {
+    console.error('Fel vid GET /admin/orders:', error);
+    res.status(500).json({
+      message: 'Kunde inte hämta beställningar',
+      error: 'FETCH_ORDERS_FAILED',
+    });
+  }
+};
 
 export const postOrder = async (req: Request, res: Response): Promise<void> => {
 	try {

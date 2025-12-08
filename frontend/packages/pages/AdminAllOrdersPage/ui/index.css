@@ -1,0 +1,21 @@
+.order__action {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.status__dropdown {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background-color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.order__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ccc;
+}

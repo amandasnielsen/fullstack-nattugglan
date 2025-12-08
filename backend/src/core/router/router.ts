@@ -5,7 +5,7 @@ import { getMenu } from "../../features/menu/controller";
 import { requireApiKey } from "../middleware/apiKey";
 import { requireAuth, requireAdmin } from "../middleware/auth";
 import { UserModel } from "../database/models/user.model";
-import { postOrder,getOrderDetails } from '../../features/orders/controller';
+import { postOrder, getOrderDetails, getAllOrders } from '../../features/orders/controller';
 
 
 const router = Router();
@@ -15,6 +15,8 @@ const router = Router();
 router.post("/auth/login", login);
 router.post("/auth/logout", logout);
 router.post("/menu", requireApiKey, requireAuth, requireAdmin);
+
+router.get("/admin/orders", requireAuth, requireAdmin, getAllOrders)
 
 //*DEBUGGING, RADERA * \\
 router.get("/debug/users", async (req, res) => {
