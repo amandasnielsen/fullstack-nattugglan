@@ -15,6 +15,8 @@ export const postOrder = async (req: Request, res: Response): Promise<void> => {
 			message: 'Beställning skapad',
 			orderNumber: newOrder.orderNumber,
 			guestId: newOrder.guestId,
+			name: newOrder.name,
+			phoneNumber: newOrder.phoneNumber,
 			status: newOrder.status,
 			order: newOrder.items,
 		});
