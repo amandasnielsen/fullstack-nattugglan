@@ -1,13 +1,34 @@
 import Logo from './assets/logo.png';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@nattugglan/core'
 
 function NavBarAdmin() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
+	const navigate = useNavigate();
+  const { logout } = useAuthStore();
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
 	};
+
+	const handleLogout = async () => {
+    if (menuOpen) {
+      toggleMenu();
+    }
+    
+    try {
+      await fetch('http://localhost:3000/api/auth/logout', {
+        method: 'POST',
+      });
+      console.log("Admin logged out from backend.");
+    } catch (error) {
+      console.error("Logout failed, proceeding with local cleanup.");
+    } finally {
+      logout(); 
+      navigate('/menu');
+    }
+  };
 
 	return (
 		<section className="navbar">
@@ -62,7 +83,7 @@ function NavBarAdmin() {
 							Lagerstatus
 						</NavLink>
 					</div>
-				<a className="navbar__menuLinks">Logga ut</a>
+				<a className="navbar__menuLinks" onClick={handleLogout}>Logga ut</a>
 				</nav>
 
 			</header>
@@ -101,7 +122,7 @@ function NavBarAdmin() {
 						Lagerstatus
 					</NavLink>
 				</div>
-				<a className="navbar__desktop-links button__logout">Logga ut</a>
+				<a className="navbar__desktop-links button__logout" onClick={handleLogout}>Logga ut</a>
 				</section>
 			</header>
 		</section>
