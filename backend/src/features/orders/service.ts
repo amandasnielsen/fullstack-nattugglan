@@ -7,12 +7,15 @@ import {
 	findAllOrders as findAllOrdersRepo,
 } from './repository';
 import {
-	OrderInterface,
+	OrderInterface, OrderModel,
 	CartItem,
 } from '../../core/database/models/order.model';
 
+
+
 //input från frontend
 export interface NewOrderInput {
+
 	items: CartItem[];
 	totalPrice: number;
 	name: string;
@@ -63,3 +66,19 @@ export const getOrderByID = async (orderNumber: string) => {
 export const findAllOrders = async () => {
   return await findAllOrdersRepo();
 };
+
+export async function updateOrderStatus(orderNumber: string, status: string) {
+  const allowed = ["Confirmed", "Ready", "Cancelled"];
+
+  if (!allowed.includes(status)) {
+    throw new Error("Invalid status");
+  }
+
+  const order = await OrderModel.findOneAndUpdate(
+    { orderNumber },
+    { status },
+    { new: true }
+  );
+
+  return order;
+}

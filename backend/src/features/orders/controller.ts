@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { handleNewOrder } from './handler';
 import { getOrderByID, findAllOrders } from './service';
+import { updateOrderStatus } from "./service";
 
 interface OrderParams {
 	orderNumber: string;
@@ -70,3 +71,21 @@ export const getOrderDetails = async (
 		});
 	}
 };
+
+export const putOrderStatus = async (
+	req: Request<{ orderNumber: string }>,
+	res: Response
+  ) => {
+	try {
+	  const { orderNumber } = req.params;
+	  const { status } = req.body;
+  
+	  const updated = await updateOrderStatus(orderNumber, status);
+	  if (!updated) return res.status(404).json({ message: "Order not found" });
+  
+	  res.json(updated);
+	} catch (err: any) {
+	  res.status(400).json({ error: err.message });
+	}
+  };
+  
