@@ -19,34 +19,40 @@ function MapPage() {
           <article className="map__content">
             <h2 className="map__heading">Adress</h2>
 
-            <div className="map__iframe-wrapper">
-              <iframe
-                src={MAP_EMBED_SRC}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="map__iframe"
-                title="Karta som visar var Nattugglan ligger i Jokkmokk"
-                allowFullScreen
-              />
-            </div>
+							<div className="map__iframe-wrapper">
+								<iframe
+									src={MAP_EMBED_SRC}
+									loading="lazy"
+									referrerPolicy="no-referrer-when-downgrade"
+									className="map__iframe"
+									title="Karta som visar var Nattugglan ligger i Jokkmokk"
+									allowFullScreen
+								/>
+							</div>
 
-            <p className="map__text">
-              Lingonstigen 19,
-              <br />
-              962 31 Jokkmokk
-            </p>
+							<p className="map__text">
+								Lingonstigen 19,
+								<br />
+								962 31 Jokkmokk
+							</p>
 
-            <p className="map__text">
-              Ring gärna!
-              <br />
-              070&nbsp;-&nbsp;123&nbsp;45&nbsp;67
-            </p>
+							<p className="map__text">
+								Öppettider
+								<br />
+								07 - 23
+							</p>
 
-            <p className="map__text">
-              Mejl:
-              <br />
-              <a href="mailto:nattugglan@gmail.com">nattugglan@gmail.com</a>
-            </p>
+							<p className="map__text">
+								Ring gärna!
+								<br />
+								070&nbsp;-&nbsp;123&nbsp;45&nbsp;67
+							</p>
+
+							<p className="map__text">
+								Mejl:
+								<br />
+								<a href="mailto:nattugglan@gmail.com">nattugglan@gmail.com</a>
+							</p>
           </article>
         </ContentContainer>
 

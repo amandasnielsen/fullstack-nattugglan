@@ -4,24 +4,8 @@
   overflow: hidden;
 }
 
-.aboutus__title {
-  font-family: "FjallaOne", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
-  font-size: var(--header-size);
-  letter-spacing: var(--spacing-wide);
-  color: var(--font-color-white);
-  text-align: center;
-
-  margin-top: 120px;   
-  margin-bottom: 3px; 
-}
-
-.aboutus__card {
-}
-
 .aboutus__content {
-  font-family: "MerriweatherSans", system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif;
+  font-family: "MerriweatherSans";
   font-size: var(--body-text);
   color: var(--font-color-dark);
   line-height: 1.4;
@@ -55,8 +39,7 @@
 }
 
 .aboutus__values-title {
-  font-family: "MerriweatherSans", system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif;
+  font-family: "MerriweatherSans";
   font-size: 0.95rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
@@ -68,4 +51,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+}
+
+@media (min-width: 900px) {
+	.aboutus .container__card {
+		max-height: 55vh;
+		max-width: 600px;
+	}
+	
 }

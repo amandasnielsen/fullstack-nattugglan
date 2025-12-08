@@ -1,24 +1,29 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LandingPage } from '@nattugglan/landingpage';
 import { MenuPage } from '@nattugglan/menupage';
-import { OrderFlowPage } from '@nattugglan/orderflowpage';
+import { OrderStatusPage } from '@nattugglan/orderstatuspage';
 import { MyOrdersPage } from '@nattugglan/myorderspage';
 import { AboutUs } from '@nattugglan/aboutus';
 import { MapPage } from '@nattugglan/mappage';
 import { LoginPage } from '@nattugglan/loginpage';
 import { ChangeOrdersPage } from '@nattugglan/adminchangeorderspage';
 import { StockPage } from '@nattugglan/stockpage';
-import { AdminAllOrdersPage } from "@nattugglan/adminallorderspage";
+import { AdminAllOrdersPage } from '@nattugglan/adminallorderspage';
+import { PaymentPage } from '@nattugglan/paymentpage';
+import { OrderConfirmationPage } from '@nattugglan/orderconfirmationpage';
+import { CartPage } from '@nattugglan/cartpage';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<section>
-				<img className="forrest" src="./src/assets/BG-forrest-phone.png" />
+				<img className="forrest" src="./src/assets/BG-forrest.jpg" />
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/menu" element={<MenuPage />} />
-					<Route path="/orderstatus" element={<OrderFlowPage />} />
+					<Route path="/cart" element={<CartPage />} />
+					<Route path="/payment" element={<PaymentPage />} />
+					<Route path="/orderstatus" element={<OrderStatusPage />} />
 					<Route path="/myorders" element={<MyOrdersPage />} />
 					<Route path="/aboutUs" element={<AboutUs />} />
 					<Route path="/maps" element={<MapPage />} />
@@ -26,6 +31,11 @@ function App() {
 					<Route path="/allorders" element={<AdminAllOrdersPage />} />
 					<Route path="/updatemenu" element={<ChangeOrdersPage />} />
 					<Route path="/stock" element={<StockPage />} />
+					<Route path="/payment" element={<PaymentPage />} />
+					<Route
+						path="/order/:orderNumber"
+						element={<OrderConfirmationPage />}
+					/>
 				</Routes>
 			</section>
 		</BrowserRouter>

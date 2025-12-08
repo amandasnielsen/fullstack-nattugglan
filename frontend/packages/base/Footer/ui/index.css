@@ -1,6 +1,7 @@
-.footer__container {
+/* #region footer-phone */
+.footer__container-phone {
 	padding: 1em; 
-	color: white;
+	color: var(--font-color-white);
 	font-family: 'MerriweatherSans';
 	font-size: var(--body-text);
 	position: fixed;
@@ -36,4 +37,81 @@
 .footer__media img {
   height: 30px;
   width: 30px;
+}
+/* #endregion footer-phone */
+
+/* #region footer-desktop */
+
+.footer__container-desktop {
+	padding: 1.6em; 
+	color: var(--font-color-white);
+	font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
+	position: fixed;
+	bottom: 0; 
+  left: 0;
+  right: 0;
+  z-index: 100;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+}
+
+.footer__span-desktop {
+	display: flex;
+	justify-content: space-between; 
+	align-items: center;
+	width: 1200px;
+}
+
+.footer__info {
+	display: flex;
+	flex-direction: row;
+	gap: 4em;
+}
+
+.footer__info-box h4 {
+	font-size: 14px;
+	margin-bottom: .5em;
+}
+
+.footer__info-box p {
+	font-size: 12px;
+	font-family: 'MerriweatherSans';
+}
+
+.footer__media-desktop {
+  display: flex;
+  gap: .5em;
+}
+
+.footer__media-desktop img {
+  height: 40px;
+  width: 40px;
+}
+
+.footer__mail {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer__mail:hover {
+  text-decoration: underline;
+}
+
+
+/* #endregion footer-desktop */
+
+
+@media (max-width: 900px) {
+  .footer__container-desktop {
+		display: none;
+	}
+}
+
+@media (min-width: 900px) {
+  .footer__container-phone {
+		display: none;
+	}
 }

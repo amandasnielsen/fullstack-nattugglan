@@ -8,7 +8,7 @@ function MyOrdersPage() {
 		<>
 			<NavBar />
 			<Footer />
-			<h1>Tidigare Beställningar</h1>
+			<h1>Mina Beställningar</h1>
 			<ContentContainer>
 				<p>Text</p>
 			</ContentContainer>

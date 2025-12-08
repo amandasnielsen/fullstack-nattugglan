@@ -1,0 +1,114 @@
+.ConfirmationPage {
+	width: 100%;
+	font-family: 'anton';
+	color: var(--font-color-dark);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	flex: 1;
+	gap: 0.5rem;
+}
+
+.ConfirmationPage .container__card {
+	display: flex;
+	flex-direction: column;
+
+	min-height: 55vh;
+	max-height: 60vh;
+}
+
+.ConfirmationPage__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
+}
+
+.Confirmation__ordnr {
+	width: 100%;
+	font-size: var(--header-size);
+	letter-spacing: var(--spacing-wide);
+	font-weight: 300;
+	text-align: center;
+	border-bottom: 1px solid var(--font-color-dark);
+}
+
+.item__cards {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	margin-bottom: 1rem;
+}
+
+.item__categoryName {
+	font-family: 'MerriweatherSans';
+	font-weight: 100;
+	font-size: var(--menu-item);
+}
+
+.item__items {
+	font-weight: 300;
+	letter-spacing: 0.03em;
+	display: flex;
+	justify-content: space-between;
+}
+
+.item__bottom {
+	display: flex;
+	margin-top: auto;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Confirmation__info {
+	margin-top: auto;
+	border-top: 1px solid var(--font-color-dark);
+	padding-top: 0.5rem;
+	margin-top: 1rem;
+	font-family: 'MerriweatherSans';
+	font-size: 0.8rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.Confirmation__info-top {
+	display: flex;
+	justify-content: space-between;
+}
+
+.Confirmation__info-bottom {
+	display: flex;
+	justify-content: space-between;
+}
+
+.Confirmation__changeBtn {
+	border-radius: 999px;
+	background: none;
+	font-family: 'MerriweatherSans';
+	border: 1px solid var(--font-color-dark);
+	color: var(--font-color-dark);
+	width: 8rem;
+	font-size: 0.8rem;
+}
+
+.Confirmation__status {
+	text-align: end;
+}
+
+.change__container {
+	display: flex;
+	gap: 1rem;
+}
+
+.change__button-container {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.paymentMessage {
+	color: var(--font-color-white);
+	padding: 1rem;
+}
