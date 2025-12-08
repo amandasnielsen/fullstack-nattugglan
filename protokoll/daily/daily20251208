@@ -1,0 +1,40 @@
+Mötesprotokoll Daily Scrum (8 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Hade först sprint review. La till lite ändringar på betalsidan, både i frontend och backend
+* Kolla igenom betalsidan så att det fungerar, sedan ladda upp koden. Sedan fortsätta med ändra beställning
+* Nej
+
+Person 2 (Amanda)
+* Sprint review. Sedan Satt jag med navbaren
+* Göra klart navbars, en för admin och en för kund. Samt skapa en logout för admin
+* Nej
+
+Person 3 (Belinda)
+* Sprint review. Sedan jobbade med loading-sidan och error-sidan
+* Fortsätta med de sidorna och pusha upp koden
+* Inga hinder
+
+Person 4 (Rasmus)
+* Sprint review först. Sedan satt med de admin-specifika routes, för de admin får göra
+* Se äver ingredienser. som admin behöver. Och fortsätta med routesen
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
