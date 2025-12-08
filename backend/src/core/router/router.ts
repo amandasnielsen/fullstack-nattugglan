@@ -13,7 +13,7 @@ const router = Router();
 //ADMIN ROUTES
 
 router.post("/auth/login", login);
-router.post("/auth/logout", requireAuth, logout);
+router.post("/auth/logout", logout);
 router.post("/menu", requireApiKey, requireAuth, requireAdmin);
 
 //*DEBUGGING, RADERA * \\

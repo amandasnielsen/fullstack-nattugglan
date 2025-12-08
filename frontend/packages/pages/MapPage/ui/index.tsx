@@ -37,6 +37,12 @@ function MapPage() {
 							</p>
 
 							<p className="map__text">
+								Öppettider
+								<br />
+								07 - 23
+							</p>
+
+							<p className="map__text">
 								Ring gärna!
 								<br />
 								070&nbsp;-&nbsp;123&nbsp;45&nbsp;67
