@@ -68,7 +68,7 @@ export const findAllOrders = async () => {
 };
 
 export async function updateOrderStatus(orderNumber: string, status: string) {
-  const allowed = ["Confirmed", "Ready", "Cancelled"];
+  const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
 
   if (!allowed.includes(status)) {
     throw new Error("Invalid status");

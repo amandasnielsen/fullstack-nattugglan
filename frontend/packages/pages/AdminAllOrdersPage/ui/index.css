@@ -32,8 +32,19 @@
 	display: flex;
   justify-content: space-between;
 	margin-bottom: 1em;
-	font-family: 'MerriweatherSans';
+	font-family: 'MerriweatherSans-Bold';
   font-size: 0.8em;
+}
+
+@media (max-width: 450px) {
+	.order__header-two {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.order__name {
+		margin-bottom: .5em;
+	}
 }
 
 .order__products-list {
@@ -62,18 +73,4 @@
 	margin: 0; 
 	font-weight: bold;
 	font-size: 1em;
-}
-
-.order__action {
-  text-align: left; 
-	position: relative;
-}
-
-.status__dropdown {
-  padding: 8px 10px;
-  border-radius: 3px;
-  border: 1px solid #585858;
-  background-color: transparent;
-  font-size: 0.85em;
-  cursor: pointer;
 }

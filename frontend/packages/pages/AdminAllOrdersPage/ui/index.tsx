@@ -5,6 +5,7 @@ import { ContentContainer } from '@nattugglan/contentcontainer';
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
+import { StatusDropdown } from '@nattugglan/statusdropdown';
 
 type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
 
@@ -207,31 +208,19 @@ function AdminAllOrdersPage() {
                     </div>
 
                     <div className="order__details-footer">
-                        <p className="order__price">Totalt: {order.totalPrice} kr</p>
-                        
-                        <div className="order__action">
-                            {(order.status !== 'Done' && order.status !== 'Cancelled') && (
-															<select 
-																className="status__dropdown"
-																value={order.status}
-																onChange={(e) => 
-																	handleStatusChange(order._id, order.orderNumber, e.target.value as OrderStatus)
-																}
-															>
-																<option value={order.status}>
-																	{order.status}
-																</option>
-
-																{STATUS_OPTIONS.map(option => (
-																	order.status !== option && (
-																		<option key={option} value={option}>
-																				{option}
-																		</option>
-																	)
-																))}
-															</select>
-                            )}
-                        </div>
+											<p className="order__price">Totalt: {order.totalPrice} kr</p>
+											
+											<div className="order__action">
+												{(order.status !== 'Done' && order.status !== 'Cancelled') && (
+													<StatusDropdown 
+														currentStatus={order.status}
+														orderId={order._id}
+														orderNumber={order.orderNumber}
+														onStatusChange={handleStatusChange}
+														options={STATUS_OPTIONS} 
+													/>
+												)}
+											</div>
                     </div>
                   </div>
                 ))}

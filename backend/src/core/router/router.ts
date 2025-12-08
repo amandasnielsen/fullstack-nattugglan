@@ -17,7 +17,8 @@ router.post("/auth/login", login);
 router.post("/auth/logout", logout);
 router.post("/menu", requireApiKey, requireAuth, requireAdmin);
 
-router.get("/admin/orders", requireAuth, requireAdmin, getAllOrders)
+router.get("/admin/orders", requireAuth, requireAdmin, getAllOrders);
+router.put("/admin/orders/:orderNumber/status", requireAuth, requireAdmin, putOrderStatus);
 
 //*DEBUGGING, RADERA * \\
 router.get("/debug/users", async (req, res) => {
