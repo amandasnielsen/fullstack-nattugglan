@@ -2,6 +2,9 @@
 	width: 100%;
 	font-family: 'anton';
 	color: var(--font-color-dark);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	flex: 1;
 	gap: 0.5rem;
@@ -51,9 +54,11 @@
 	justify-content: space-between;
 }
 
-.item__totalprice {
+.item__bottom {
+	display: flex;
 	margin-top: auto;
-	text-align: end;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .Confirmation__info {
@@ -90,4 +95,9 @@
 
 .Confirmation__status {
 	text-align: end;
+}
+
+.paymentMessage {
+	color: var(--font-color-white);
+	padding: 1rem;
 }

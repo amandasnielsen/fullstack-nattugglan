@@ -1,32 +1,34 @@
-
-import { Router } from "express";
-import { login } from "../../features/auth/controller";
-import { getMenu } from "../../features/menu/controller";
-import { requireApiKey } from "../middleware/apiKey";
-import { requireAuth, requireAdmin } from "../middleware/auth";
-import { UserModel } from "../database/models/user.model";
-import { postOrder,getOrderDetails } from '../../features/orders/controller';
-
+import { Router } from 'express';
+import { login } from '../../features/auth/controller';
+import { getMenu } from '../../features/menu/controller';
+import { requireApiKey } from '../middleware/apiKey';
+import { requireAuth, requireAdmin } from '../middleware/auth';
+import { UserModel } from '../database/models/user.model';
+import {
+	postOrder,
+	getOrderDetails,
+	patchOrder,
+} from '../../features/orders/controller';
 
 const router = Router();
 
 //ADMIN ROUTES
 
-router.post("/auth/login", login);
-router.post("/menu", requireApiKey, requireAuth, requireAdmin);
+router.post('/auth/login', login);
+router.post('/menu', requireApiKey, requireAuth, requireAdmin);
 
 //*DEBUGGING, RADERA * \\
-router.get("/debug/users", async (req, res) => {
-    const users = await UserModel.find();
-    res.json(users);
-  });
+router.get('/debug/users', async (req, res) => {
+	const users = await UserModel.find();
+	res.json(users);
+});
 
 //USER ROUTES
 router.get('/menu', getMenu);
 
 //Orders
 router.post('/order', postOrder);
-router.get('/order/:orderNumber', getOrderDetails)
-
+router.get('/order/:orderNumber', getOrderDetails);
+router.patch('/order/:orderNumber', patchOrder);
 
 export default router;

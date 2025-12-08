@@ -57,3 +57,23 @@ export const placeOrder = async (
 export const getOrderByID = async (orderNumber: string) => {
 	return await findOrderById(orderNumber);
 };
+
+export const updateOrderbyId = async (
+	orderNumber: string,
+	updateData: Partial<OrderInterface>
+): Promise<OrderInterface> => {
+	const order = await getOrderByID(orderNumber);
+	if (!order) throw new Error('Order not found');
+
+	if (updateData.items) {
+		updateData.totalPrice = updateData.items.reduce(
+			(sum, i) => sum + i.price * i.quantity,
+			0
+		);
+	}
+
+	Object.assign(order, updateData);
+
+	await order.save();
+	return order;
+};
