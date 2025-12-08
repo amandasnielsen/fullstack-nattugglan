@@ -1,6 +1,6 @@
 
 import { Router } from "express";
-import { login } from "../../features/auth/controller";
+import { login, logout } from "../../features/auth/controller";
 import { getMenu } from "../../features/menu/controller";
 import { requireApiKey } from "../middleware/apiKey";
 import { requireAuth, requireAdmin } from "../middleware/auth";
@@ -13,6 +13,7 @@ const router = Router();
 //ADMIN ROUTES
 
 router.post("/auth/login", login);
+router.post("/auth/logout", requireAuth, logout);
 router.post("/menu", requireApiKey, requireAuth, requireAdmin);
 
 //*DEBUGGING, RADERA * \\
