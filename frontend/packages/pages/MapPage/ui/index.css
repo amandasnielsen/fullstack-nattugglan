@@ -4,30 +4,20 @@
   overflow: hidden;
 }
 
-.map__title {
-  font-family: "FjallaOne", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
-  font-size: var(--header-size);
-  letter-spacing: var(--spacing-wide);
-  color: var(--font-color-white);
-  text-align: center;
-  margin-top: 120px;
-  margin-bottom: 3px;
-}
-
-.map__card {
+.map .container__card {
+	max-height: 60vh;
 }
 
 .map__content {
-  font-family: "Anton", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  font-family: "Anton";
+	letter-spacing: var(--spacing-wide);
   font-size: var(--body-text);
   color: var(--font-color-dark);
   line-height: 1.4;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+	align-items: center;
   gap: 0.75rem;
 }
 
@@ -40,19 +30,17 @@
 
 .map__iframe-wrapper {
   width: 100%;
-  max-width: 260px;
+  max-width: 270px;
   border-radius: 6px;
   overflow: hidden; 
   margin: 0.5rem 0 0.9rem;
 }
-
 
 .map__iframe {
   width: 100%;
   height: 230px;        
   border: 0;
 }
-
 
 .map__text {
   margin: 0.25rem 0;
@@ -62,7 +50,6 @@
   font-size: 0.9rem;
 }
 
-
 .map__text a {
   color: inherit;
   text-decoration: none;
@@ -70,4 +57,15 @@
 
 .map__text a:hover {
   text-decoration: underline;
+}
+
+@media (min-width: 900px) {
+	.map .container__card {
+		max-height: 55vh;
+		max-width: 600px;
+	}
+
+	.map__iframe-wrapper {
+		max-width: 400px;
+	}
 }
