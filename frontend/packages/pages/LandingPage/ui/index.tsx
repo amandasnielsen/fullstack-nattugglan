@@ -23,7 +23,7 @@ function LandingPage() {
         <h1 className="landing__header">Vaken? Vi med!</h1>
 				<img className="logo__landing" src={Logo} alt="nattugglan logo" />
 
-				<div className="button__group">
+				<div className="button__group-one">
           <Button 
             variant="secondary" 
             fullWidth={true}  
@@ -32,7 +32,9 @@ function LandingPage() {
           >
             Beställ käk!
           </Button>
+				</div>
 
+				<div className="button__group-two">
           <Button
             variant="primary" 
             fullWidth={true} 
@@ -41,7 +43,8 @@ function LandingPage() {
           >
             Admin
           </Button>
-        </div>
+				</div>
+        
       </div>
 
     </section>

@@ -7,6 +7,7 @@ import {
 } from './repository';
 import {
 	OrderInterface,
+	OrderModel,
 	CartItem,
 } from '../../core/database/models/order.model';
 
@@ -77,3 +78,19 @@ export const updateOrderbyId = async (
 	await order.save();
 	return order;
 };
+
+export async function updateOrderStatus(orderNumber: string, status: string) {
+	const allowed = ['Confirmed', 'Ready', 'Cancelled'];
+
+	if (!allowed.includes(status)) {
+		throw new Error('Invalid status');
+	}
+
+	const order = await OrderModel.findOneAndUpdate(
+		{ orderNumber },
+		{ status },
+		{ new: true }
+	);
+
+	return order;
+}

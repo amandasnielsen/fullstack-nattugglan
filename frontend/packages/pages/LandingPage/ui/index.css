@@ -10,12 +10,17 @@
 	width: 250px;
 }
 
-.landing__button-menu {
-	margin-top: 3em;
+.button__group-one {
+	width: 280px; 
+  padding: 15px 20px;
+	margin-top: 4em;
 }
 
-.landing__button-login {
-	margin-top: 6em;
+.button__group-two {
+	width: 280px; 
+  padding: 15px 20px;
+	position: absolute;
+	bottom: 2em;
 }
 
 @media (max-height: 800px) {
@@ -27,8 +32,8 @@
 	margin-top: 1em;
 	width: 250px;
 	}
-	
-	.landing__button-login {
+
+	.button__group-one {
 		margin-top: 2em;
 	}
 }

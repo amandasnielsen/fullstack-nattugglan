@@ -14,7 +14,7 @@
 	--font-color-white: #f8f8f8;
 	--font-color-dark: #020b28;
 
-	--header-size: 32px;
+	--header-size: 28px;
 	--menu-item: 14px;
 	--body-text: 12px;
 	--spacing-wide: 0.08em;
@@ -25,8 +25,8 @@ h1 {
 	font-size: var(--header-size);
 	letter-spacing: var(--spacing-wide);
 	color: var(--font-color-white);
-	margin-top: 3em;
-	margin-bottom: .3em;
+	margin-top: 3.5em;
+	margin-bottom: .5em;
 	font-weight: 500;
 	text-align: center;
 	position: relative;
@@ -37,6 +37,7 @@ h1 {
   h1 {
 		margin-top: 3em;
 		margin-bottom: 1em;
+		font-size: 32px;
 	}
 }
 
@@ -80,6 +81,6 @@ html {
   height: 100%;
   object-fit: cover; 
   object-position: center bottom;
-  opacity: 0.12;
+  opacity: 0.15;
   z-index: -1;
 }
