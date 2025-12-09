@@ -11,8 +11,9 @@ import { OrderTotal } from './components/OrderTotal.tsx';
 import { OrderActions } from './components/OrderActions.tsx';
 import { updateOrder } from './utils/Orderutils.ts';
 import { Button } from '@nattugglan/button';
+import { useOrderStore } from '@nattugglan/core/state/orderStore';
 
-interface orderDetailInterface {
+export interface orderDetailInterface {
 	orderNumber: string;
 	guestId: string;
 	totalPrice: number;
@@ -43,6 +44,7 @@ function OrderConfirmationPage() {
 	const [originalTotal, setOriginalTotal] = useState<number>(0);
 	const [newTotal, setNewTotal] = useState<number>(0);
 	const [showPaymentMessage, setShowPaymentMessage] = useState(false);
+	const { setGuestId } = useOrderStore();
 
 	// hämta orderDetails
 	useEffect(() => {
@@ -60,6 +62,10 @@ function OrderConfirmationPage() {
 			.then((data) => {
 				setOrderData(data);
 				setEditableItems(data.items);
+
+				if (data.guestId) {
+					setGuestId(data.guestId);
+				}
 
 				const total = data.items.reduce(
 					(sum: number, i: CartItem) => sum + i.price * i.quantity,

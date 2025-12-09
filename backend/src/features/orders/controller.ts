@@ -6,9 +6,14 @@ import {
 	updateOrderStatus,
 	updateOrderbyId,
 } from './service';
+import {
+	findAllOrdersByGuestId,
+	findAllOrdersByNameAndPhone,
+} from './repository';
 
 interface OrderParams {
-	orderNumber: string;
+	orderNumber?: string;
+	guestId?: string;
 }
 
 export const getAllOrders = async (req: Request, res: Response) => {
@@ -55,7 +60,7 @@ export const getOrderDetails = async (
 	res: Response
 ) => {
 	try {
-		const orderNumber: string = req.params.orderNumber;
+		const orderNumber = req.params.orderNumber;
 		if (orderNumber === undefined || orderNumber === '')
 			return res.status(404).json({ message: 'Order not found' });
 
@@ -73,6 +78,45 @@ export const getOrderDetails = async (
 			message: errorMessage.replace('400: ', ''),
 			error: 'ORDER_CREATION_FAILED',
 		});
+	}
+};
+
+export const getOrderByGuestId = async (
+	req: Request<OrderParams>,
+	res: Response
+) => {
+	const { guestId } = req.query as { guestId: string | undefined };
+
+	if (!guestId || typeof guestId !== 'string')
+		return res.status(400).json({ message: 'Guest ID saknas' });
+
+	try {
+		const orders = await findAllOrdersByGuestId(guestId);
+		return res.status(200).json(orders);
+	} catch (error) {
+		console.error('Fel vid hämtning av ordrar:', error);
+		return res
+			.status(500)
+			.json({ message: 'Internt serverfel vid hämtning av ordrar' });
+	}
+};
+export const getOrderByNameAndPhone = async (
+	req: Request<OrderParams>,
+	res: Response
+) => {
+	const { name, phoneNumber } = req.body;
+	console.log('namn:', name, 'number:', phoneNumber);
+	if (!name || !phoneNumber)
+		return res.status(400).json({ message: 'Namn eller telefonnummer saknas' });
+
+	try {
+		const orders = await findAllOrdersByNameAndPhone(name, phoneNumber);
+		return res.status(200).json(orders);
+	} catch (error) {
+		console.error('Fel vid hämtning av ordrar:', error);
+		return res
+			.status(500)
+			.json({ message: 'Internt serverfel vid hämtning av ordrar' });
 	}
 };
 
