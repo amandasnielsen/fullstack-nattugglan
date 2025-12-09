@@ -6,58 +6,107 @@
   letter-spacing: var(--spacing-wide);
 }
 
+.admin__menu-page .container__card {
+	min-height: 60vh;
+	max-height: 60vh;
+	max-width: 500px;
+}
+
 .menu__item-card {
-  padding: .8em;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1em;
+  padding: 1em;
 	margin-bottom: 1em;
-  padding: .8em;
   border: 1px solid #585858;
   border-radius: 5px;
+	font-family: 'MerriweatherSans';
+  font-size: 0.9em;
 }
 
 .menu__item-card h3 {
   margin-top: 0;
+	font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+	margin-bottom: .5em;
 }
 
-.menu__item-card label {
-  margin-top: .5em;
-	font-family: 'MerriweatherSans-Bold';
-  font-size: 0.8em;
+.ingredients__container {
+  border-bottom: 1px solid #585858;
+  padding-bottom: 1em; 
+	width: 100%;
 }
 
 .menu__item-card input[type="text"],
 .menu__item-card input[type="number"],
-.menu__item-card textarea,
-.menu__item-card select {
-	padding: 8px;
-	border: 1px solid #ccc;
+.menu__item-card textarea
+{
+	padding: .5em;
+	border: 1px solid #585858;
+	background-color: transparent;
 	border-radius: 3px;
-	width: 100%;
+	width: 80%;
 	box-sizing: border-box;
-	margin-bottom: 10px;
+	margin-bottom: .5em;
+	font-family: 'MerriweatherSans';
+  font-size: 0.85em;
 }
 
-.checkbox__label {
+.category__radio-group {
+  margin-bottom: .5em;
+}
+
+.category__radio-group label {
+	display: block;
+}
+
+.category__options {
 	display: flex;
-	align-items: center;
-	gap: 10px;
+	flex-wrap: wrap;
+	gap: 1em; 
+	margin-top: 1em;
 }
 
-.checkbox__label input[type="checkbox"] {
-	width: auto;
-	margin: 0;
-	transform: scale(1.5);
+.category__option {
+  display: flex;
+  align-items: center;
 }
 
-.card__actions {
+.category__option input[type="radio"] {
+  margin-right: .5em;
+}
+
+.card__actions-menu {
 	display: flex;
-	justify-content: flex-end;
-	gap: 10px;
-	margin-top: 15px;
+	align-self: flex-end;
+	gap: 1em;
 }
 
 .edit__button {
   align-self: flex-end;
+	background-color: #172346;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+	color: white;
+	border: none;
+}
+
+.cancel__button {
+  align-self: flex-end;
+	background-color: transparent;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+	border: 1px solid #585858;
+}
+
+.save__button {
+  align-self: flex-end;
+	background-color: #172346;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+	color: white;
+	border: none;
 }
