@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from '@nattugglan/button'; 
 
-// --- TYPER ---
-
 interface MenuItem {
   _id: string;
   name: string;
   price: number;
   category: string;
   ingredients: string[];
-  available: boolean; // Behålls i typen men ignoreras i UI
+  available: boolean;
 }
 
 interface MenuItemCardProps {
@@ -18,30 +16,22 @@ interface MenuItemCardProps {
   onSave: (itemId: string, updateData: Partial<MenuItem>) => Promise<void>;
 }
 
-// --- DEN REDIGERBARA KOMPONENTEN ---
-
 const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories }) => { 
   const [isEditing, setIsEditing] = useState(false);
 
-  // Initiera state för de fält som SKA redigeras
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price)); 
   const [category, setCategory] = useState(item.category); 
   const [ingredients, setIngredients] = useState(item.ingredients.join(', ')); 
-  // BORTTAGEN STATE: available
 
-
-  // Funktion för textinput, numberinput, och textarea
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
     if (name === 'name') setName(value);
     else if (name === 'price') setPrice(value);
     else if (name === 'ingredients') setIngredients(value);
-    // OBS: Category hanteras nu enbart av handleCategoryChange
   };
   
-  // Hanterare för Radio Buttons (Kategori)
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value); 
   };
@@ -59,10 +49,6 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
     // 3. Kategori
     if (category !== item.category) dataToSave.category = category; 
 
-    // BORTTAGEN LOGIK: Tillgänglighet skickas inte.
-    /* if (available !== item.available) dataToSave.available = available; 
-    */
-
     // 4. Ingredienser
     const newIngredientsArray = ingredients 
       ? ingredients.split(',').map(s => s.trim()).filter(s => s.length > 0) 
@@ -79,7 +65,6 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
     setIsEditing(false);
   };
 
-  // --- VISNINGSLÄGE ---
   if (!isEditing) {
     return (
       <div className="admin__menu-card">

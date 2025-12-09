@@ -8,24 +8,20 @@ import { useNavigate } from 'react-router-dom';
 import { MenuItemCard } from './MenuItemCard';
 
 interface MenuItem {
-    _id: string;
-    name: string;
-    price: number;
-    category: string;
-    ingredients: string[];
-    available: boolean;
+	_id: string;
+	name: string;
+	price: number;
+	category: string;
+	ingredients: string[];
+	available: boolean;
 }
 
-// Grupperar menyvaror efter kategori
 interface GroupedItems {
-    [category: string]: MenuItem[];
+	[category: string]: MenuItem[];
 }
 
-// Kategorier (matcha dina data)
 const CATEGORIES = ['Kött', 'Vego', 'Snacks', 'Dricka'];
 const API_BASE_URL = 'http://localhost:3000/api'; 
-
-// --- HUVUDKOMPONENT ---
 
 function AdminChangeMenuPage() {
 	const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -35,51 +31,45 @@ function AdminChangeMenuPage() {
 	const logout = useAuthStore(state => state.logout);
 	const navigate = useNavigate();
 
-	// 1. Hämta menydata vid sidladdning
 	useEffect(() => {
-			const fetchMenuItems = async () => {
-					if (!token) {
-							navigate('/login');
-							return;
-					}
+		const fetchMenuItems = async () => {
+			if (!token) {
+				navigate('/login');
+				return;
+			}
 
-					try {
-							// Använder GET /menu (icke-adminskyddad rutt för gäster/admin-visning)
-							const response = await fetch(`${API_BASE_URL}/menu`, {
-									method: 'GET',
-									headers: {
-											// Inkludera token för att få tillgång till adminsidan, 
-											// även om GET /menu är publik behöver denna adminsida ändå autentisering
-											'Authorization': `Bearer ${token}`, 
-											'Content-Type': 'application/json',
-									},
-							});
+			try {
+				const response = await fetch(`${API_BASE_URL}/menu`, {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`, 
+						'Content-Type': 'application/json',
+					},
+				});
 
-							if (response.status === 401 || response.status === 403) {
-									logout(); 
-									navigate('/access-denied');
-									return;
-							}
-							
-							if (!response.ok) {
-									throw new Error(`Failed to fetch menu: ${response.statusText}`);
-							}
+				if (response.status === 401 || response.status === 403) {
+					logout(); 
+					navigate('/access-denied');
+					return;
+				}
+				
+				if (!response.ok) {
+					throw new Error(`Failed to fetch menu: ${response.statusText}`);
+				}
 
-							const data: MenuItem[] = await response.json();
-							setMenuItems(data);
+				const data: MenuItem[] = await response.json();
+				setMenuItems(data);
 
-					} catch (error) {
-							console.error("Fel vid hämtning av menyn:", error);
-					} finally {
-							setLoading(false);
-					}
-			};
+			} catch (error) {
+				console.error("Fel vid hämtning av menyn:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-			fetchMenuItems();
+		fetchMenuItems();
 	}, [token, navigate, logout]);
 
-
-	// 2. Gruppera menyvarorna per kategori (Används för rendering)
 	const groupedItems = useMemo(() => {
 		return menuItems.reduce<GroupedItems>((acc, item) => {
 			const category = item.category || 'Övrigt';
@@ -92,7 +82,6 @@ function AdminChangeMenuPage() {
 	}, [menuItems]);
 
 
-	// 3. Funktion för att skicka PUT/PATCH till backend
 	const handleUpdate = async (itemId: string, updateData: Partial<MenuItem>) => {
 		if (!token) return;
 
@@ -100,8 +89,8 @@ function AdminChangeMenuPage() {
 			const response = await fetch(`${API_BASE_URL}/admin/menu/${itemId}`, { 
 				method: 'PUT', 
 				headers: { 
-						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`,
 				},
 				body: JSON.stringify(updateData),
 			});
