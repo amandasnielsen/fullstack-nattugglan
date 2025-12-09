@@ -1,0 +1,31 @@
+
+.loading {
+  min-height: 100vh;
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: var(--font-color-white);
+  text-align: center;
+  z-index: 9999;
+}
+
+.loading__image {
+  width: 230px;
+  height: auto;
+}
+
+.loading__title {
+  font-family: "FjallaOne", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: var(--spacing-wide);
+}
+
+.loading__text {
+  max-width: 260px;
+  font-family: "Anton", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  font-size: var(--body-text);
+}

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { handleNewOrder } from './handler';
-import { getOrderByID, findAllOrders } from './service';
-import { updateOrderStatus } from "./service";
+import { getOrderByID, findAllOrders, updateOrderStatus, updateOrderbyId } from './service';
 
 interface OrderParams {
 	orderNumber: string;
@@ -72,10 +71,30 @@ export const getOrderDetails = async (
 	}
 };
 
+export const patchOrder = async (req: Request<OrderParams>, res: Response) => {
+	try {
+		const { orderNumber } = req.params;
+		if (!orderNumber)
+			return res.status(400).json({ message: 'OrderNumber saknas' });
+
+		const updateData = req.body;
+
+		const updatedOrder = await updateOrderbyId(orderNumber, updateData);
+
+		res.status(200).json({
+			message: 'Order uppdaterad',
+			order: updatedOrder,
+		});
+	} catch (error: any) {
+		console.error('Fel vid PATCH /orders/:ordernumber:', error);
+		res.status(500).json({ message: 'Kunde inte uppdatera ordern', error });
+	}
+};
+
 export const putOrderStatus = async (
 	req: Request<{ orderNumber: string }>,
 	res: Response
-  ) => {
+) => {
 	try {
 	  const { orderNumber } = req.params;
 	  const { status, comment } = req.body;
@@ -85,7 +104,6 @@ export const putOrderStatus = async (
   
 	  res.json(updated);
 	} catch (err: any) {
-	  res.status(400).json({ error: err.message });
+		res.status(400).json({ error: err.message });
 	}
-  };
-  
+};

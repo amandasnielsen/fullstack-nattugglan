@@ -8,7 +8,7 @@ import { useCartStore } from '@nattugglan/core';
 function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const totalQuantity = useCartStore((state) => state.totalQuantity);
+	const totalQuantity = useCartStore((state) => state.totalQuantity);
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -24,22 +24,19 @@ function NavBar() {
 				</div>
 
 				<div className="navbar__icons-right">
-					
 					<div className="navbar__icons-right">
-					
-						<NavLink 
-              to="/cart"
-              className="navbar__cart-link"
-            >
-              <img 
-                src={CartIcon} 
-                className="navbar__cart-icon" 
-                alt="Kundkorg" 
-              />
-              <span className="navbar__cart-badge">
-                {totalQuantity}
-              </span>
-            </NavLink>
+						<NavLink to="/cart" className="navbar__cart-link">
+							{totalQuantity > 0 && (
+								<>
+									<img
+										src={CartIcon}
+										className="navbar__cart-icon"
+										alt="Kundkorg"
+									/>
+									<span className="navbar__cart-badge">{totalQuantity}</span>
+								</>
+							)}
+						</NavLink>
 
 						<div
 							className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
@@ -124,7 +121,9 @@ function NavBar() {
 					<div className="navbar__desktop-group">
 						<NavLink
 							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+								isActive
+									? 'navbar__desktop-links active-link-desktop'
+									: 'navbar__desktop-links'
 							}
 							to="/menu"
 							onClick={toggleMenu}
@@ -133,7 +132,9 @@ function NavBar() {
 						</NavLink>
 						<NavLink
 							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+								isActive
+									? 'navbar__desktop-links active-link-desktop'
+									: 'navbar__desktop-links'
 							}
 							to="/orderstatus"
 							onClick={toggleMenu}
@@ -142,7 +143,9 @@ function NavBar() {
 						</NavLink>
 						<NavLink
 							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+								isActive
+									? 'navbar__desktop-links active-link-desktop'
+									: 'navbar__desktop-links'
 							}
 							to="/myorders"
 							onClick={toggleMenu}
@@ -151,7 +154,9 @@ function NavBar() {
 						</NavLink>
 						<NavLink
 							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+								isActive
+									? 'navbar__desktop-links active-link-desktop'
+									: 'navbar__desktop-links'
 							}
 							to="/aboutUs"
 							onClick={toggleMenu}
@@ -160,7 +165,9 @@ function NavBar() {
 						</NavLink>
 						<NavLink
 							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+								isActive
+									? 'navbar__desktop-links active-link-desktop'
+									: 'navbar__desktop-links'
 							}
 							to="/maps"
 							onClick={toggleMenu}
@@ -168,30 +175,32 @@ function NavBar() {
 							Vart finns vi?
 						</NavLink>
 						<NavLink
-						className={({ isActive }) =>
-							isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
-						}
-						to="/login"
-						onClick={toggleMenu}
+							className={({ isActive }) =>
+								isActive
+									? 'navbar__desktop-links active-link-desktop'
+									: 'navbar__desktop-links'
+							}
+							to="/login"
+							onClick={toggleMenu}
 						>
 							Admin
 						</NavLink>
 					</div>
 					<section className="cart__desktop">
-						<div className="navbar__desktop-cart">			
-							<NavLink 
-              to="/cart"
-              className="navbar__cart-link"
-            >
-              <img 
-                src={CartIcon} 
-                className="navbar__cart-icon" 
-                alt="Kundkorg" 
-              />
-              <span className="navbar__cart-badge">
-                {totalQuantity}
-              </span>
-            </NavLink>
+						<div className="navbar__desktop-cart">
+							<NavLink to="/cart" className="navbar__cart-link">
+								{totalQuantity > 0 && (
+									<>
+										<img
+											src={CartIcon}
+											className="navbar__cart-icon"
+											alt="Kundkorg"
+										/>
+
+										<span className="navbar__cart-badge">{totalQuantity}</span>
+									</>
+								)}
+							</NavLink>
 						</div>
 					</section>
 				</section>

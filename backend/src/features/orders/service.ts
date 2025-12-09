@@ -7,15 +7,13 @@ import {
 	findAllOrders as findAllOrdersRepo,
 } from './repository';
 import {
-	OrderInterface, OrderModel,
+	OrderInterface,
+	OrderModel,
 	CartItem,
 } from '../../core/database/models/order.model';
 
-
-
 //input från frontend
 export interface NewOrderInput {
-
 	items: CartItem[];
 	totalPrice: number;
 	name: string;
@@ -68,27 +66,48 @@ export const findAllOrders = async () => {
 };
 
 export async function updateOrderStatus(orderNumber: string, status: string, comment?: string) {
-  const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
+   const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
 
-  if (!allowed.includes(status)) {
-    throw new Error("Invalid status");
-  }
+   if (!allowed.includes(status)) {
+        throw new Error('Invalid status');
+    }
 
-  const updateData: any = { status };
+    const updateData: any = { status };
 
-  if (status === "Cancelled" && !comment) {
-    throw new Error("Kommentar krävs för att avbryta ordern.");
-  }
+    if (status === "Cancelled" && !comment) {
+        throw new Error("Kommentar krävs för att avbryta ordern.");
+    }
 
-  if (status === "Cancelled" && comment) {
-    updateData.cancellationReason = comment; 
-  }
+    if (status === "Cancelled" && comment) {
+        updateData.cancellationReason = comment; 
+    }
 
-  const order = await OrderModel.findOneAndUpdate(
-    { orderNumber },
-    updateData, // Använd updateData objektet
-    { new: true }
-  );
+    const order = await OrderModel.findOneAndUpdate(
+        { orderNumber },
+        updateData,
+        { new: true }
+    );
 
-  return order;
+    return order;
 }
+  
+  
+export const updateOrderbyId = async (
+	orderNumber: string,
+	updateData: Partial<OrderInterface>
+): Promise<OrderInterface> => {
+	const order = await getOrderByID(orderNumber);
+	if (!order) throw new Error('Order not found');
+
+	if (updateData.items) {
+		updateData.totalPrice = updateData.items.reduce(
+			(sum, i) => sum + i.price * i.quantity,
+			0
+		);
+	}
+
+	Object.assign(order, updateData);
+
+	await order.save();
+	return order;
+};
