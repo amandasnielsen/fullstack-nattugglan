@@ -1,0 +1,40 @@
+Mötesprotokoll Daily Scrum (9 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Gjorde ändra order-funktionen och pushade till dev
+* Göra den storyn där kunden kan avbryta sin beställning
+* Nej
+
+Person 2 (Amanda)
+* Satt med AdminAllOrdersPage och kopplade ihop med status-funktionen
+* Göra klart den, en del småfix kvar
+* Nej
+
+Person 3 (Belinda)
+* Blev klar NotFound-sidan och Loading-sidan
+* Ska göra klart Error-sidan med animeringen
+* Nej
+
+Person 4 (Rasmus)
+* Gjorde funktionen för att ändra status och började med orderflödes-sidan
+* Forsätta med den sidan och göra klart den
+* Nej. Får jag inte till designen på sidan, kan någon annan ta den
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
