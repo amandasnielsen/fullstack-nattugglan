@@ -144,9 +144,11 @@ function OrderConfirmationPage() {
 	};
 
 	const cancellOrder = async () => {
+		const cancellationComment = 'kund avbröt beställningen';
 		try {
 			const newStatus = await putStatusChange(orderNumber, {
 				status: 'Cancelled',
+				comment: cancellationComment,
 			});
 
 			setOrderData(newStatus);
@@ -160,7 +162,7 @@ function OrderConfirmationPage() {
 
 	const handleClick = () => {
 		if (status === 'Pending' || status === 'Confirmed' || status === 'Ready') {
-			navigate(`/orderstatus`);
+			navigate(`/orderstatus/${orderNumber}`);
 		} else {
 			navigate(`/myorders`);
 		}

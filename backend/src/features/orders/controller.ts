@@ -1,22 +1,27 @@
 import { Request, Response } from 'express';
 import { handleNewOrder } from './handler';
-import { getOrderByID, findAllOrders, updateOrderStatus, updateOrderbyId } from './service';
+import {
+	getOrderByID,
+	findAllOrders,
+	updateOrderStatus,
+	updateOrderbyId,
+} from './service';
 
 interface OrderParams {
 	orderNumber: string;
 }
 
 export const getAllOrders = async (req: Request, res: Response) => {
-  try {
-    const orders = await findAllOrders(); 
-    res.status(200).json(orders);
-  } catch (error: any) {
-    console.error('Fel vid GET /admin/orders:', error);
-    res.status(500).json({
-      message: 'Kunde inte hämta beställningar',
-      error: 'FETCH_ORDERS_FAILED',
-    });
-  }
+	try {
+		const orders = await findAllOrders();
+		res.status(200).json(orders);
+	} catch (error: any) {
+		console.error('Fel vid GET /admin/orders:', error);
+		res.status(500).json({
+			message: 'Kunde inte hämta beställningar',
+			error: 'FETCH_ORDERS_FAILED',
+		});
+	}
 };
 
 export const postOrder = async (req: Request, res: Response): Promise<void> => {
@@ -96,13 +101,13 @@ export const putOrderStatus = async (
 	res: Response
 ) => {
 	try {
-	  const { orderNumber } = req.params;
-	  const { status, comment } = req.body;
-  
-	  const updated = await updateOrderStatus(orderNumber, status, comment);
-	  if (!updated) return res.status(404).json({ message: "Order not found" });
-  
-	  res.json(updated);
+		const { orderNumber } = req.params;
+		const { status, comment } = req.body;
+
+		const updated = await updateOrderStatus(orderNumber, status, comment);
+		if (!updated) return res.status(404).json({ message: 'Order not found' });
+
+		res.json(updated);
 	} catch (err: any) {
 		res.status(400).json({ error: err.message });
 	}

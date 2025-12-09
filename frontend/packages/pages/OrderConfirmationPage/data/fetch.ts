@@ -13,6 +13,7 @@ interface OrderChangeProp {
 
 type StatusChange = {
 	status: string;
+	comment: string;
 };
 
 export const fetchOrderDetails = async (orderNumber: string) => {
@@ -62,7 +63,7 @@ export const patchOrderChange = async (
 
 export const putStatusChange = async (
 	orderNumber: string,
-	status: StatusChange
+	payload: StatusChange
 ) => {
 	try {
 		const response = await fetch(
@@ -70,7 +71,7 @@ export const putStatusChange = async (
 			{
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(status),
+				body: JSON.stringify(payload),
 			}
 		);
 
