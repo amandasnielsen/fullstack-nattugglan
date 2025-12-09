@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { NavBar } from "@nattugglan/navbar";
 import { Footer } from "@nattugglan/footer";
 import { ContentContainer } from "@nattugglan/contentcontainer";
-
+import { Button } from "@nattugglan/button";
+import { useNavigate } from "react-router-dom";
 
 interface OrderResponse {
   orderNumber: string;
@@ -14,14 +15,28 @@ interface OrderResponse {
 export function OrderStatusPage() {
   const { orderNumber } = useParams();
   const [order, setOrder] = useState<OrderResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/order/${orderNumber}`)
-      .then((res) => res.json())
-      .then((data) => setOrder(data));
-  }, [orderNumber]);
+    if (!orderNumber) {
+      setError("Ingen order angiven.");
+      return;
+    }
 
-  if (!order) return <div>Loading...</div>;
+    fetch(`http://localhost:3000/api/order/${orderNumber}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Order hittades inte");
+        return res.json();
+      })
+      .then((data) => {
+        setOrder(data);
+        setError(null);
+      })
+      .catch(() => {
+        setError("Kunde inte hitta någon order.");
+      });
+  }, [orderNumber]);
 
   const steps = [
     { key: "Pending", label: "Din beställning väntar på att bli bekräftad" },
@@ -29,29 +44,68 @@ export function OrderStatusPage() {
     { key: "Ready", label: "Din mat är redo för upphämtning!" },
   ];
 
-  const currentStepIndex = steps.findIndex((step) => step.key === order.status);
+    // === NO ORDER FOUND ===
+    if (error || !order) {
+      return (
+        <>
+          <NavBar />
+          <Footer />
+    
+          <h1 className="status__title">
+            Orderstatus
+          </h1>
+    
+          <ContentContainer>
+            <p className="status-cancelled">
+              Du har inte gjort någon order än.</p>
+              <p className="status-cancelled"> Gå in på menyn och välj något gott!
+            </p>
+            
+          </ContentContainer>
+          <div className="status-box__order">
+            <Button
+                variant="primary"
+                fullWidth={true}
+                className="status__button-menu"
+                onClick={() => navigate("/menu")}>
+                Meny
+            </Button>
+          </div>
+        </>
+      );
+    }
 
-  if (order.status === "Cancelled") {
+  // === CANCELLED ORDER ===
+  if (order && order.status === "Cancelled") {
     return (
       <>
         <NavBar />
         <Footer />
-  
+
         <h1 className="status__title">Orderstatus</h1>
-  
+
         <ContentContainer>
           <div className="status-box">
             <h2 className="status-box__order">Order #{order.orderNumber}</h2>
-  
             <p className="status-cancelled">
-              Den här beställningen har avbrutits av köket
+              Den här beställningen har avbrutits av köket.
             </p>
           </div>
         </ContentContainer>
+        <div className="status-box__order">
+          <Button
+            variant="primary"
+            fullWidth={true}
+            className="status__button-menu"
+            onClick={() => navigate("/menu")}>
+            Meny
+          </Button>
+        </div>
       </>
     );
   }
-  
+
+  const currentStepIndex = steps.findIndex((step) => step.key === order.status);
 
   return (
     <>
@@ -80,8 +134,15 @@ export function OrderStatusPage() {
           </div>
         </div>
       </ContentContainer>
+      <div className="status-box__order">
+          <Button
+            variant="primary"
+            fullWidth={true}
+            className="status__button-menu"
+            onClick={() => navigate("/menu")}>
+            Meny
+        </Button>
+      </div>
     </>
   );
 }
-
-
