@@ -108,7 +108,7 @@ function AdminAllOrdersPage() {
         });
 
         if (response.status === 401 || response.status === 403) {
-          logout(); 
+          logout(); // logga ut om behörighet saknas
           navigate('/access-denied');
           return;
         }
@@ -118,11 +118,16 @@ function AdminAllOrdersPage() {
         }
         const data: Order[] = await response.json(); 
         
-        // jämför de nya hämtade datan med den befintliga. renderas om bara om det är nya ordrar
+        // jämför de nya hämtade datan med den befintliga datan
+				// renderas om bara om det är nya ordrar
         if (JSON.stringify(latestOrdersRef.current) !== JSON.stringify(data)) {
-					latestOrdersRef.current = data;
-					setOrders(data);
+					// om det finns något nytt
+					latestOrdersRef.current = data; // uppdaterar och lagrar den nya datan
+					setOrders(data); // renderar om sidan
         }
+
+				// om det inte är någon ny data, hoppas den över setOrders
+				// då blir det ingen ful "blinkning" vid varje omladdning
 
       } catch (error) {
         console.error("Fel vid hämtning av ordrar:", error);
@@ -137,7 +142,7 @@ function AdminAllOrdersPage() {
     const intervalId = setInterval(fetchOrders, 10000); // laddar om (polling) var 10e sekund
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(intervalId); // rensar intervallet
       isCancelled = true;
     };
     
