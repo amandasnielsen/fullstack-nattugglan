@@ -8,7 +8,7 @@ import { ContentContainer } from "@nattugglan/contentcontainer";
 
 interface OrderResponse {
   orderNumber: string;
-  status: "Pending" | "Cooking" | "Preparing" | "Ready";
+  status: "Pending" | "Confirmed" | "Ready" | "Cancelled";
 }
 
 export function OrderStatusPage() {
