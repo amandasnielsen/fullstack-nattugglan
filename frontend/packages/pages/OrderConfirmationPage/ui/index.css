@@ -81,20 +81,30 @@
 .Confirmation__info-bottom {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
 }
 
-.Confirmation__changeBtn {
-	border-radius: 999px;
+.Confirmation__info-left,
+.Confirmation__info-right {
+	display: flex;
+	align-items: center;
+}
+
+.Confirmation__btn {
+	padding: 0.5rem 1rem;
 	background: none;
+	cursor: pointer;
+	border-radius: 999px;
 	font-family: 'MerriweatherSans';
 	border: 1px solid var(--font-color-dark);
 	color: var(--font-color-dark);
-	width: 8rem;
 	font-size: 0.8rem;
 }
 
-.Confirmation__status {
-	text-align: end;
+.Confirmation__btn:hover {
+	background-color: var(--font-color-dark);
+	color: var(--font-color-white);
 }
 
 .change__container {
