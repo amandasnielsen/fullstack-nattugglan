@@ -70,7 +70,8 @@
 	flex-wrap: wrap;
 	gap: 8px;
 	justify-content: center;
-	margin-bottom: 2em;
+	margin-bottom: 1em;
+	padding: 0.5em;
 }
 
 .filter__button-orders {

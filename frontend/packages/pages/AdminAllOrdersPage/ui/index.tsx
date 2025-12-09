@@ -2,7 +2,7 @@ import './index.css';
 import { NavBarAdmin } from '@nattugglan/navbaradmin';
 import { Footer } from '@nattugglan/footer';
 import { ContentContainer } from '@nattugglan/contentcontainer';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 import { StatusDropdown } from '@nattugglan/statusdropdown';
@@ -24,14 +24,14 @@ interface Order {
   items: OrderItem[];
   name: string;
   createdAt: string;
-	cancellationReason?: string;
+  cancellationReason?: string;
 }
 
 interface CancelModalState {
-	isOpen: boolean;
-	orderId: string | null;
-	orderNumber: string | null;
-	currentComment: string;
+  isOpen: boolean;
+  orderId: string | null;
+  orderNumber: string | null;
+  currentComment: string;
 }
 
 const STATUS_ORDER: OrderStatus[] = [
@@ -51,8 +51,9 @@ const STATUS_OPTIONS: OrderStatus[] = [
   'Cancelled'
 ];
 
+// namnen på kategorierna som visas
 const STATUS_DISPLAY_NAMES: Record<FilterStatus, string> = {
-  'All': 'Visa Alla',
+  'All': 'Visa alla',
   'Pending': 'Pending',
   'Confirmed': 'Confirmed',
   'Ready': 'Ready for pickup',
@@ -75,23 +76,27 @@ function AdminAllOrdersPage() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<FilterStatus>('All');
   const [cancelModal, setCancelModal] = useState<CancelModalState>({
-		isOpen: false,
-		orderId: null,
-		orderNumber: null,
-		currentComment: '',
+    isOpen: false,
+    orderId: null,
+    orderNumber: null,
+    currentComment: '',
   });
 
+  // använd useRef för att lagra senaste datan och undvika blinkning
+  const latestOrdersRef = useRef<Order[] | null>(null); 
+  
   const token = useAuthStore(state => state.token);
   const logout = useAuthStore(state => state.logout); 
   const navigate = useNavigate();
 
-  // hämtar ordrar från backend
+  // hämtar ordrar från backend (med Polling och det kommer inte blinka till
   useEffect(() => {
+    let isCancelled = false; 
+
     const fetchOrders = async () => {
-      if (!token) {
-        navigate('/login');
-        return;
-      }
+      if (!token || isCancelled) return;
+
+			console.log('Hämtar nya ordrar från backend');
 
       try {
         const response = await fetch('http://localhost:3000/api/admin/orders', {
@@ -111,33 +116,46 @@ function AdminAllOrdersPage() {
         if (!response.ok) {
           throw new Error(`Failed to fetch orders: ${response.statusText}`);
         }
-
-        const data: Order[] = await response.json();
-        setOrders(data);
+        const data: Order[] = await response.json(); 
+        
+        // jämför de nya hämtade datan med den befintliga. renderas om bara om det är nya ordrar
+        if (JSON.stringify(latestOrdersRef.current) !== JSON.stringify(data)) {
+					latestOrdersRef.current = data;
+					setOrders(data);
+        }
 
       } catch (error) {
         console.error("Fel vid hämtning av ordrar:", error);
       } finally {
-        setLoading(false);
+        if (loading) {
+          setLoading(false);
+        }
       }
     };
 
     fetchOrders();
-  }, [token, navigate, logout]);
+    const intervalId = setInterval(fetchOrders, 10000); // laddar om (polling) var 10e sekund
+
+    return () => {
+      clearInterval(intervalId);
+      isCancelled = true;
+    };
+    
+  }, [token, navigate, logout, loading]); 
 
 
   const confirmCancel = () => {
     if (!cancelModal.currentComment) {
-			return;
+      return;
     }
 
     if (cancelModal.orderId && cancelModal.orderNumber) {
-			handleStatusChange(
-				cancelModal.orderId,
-				cancelModal.orderNumber,
-				'Cancelled',
-				cancelModal.currentComment
-			);
+      handleStatusChange(
+        cancelModal.orderId,
+        cancelModal.orderNumber,
+        'Cancelled',
+        cancelModal.currentComment
+      );
     }
     setCancelModal({ isOpen: false, orderId: null, orderNumber: null, currentComment: '' });
   };
@@ -196,7 +214,7 @@ function AdminAllOrdersPage() {
     }
   };
 
-  // gruppera och sortera ordrarna (pending först)
+  // gruppera och sortera orderkategorierna (pending först)
   const groupedOrders = useMemo(() => {
     if (!orders) return {} as Record<OrderStatus, Order[]>;
 
@@ -212,8 +230,8 @@ function AdminAllOrdersPage() {
       return acc;
     }, initialGroups);
 
-		// sortera på nyaste ordrar först
-		(Object.keys(grouped) as OrderStatus[]).forEach(statusKey => {
+    // sortera på nyaste ordrar först
+    (Object.keys(grouped) as OrderStatus[]).forEach(statusKey => {
       const group = grouped[statusKey];
 
       group.sort((a, b) => {
@@ -231,6 +249,7 @@ function AdminAllOrdersPage() {
     return (
       <>
         <NavBarAdmin />
+				<h1>Alla beställningar</h1>
         <ContentContainer><p className="loading__message">Laddar beställningar...</p></ContentContainer>
         <Footer />
       </>
@@ -243,17 +262,17 @@ function AdminAllOrdersPage() {
       <h1>Alla beställningar</h1>
 
       <div className="filter__bar-orders">
-				{FILTER_OPTIONS.map(filterKey => (
-					<Button
-						key={filterKey}
-						variant={activeFilter === filterKey ? 'filterActive' : 'filter'}
-						fullWidth={false}
-						onClick={() => setActiveFilter(filterKey)}
-						className="filter__button-orders"
-					>
-						{STATUS_DISPLAY_NAMES[filterKey]}
-					</Button>
-				))}
+        {FILTER_OPTIONS.map(filterKey => (
+          <Button
+            key={filterKey}
+            variant={activeFilter === filterKey ? 'filterActive' : 'filter'}
+            fullWidth={false}
+            onClick={() => setActiveFilter(filterKey)}
+            className="filter__button-orders"
+          >
+            {STATUS_DISPLAY_NAMES[filterKey]}
+          </Button>
+        ))}
       </div>
       
       <ContentContainer>
@@ -319,12 +338,12 @@ function AdminAllOrdersPage() {
                         </div>
                       </div>
 
-											{order.status === 'Cancelled' && order.cancellationReason && (
-												<div className="cancellation__reason">
-													<p className="reason__label">Orsak:</p>
-													<p className="reason__text">{order.cancellationReason}</p>
-												</div>
-											)}
+                      {order.status === 'Cancelled' && order.cancellationReason && (
+                        <div className="cancellation__reason">
+                          <p className="reason__label">Orsak:</p>
+                          <p className="reason__text">{order.cancellationReason}</p>
+                        </div>
+                      )}
 
                     </div>
                   ))}
@@ -338,32 +357,32 @@ function AdminAllOrdersPage() {
       <Footer />
 
       {cancelModal.isOpen && (
-				<div className="modal__overlay">
-					<div className="modal__content">
-						<h2>Avbryt Order #{cancelModal.orderNumber}</h2>
-						<textarea
-							placeholder="Ange anledning..."
-							value={cancelModal.currentComment}
-							onChange={(e) => setCancelModal(p => ({ ...p, currentComment: e.target.value }))}
-						/>
-						<div className="modal__actions">
-							<Button 
-								fullWidth={false}
-								className="cancel"
-								onClick={() => setCancelModal({ isOpen: false, orderId: null, orderNumber: null, currentComment: '' })}
-							>
-								Avbryt
-							</Button>
-							<Button 
-								fullWidth={false}
-								className="confirm"
-								onClick={confirmCancel}
-							>
-								Bekräfta
-							</Button>
-						</div>
-					</div>
-				</div>
+        <div className="modal__overlay">
+          <div className="modal__content">
+            <h2>Avbryt Order #{cancelModal.orderNumber}</h2>
+            <textarea
+              placeholder="Ange anledning..."
+              value={cancelModal.currentComment}
+              onChange={(e) => setCancelModal(p => ({ ...p, currentComment: e.target.value }))}
+            />
+            <div className="modal__actions">
+              <Button 
+                fullWidth={false}
+                className="cancel"
+                onClick={() => setCancelModal({ isOpen: false, orderId: null, orderNumber: null, currentComment: '' })}
+              >
+                Avbryt
+              </Button>
+              <Button 
+                fullWidth={false}
+                className="confirm"
+                onClick={confirmCancel}
+              >
+                Bekräfta
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );
