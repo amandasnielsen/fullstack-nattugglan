@@ -12,7 +12,7 @@ interface orderDetailInterface {
 	guestId: string;
 	totalPrice: number;
 	items: CartItem[];
-	status: 'Pending' | 'Confirmed' | 'Ready' | 'Delivered' | 'Cancelled';
+	status: 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
 	createdAt: string;
 	name: string;
 }

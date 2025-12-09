@@ -4,6 +4,7 @@ import {
 	findOrderById,
 	findOrderByNameAndPhone,
 	NewOrderData,
+	findAllOrders as findAllOrdersRepo,
 } from './repository';
 import {
 	OrderInterface,
@@ -59,6 +60,38 @@ export const getOrderByID = async (orderNumber: string) => {
 	return await findOrderById(orderNumber);
 };
 
+// hämta alla ordrar för admin
+export const findAllOrders = async () => {
+  return await findAllOrdersRepo();
+};
+
+export async function updateOrderStatus(orderNumber: string, status: string, comment?: string) {
+   const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
+
+   if (!allowed.includes(status)) {
+        throw new Error('Invalid status');
+    }
+
+    const updateData: any = { status };
+
+    if (status === "Cancelled" && !comment) {
+        throw new Error("Kommentar krävs för att avbryta ordern.");
+    }
+
+    if (status === "Cancelled" && comment) {
+        updateData.cancellationReason = comment; 
+    }
+
+    const order = await OrderModel.findOneAndUpdate(
+        { orderNumber },
+        updateData,
+        { new: true }
+    );
+
+    return order;
+}
+  
+  
 export const updateOrderbyId = async (
 	orderNumber: string,
 	updateData: Partial<OrderInterface>
@@ -78,19 +111,3 @@ export const updateOrderbyId = async (
 	await order.save();
 	return order;
 };
-
-export async function updateOrderStatus(orderNumber: string, status: string) {
-	const allowed = ['Confirmed', 'Ready', 'Cancelled'];
-
-	if (!allowed.includes(status)) {
-		throw new Error('Invalid status');
-	}
-
-	const order = await OrderModel.findOneAndUpdate(
-		{ orderNumber },
-		{ status },
-		{ new: true }
-	);
-
-	return order;
-}
