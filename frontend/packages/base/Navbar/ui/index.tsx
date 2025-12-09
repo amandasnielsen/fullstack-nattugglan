@@ -4,9 +4,12 @@ import CartIcon from './assets/cart.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCartStore } from '@nattugglan/core';
+import { useOrderStore } from '@nattugglan/core/state/orderStore';
 
 function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
+	const orderNumber = useOrderStore((state) => state.orderNumber);
+
 
   const totalQuantity = useCartStore((state) => state.totalQuantity);
 
@@ -69,7 +72,7 @@ function NavBar() {
 							className={({ isActive }) =>
 								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
 							}
-							to="/orderstatus"
+							to={`/orderstatus/${orderNumber}`}
 							onClick={toggleMenu}
 						>
 							Orderstatus
@@ -133,13 +136,13 @@ function NavBar() {
 						</NavLink>
 						<NavLink
 							className={({ isActive }) =>
-								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'
+								isActive ? "navbar__desktop-links active-link-desktop" : "navbar__desktop-links"
 							}
-							to="/orderstatus"
+							to={`/orderstatus/${orderNumber}`}
 							onClick={toggleMenu}
-						>
+							>
 							Orderstatus
-						</NavLink>
+							</NavLink>
 						<NavLink
 							className={({ isActive }) =>
 								isActive ? 'navbar__desktop-links active-link-desktop' : 'navbar__desktop-links'

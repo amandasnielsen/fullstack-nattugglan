@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useCartStore } from '@nattugglan/core';
 import type { OrderInterface } from '@nattugglan/core';
 import { validateName, validatePhone } from '../data/validation';
+import { useOrderStore } from '@nattugglan/core/state/orderStore';
 
 function PaymentPage() {
 	const navigate = useNavigate();
@@ -59,6 +60,9 @@ function PaymentPage() {
 				body: JSON.stringify(order),
 			});
 
+			
+
+
 			if (!response.ok) {
 				const errorData = await response.json();
 				throw new Error(errorData.message || `Serverfel: ${response.status}`);
@@ -66,6 +70,7 @@ function PaymentPage() {
 
 			const result = await response.json();
 			const orderNumber = result.orderNumber;
+			useOrderStore.getState().setOrderNumber(result.orderNumber);
 
 			clearCart();
 
