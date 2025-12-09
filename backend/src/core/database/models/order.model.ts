@@ -28,7 +28,8 @@ export interface OrderInterface extends Document {
 	createdAt: Date;
 	name: string;
 	phoneNumber: string;
-	status: 'Pending' | 'Confirmed' | 'Ready' | 'Delivered' | 'Cancelled';
+	status: 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
+	cancellationReason?: string;
 }
 
 const OrderSchema: Schema = new Schema({
@@ -41,9 +42,10 @@ const OrderSchema: Schema = new Schema({
 	phoneNumber: { type: String, required: true },
 	status: {
 		type: String,
-		enum: ['Pending', 'Confirmed', 'Ready', 'Delivered', 'Cancelled'],
+		enum: ['Pending', 'Confirmed', 'Ready', 'Done', 'Cancelled'],
 		default: 'Pending',
 	},
+	cancellationReason: { type: String, required: false },
 });
 
 export const OrderModel = model<OrderInterface>('Order', OrderSchema);

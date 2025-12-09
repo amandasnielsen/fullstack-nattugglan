@@ -33,7 +33,7 @@ function LoginPage() {
 
       alert("Logged in!");
 
-      navigate("/updatemenu");
+      navigate("/allorders");
 
     } catch (err) {
       console.error(err);

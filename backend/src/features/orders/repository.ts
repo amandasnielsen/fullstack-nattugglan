@@ -35,3 +35,7 @@ export const findOrderByNameAndPhone = async (
 ): Promise<OrderInterface | null> => {
 	return await OrderModel.findOne({ name, phoneNumber });
 };
+
+export const findAllOrders = async (): Promise<OrderInterface[]> => {
+	return OrderModel.find().sort({ createdAt: -1 }).exec();
+}

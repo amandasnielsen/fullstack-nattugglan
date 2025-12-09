@@ -4,17 +4,16 @@ import {
 	findOrderById,
 	findOrderByNameAndPhone,
 	NewOrderData,
+	findAllOrders as findAllOrdersRepo,
 } from './repository';
 import {
-	OrderInterface, OrderModel,
+	OrderInterface,
+	OrderModel,
 	CartItem,
 } from '../../core/database/models/order.model';
 
-
-
 //input från frontend
 export interface NewOrderInput {
-
 	items: CartItem[];
 	totalPrice: number;
 	name: string;
@@ -61,18 +60,54 @@ export const getOrderByID = async (orderNumber: string) => {
 	return await findOrderById(orderNumber);
 };
 
-export async function updateOrderStatus(orderNumber: string, status: string) {
-  const allowed = ["Confirmed", "Ready", "Cancelled"];
+// hämta alla ordrar för admin
+export const findAllOrders = async () => {
+  return await findAllOrdersRepo();
+};
 
-  if (!allowed.includes(status)) {
-    throw new Error("Invalid status");
-  }
+export async function updateOrderStatus(orderNumber: string, status: string, comment?: string) {
+   const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
 
-  const order = await OrderModel.findOneAndUpdate(
-    { orderNumber },
-    { status },
-    { new: true }
-  );
+   if (!allowed.includes(status)) {
+        throw new Error('Invalid status');
+    }
 
-  return order;
+    const updateData: any = { status };
+
+    if (status === "Cancelled" && !comment) {
+        throw new Error("Kommentar krävs för att avbryta ordern.");
+    }
+
+    if (status === "Cancelled" && comment) {
+        updateData.cancellationReason = comment; 
+    }
+
+    const order = await OrderModel.findOneAndUpdate(
+        { orderNumber },
+        updateData,
+        { new: true }
+    );
+
+    return order;
 }
+  
+  
+export const updateOrderbyId = async (
+	orderNumber: string,
+	updateData: Partial<OrderInterface>
+): Promise<OrderInterface> => {
+	const order = await getOrderByID(orderNumber);
+	if (!order) throw new Error('Order not found');
+
+	if (updateData.items) {
+		updateData.totalPrice = updateData.items.reduce(
+			(sum, i) => sum + i.price * i.quantity,
+			0
+		);
+	}
+
+	Object.assign(order, updateData);
+
+	await order.save();
+	return order;
+};
