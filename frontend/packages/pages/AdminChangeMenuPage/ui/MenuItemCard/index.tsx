@@ -82,7 +82,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
   // --- VISNINGSLÄGE ---
   if (!isEditing) {
     return (
-      <div className="menu__item-card">
+      <div className="admin__menu-card">
         <h3>{item.name}</h3>
         <p><strong>Pris:</strong> {item.price}:-</p> 
         
@@ -105,7 +105,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
   }
 
   return (
-    <div className="menu__item-card menu__item-card--editing">
+    <div className="admin__menu-card admin__menu-card--editing">
       <h3>{item.name} (Redigera)</h3>
         
       <label><strong>Namn:</strong></label>
