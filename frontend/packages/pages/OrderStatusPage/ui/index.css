@@ -1,0 +1,59 @@
+.status-box__order {
+  font-family: 'anton';
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 1.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #000000;
+}
+
+.status-box__order { 
+  text-align: center; 
+  margin-bottom: 1.5rem; 
+  font-size: 1.8rem; 
+}
+
+.status__button-menu{
+  width: 280px;
+  padding: 15px 20px;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+}
+
+.status-box__timeline { 
+  font-family: 'MerriweatherSans';
+  display: flex; 
+  flex-direction: column; 
+  gap: 6rem; 
+}
+
+.status-step { 
+  display: flex; 
+  align-items: center; 
+  gap: 1rem; 
+}
+
+.status-dot { 
+  width: 28px; 
+  height: 28px; 
+  background: #999; 
+  border-radius: 50%; 
+}
+
+.status-dot.active { 
+  background: #001b4e; 
+}
+
+.status-text { 
+  font-size: 1rem; 
+}
+
+.status-cancelled {
+  font-family: 'anton';
+  font-size: 1.4rem;
+  color: #b00000;
+  text-align: center;
+  margin-top: 2rem;
+  font-weight: bold;
+}
