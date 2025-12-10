@@ -30,16 +30,7 @@ function NavBar() {
 						<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
 					</NavLink>
 				</div>
-					<div className="navbar__bell">
-						{hasNewOrderUpdate && (
-						<NavLink to={`/orderstatus/${orderNumber}`}
-							className="notification-bell"
-							onClick={() => clearNotification()}
-						>
-							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
-						</NavLink>
-						)}
-					</div>
+
 
 				<div className="navbar__icons-right">
 					<div className="navbar__icons-right">
@@ -55,6 +46,17 @@ function NavBar() {
 								</>
 							)}
 						</NavLink>
+
+						<div className="navbar__bell">
+						{hasNewOrderUpdate && (
+						<NavLink to={`/orderstatus/${orderNumber}`}
+							className="notification-bell"
+							onClick={() => clearNotification()}
+						>
+							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
+						</NavLink>
+						)}
+					</div>
 
 						<div
 							className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
@@ -136,17 +138,18 @@ function NavBar() {
 							<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
 						</NavLink>
 					</div>
-						<div className="navbar__bell">
-							{hasNewOrderUpdate && (
-							<NavLink to={`/orderstatus/${orderNumber}`}
-								className="notification-bell"
-								onClick={() => clearNotification()}
-							>
-								<img src={Bell} className='navbar__bell' alt="Nofifikation" />
-							</NavLink>
-							)}
-						</div>
+
 					<div className="navbar__desktop-group">
+					<div className="navbar__bell">
+						{hasNewOrderUpdate && (
+						<NavLink to={`/orderstatus/${orderNumber}`}
+							className="notification-bell"
+							onClick={() => clearNotification()}
+						>
+							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
+						</NavLink>
+						)}
+					</div>
 						<NavLink
 							className={({ isActive }) =>
 								isActive
