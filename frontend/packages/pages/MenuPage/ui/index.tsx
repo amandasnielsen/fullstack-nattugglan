@@ -5,7 +5,7 @@ import { Footer } from '@nattugglan/footer';
 import { Button } from '@nattugglan/button';
 import { QuantityControl } from '@nattugglan/quantitycontrol';
 import { ContentContainer } from '@nattugglan/contentcontainer';
-import { useMenuStore, useCartStore, type MenuItem } from '@nattugglan/core'; // Importerar MenuItem för typning
+import { useMenuStore, useCartStore, type MenuItem } from '@nattugglan/core';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 

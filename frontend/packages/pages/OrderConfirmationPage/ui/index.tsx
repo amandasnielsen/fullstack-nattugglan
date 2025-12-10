@@ -238,8 +238,12 @@ function OrderConfirmationPage() {
 				</section>
 			</ContentContainer>
 			{renderPaymentMessage()}
-			<div className="Conformation__btnContainer">
-				<Button variant="secondary" onClick={handleClick}>
+			<div className="button__checkout-wrapper">
+				<Button 
+					variant="secondary" 
+					onClick={handleClick}
+					className="button__checkout"
+				>
 					Följ din beställning
 				</Button>
 			</div>
