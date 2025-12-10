@@ -123,12 +123,15 @@ export function OrderStatusPage() {
 							{steps.map((step, index) => (
 								<div key={step.key} className="status-step">
 									<div
-										className={
-											index <= currentStepIndex
-												? "status-dot active"
-												: "status-dot"
-										}
-									></div>
+                  className={
+                    index <= currentStepIndex
+                      ? 
+                      (index === currentStepIndex 
+                          ? "status-dot active pulsating" // active OCH pulsating
+                          : "status-dot active")          // active
+                      : "status-dot"                     
+                  }
+                ></div>
 									<p className="status-text">{step.label}</p>
 								</div>
 							))}
