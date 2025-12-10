@@ -2,6 +2,7 @@ import './OrderHistoryList.css';
 import type { orderDetailInterface } from '@nattugglan/orderconfirmationpage';
 import type { CartItem } from '@nattugglan/core';
 import { useCartStore } from '@nattugglan/core';
+import { useNavigate } from 'react-router-dom';
 
 interface OrderHistoryListProps {
 	orders: orderDetailInterface[];
@@ -9,6 +10,7 @@ interface OrderHistoryListProps {
 
 export function OrderHistoryList({ orders }: OrderHistoryListProps) {
 	const { addItem } = useCartStore();
+	const navigate = useNavigate();
 	if (!orders || orders.length === 0) {
 		return <p>Hittade ingen historik</p>;
 	}
@@ -18,7 +20,6 @@ export function OrderHistoryList({ orders }: OrderHistoryListProps) {
 			addItem(item);
 		});
 		console.log(`Vill återbeställa order: ${orderId}.`);
-		//här ska logik för att lägga till i varukorgen hamna
 	};
 
 	return (
