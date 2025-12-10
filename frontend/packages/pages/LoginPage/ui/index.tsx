@@ -10,6 +10,8 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  
+  const authLogin = useAuthStore(state => state.login); 
 
   async function handleLogin() {
     try {
@@ -23,17 +25,24 @@ function LoginPage() {
       });
 
       const data = await res.json();
-
+      
       if (!res.ok) {
         alert(data.error || "Login failed");
         return;
       }
 
-      useAuthStore.getState().setToken(data.token);
+      const token = data.token;
+      const role = data.role as 'admin' | 'user'; 
 
+      authLogin(token, role); 
+      
       alert("Logged in!");
 
-      navigate("/allorders");
+      if (role === 'admin') {
+        navigate("/allorders");
+      } else {
+        navigate("/menu"); 
+      }
 
     } catch (err) {
       console.error(err);
