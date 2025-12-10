@@ -6,6 +6,7 @@ import { Footer } from "@nattugglan/footer";
 import { ContentContainer } from "@nattugglan/contentcontainer";
 import { Button } from "@nattugglan/button";
 import { useNavigate } from "react-router-dom";
+import OwlChef from './assets/owl-chef.png';
 
 interface OrderResponse {
   orderNumber: string;
@@ -62,15 +63,15 @@ export function OrderStatusPage() {
             </p>
             
           </ContentContainer>
-          <div className="status-box__order">
-            <Button
-                variant="primary"
-                fullWidth={true}
-                className="status__button-menu"
-                onClick={() => navigate("/menu")}>
-                Meny
-            </Button>
-          </div>
+          <div className="button__checkout-wrapper">
+						<Button
+							variant="secondary"
+							fullWidth={true}
+							className="button__checkout"
+							onClick={() => navigate("/menu")}>
+							Meny
+					</Button>
+				</div>
         </>
       );
     }
@@ -92,15 +93,15 @@ export function OrderStatusPage() {
             </p>
           </div>
         </ContentContainer>
-        <div className="status-box__order">
+        <div className="button__checkout-wrapper">
           <Button
-            variant="primary"
+            variant="secondary"
             fullWidth={true}
-            className="status__button-menu"
+            className="button__checkout"
             onClick={() => navigate("/menu")}>
             Meny
-          </Button>
-        </div>
+        </Button>
+      </div>
       </>
     );
   }
@@ -118,30 +119,32 @@ export function OrderStatusPage() {
         <div className="status-box">
           <h2 className="status-box__order">Order #{order.orderNumber}</h2>
 
-          <div className="status-box__timeline">
-            {steps.map((step, index) => (
-              <div key={step.key} className="status-step">
-                <div
-                  className={
-                    index <= currentStepIndex
-                      ? "status-dot active"
-                      : "status-dot"
-                  }
-                ></div>
-                <p className="status-text">{step.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </ContentContainer>
-      <div className="status-box__order">
+						<div className="status-box__timeline">
+							{steps.map((step, index) => (
+								<div key={step.key} className="status-step">
+									<div
+										className={
+											index <= currentStepIndex
+												? "status-dot active"
+												: "status-dot"
+										}
+									></div>
+									<p className="status-text">{step.label}</p>
+								</div>
+							))}
+						</div>
+						<img className="owl-chef" src={OwlChef} alt="Owl Chef" />
+					</div>
+      	</ContentContainer>
+      	<div className="button__checkout-wrapper">
           <Button
-            variant="primary"
+            variant="secondary"
             fullWidth={true}
-            className="status__button-menu"
-            onClick={() => navigate("/menu")}>
-            Meny
-        </Button>
+            className="button__checkout"
+            onClick={() => navigate("/menu")}
+						>
+            	Meny
+        	</Button>
       </div>
     </>
   );

@@ -1,44 +1,72 @@
 .status-box__order {
   font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
   text-align: center;
-  margin-bottom: 2.5rem;
-  font-size: 1.8rem;
-  padding-bottom: 0.5rem;
   border-bottom: 1px solid #000000;
-}
-
-.status-box__order { 
-  text-align: center; 
+	padding: .5rem;
   margin-bottom: 1.5rem; 
-  font-size: 1.8rem; 
-}
-
-.status__button-menu{
-  width: 280px;
-  padding: 15px 20px;
-  bottom: 0;
-  left: 0;
-  align-items: center;
 }
 
 .status-box__timeline { 
   font-family: 'MerriweatherSans';
-  display: flex; 
-  flex-direction: column; 
-  gap: 6rem; 
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+  justify-content: space-between; 
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	padding-top: 1rem;
+
+}
+
+.status-box {
+  min-height: 40vh; 
+  display: flex;
+  flex-direction: column;
+	position: relative;
+}
+
+.owl-chef {
+	position: absolute;
+	right: 1.5rem;
+	bottom: 0;
+	width: 100px;
+	height: auto;
+  z-index: 100;
+}
+
+@media (max-width: 600px) {
+	.owl-chef {
+		bottom: 0;
+		right: 1rem; 
+		width: 70px;
+	}
+}
+
+@media (max-width: 400px) {
+	.owl-chef {
+		width: 60px;
+	}
 }
 
 .status-step { 
   display: flex; 
-  align-items: center; 
-  gap: 1rem; 
+  align-items: flex-start; 
+  gap: 1rem;
+  padding: 10px 0; 
+  position: relative; 
+  margin: 0;
 }
 
 .status-dot { 
-  width: 28px; 
-  height: 28px; 
+  width: 22px; 
+  height: 22px; 
   background: #999; 
   border-radius: 50%; 
+  flex-shrink: 0; 
+  position: relative;
+  z-index: 10; 
+  margin-top: 2px;
 }
 
 .status-dot.active { 
@@ -46,14 +74,16 @@
 }
 
 .status-text { 
-  font-size: 1rem; 
+  font-size: .9rem; 
+  align-self: center;
+  margin-top: 0; 
 }
 
 .status-cancelled {
   font-family: 'anton';
-  font-size: 1.4rem;
-  color: #b00000;
+  letter-spacing: var(--spacing-wide);
+  font-size: 1.2rem;
+  color: #820101;
   text-align: center;
   margin-top: 2rem;
-  font-weight: bold;
 }
