@@ -31,25 +31,23 @@ function MapPage() {
 							</div>
 
 							<p className="map__text">
-								Lingonstigen 19,
-								<br />
-								962 31 Jokkmokk
+								Lingonstigen 19 i Jokkmokk
 							</p>
 
 							<p className="map__text">
-								Öppettider
+								<strong>Öppettider:</strong>
 								<br />
-								07 - 23
+								Alla dagar 07 - 23
 							</p>
 
 							<p className="map__text">
-								Ring gärna!
+								<strong>Telefonnummer:</strong>
 								<br />
 								070&nbsp;-&nbsp;123&nbsp;45&nbsp;67
 							</p>
 
 							<p className="map__text">
-								Mejl:
+								<strong>Mejl:</strong>
 								<br />
 								<a href="mailto:nattugglan@gmail.com">nattugglan@gmail.com</a>
 							</p>
