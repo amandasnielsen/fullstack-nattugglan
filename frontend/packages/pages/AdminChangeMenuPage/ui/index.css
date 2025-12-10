@@ -28,6 +28,7 @@
 	font-family: 'anton';
   letter-spacing: var(--spacing-wide);
 	margin-bottom: .5em;
+	font-size: 16px;
 }
 
 .ingredients__container {
