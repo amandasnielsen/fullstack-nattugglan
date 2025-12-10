@@ -15,4 +15,5 @@ export interface OrderInterface {
 	totalPrice: number;
 	items: CartItem[];
 	createdAt: string;
+	guestId?: string;
 }

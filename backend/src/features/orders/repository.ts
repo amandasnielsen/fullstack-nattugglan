@@ -38,4 +38,17 @@ export const findOrderByNameAndPhone = async (
 
 export const findAllOrders = async (): Promise<OrderInterface[]> => {
 	return OrderModel.find().sort({ createdAt: -1 }).exec();
-}
+};
+
+export const findAllOrdersByGuestId = async (
+	guestId: string
+): Promise<OrderInterface[]> => {
+	return await OrderModel.find({ guestId });
+};
+
+export const findAllOrdersByNameAndPhone = async (
+	name: string,
+	phoneNumber: string
+): Promise<OrderInterface[]> => {
+	return await OrderModel.find({ name, phoneNumber });
+};
