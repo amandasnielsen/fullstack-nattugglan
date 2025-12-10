@@ -147,7 +147,7 @@ function OrderConfirmationPage() {
 		if (difference < 0)
 			return (
 				<p className="paymentMessage">
-					Få tillbaka {-difference} när du hämtar din mat
+					Du får tillbaka {-difference}:- när du hämtar din mat
 				</p>
 			);
 		return null;

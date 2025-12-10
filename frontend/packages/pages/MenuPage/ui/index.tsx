@@ -39,14 +39,14 @@ function MenuPage() {
     navigate('/cart');
   };
 
-  // NY LOGIK: Grupperar menyn baserat på vald kategori
+  // grupperar menyn baserat på vald kategori
   const menuToDisplay = useMemo(() => {
-    // Filtrera alla objekt baserat på vald kategori
+    // filtrera alla objekt baserat på vald kategori
     const filtered = (activeCategory === 'Visa allt')
       ? menu
       : menu.filter(item => item.category.toUpperCase() === activeCategory.toUpperCase());
     
-    // Gruppera de filtrerade objekten
+    // gruppera de filtrerade objekten
     const grouped: GroupedMenu = filtered.reduce((acc, item) => {
       const categoryKey = item.category || 'Övrigt'; // Använd kategorin som nyckel
       

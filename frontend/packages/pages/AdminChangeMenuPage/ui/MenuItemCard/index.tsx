@@ -19,6 +19,7 @@ interface MenuItemCardProps {
 const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories }) => { 
   const [isEditing, setIsEditing] = useState(false);
 
+	// states för det som går att ändra
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price)); 
   const [category, setCategory] = useState(item.category); 
@@ -32,6 +33,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
     else if (name === 'ingredients') setIngredients(value);
   };
   
+	// kategori ändras genom checkboxar
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value); 
   };
@@ -40,16 +42,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
   const handleSave = async () => {
     const dataToSave: Partial<MenuItem> = {};
 
-    // 1. Namn
+    // sparar namn, pris, kategori och ingredienser
     if (name !== item.name) dataToSave.name = name;
-    
-    // 2. Pris
     if (price !== String(item.price)) dataToSave.price = Number(price); 
-
-    // 3. Kategori
     if (category !== item.category) dataToSave.category = category; 
-
-    // 4. Ingredienser
     const newIngredientsArray = ingredients 
       ? ingredients.split(',').map(s => s.trim()).filter(s => s.length > 0) 
       : [];
