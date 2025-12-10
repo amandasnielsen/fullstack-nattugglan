@@ -1,6 +1,6 @@
 import './index.css';
 import { NavBarAdmin } from '@nattugglan/navbaradmin';
-import { Footer } from '@nattugglan/footer';
+import { FooterAdmin } from '@nattugglan/footeradmin';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 import { useState, useEffect, useMemo } from 'react';
 import { useAuthStore } from '@nattugglan/core';
@@ -116,7 +116,7 @@ function AdminChangeMenuPage() {
         <NavBarAdmin />
         <h1>Uppdatera menyn</h1>
         <ContentContainer><p>Laddar meny...</p></ContentContainer>
-        <Footer />
+        <FooterAdmin />
       </>
     );
   }
@@ -176,7 +176,7 @@ function AdminChangeMenuPage() {
           )}
         </div>
       </ContentContainer>
-      <Footer />
+      <FooterAdmin />
     </section>
   );
 }

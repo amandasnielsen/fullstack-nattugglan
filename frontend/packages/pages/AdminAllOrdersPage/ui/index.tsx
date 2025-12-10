@@ -1,6 +1,6 @@
 import './index.css';
 import { NavBarAdmin } from '@nattugglan/navbaradmin';
-import { Footer } from '@nattugglan/footer';
+import { FooterAdmin } from '@nattugglan/footeradmin';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 import { useState, useEffect, useMemo, useRef } from 'react'; 
 import { useNavigate } from 'react-router-dom';
@@ -197,7 +197,7 @@ function AdminAllOrdersPage() {
         <NavBarAdmin />
         <h1>Alla beställningar</h1>
         <ContentContainer><p className="loading__message">Laddar beställningar...</p></ContentContainer>
-        <Footer />
+        <FooterAdmin />
       </>
     );
   }
@@ -300,7 +300,7 @@ function AdminAllOrdersPage() {
             
         </div>
       </ContentContainer>
-      <Footer />
+      <FooterAdmin />
 
       {cancelModal.isOpen && (
         <div className="modal__overlay">
