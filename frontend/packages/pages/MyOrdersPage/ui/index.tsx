@@ -22,62 +22,65 @@ function MyOrdersPage() {
 		fetchOrders(name, phoneNumber);
 	};
 
+	const sortedOrders = previousOrders.sort((a, b) => {
+		const dateA = new Date(a.createdAt);
+		const dateB = new Date(b.createdAt);
+
+		return dateB.getTime() - dateA.getTime();
+	});
+
 	if (isLoading) {
 		return <div>Laddar orderhistorik....</div>;
 	}
 
-	if (guestId && previousOrders.length > 0) {
-		return (
-			<div>
-				<h2>Tidigare Beställningar</h2>
-				<p>Här är dina tidigare ordrar! {guestId}</p>
-				<OrderHistoryList orders={previousOrders} />
-			</div>
-		);
-	}
-
-	if (!guestId) {
-		return (
-			<div>
-				<h2>Hitta dina tidigare ordrar</h2>
-				<p>
-					Vänligen ange ditt namn och telefonnummer för att hämta dina tidigare
-					ordrar
-				</p>
-
-				<form onSubmit={handleSubmit}>
-					<input
-						type="text"
-						placeholder="Namn"
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-						required
-					/>
-					<input
-						type="tel"
-						placeholder="Telefonnummer"
-						value={phoneNumber}
-						onChange={(e) => setPhoneNumber(e.target.value)}
-						required
-					/>
-					<button type="submit">Hämta Ordrar</button>
-				</form>
-			</div>
-		);
-	}
-
 	return (
-		<>
+		<article className="orderHistory">
 			<NavBar />
 			<Footer />
 			<h1>Mina Beställningar</h1>
 			<ContentContainer>
-				<p>
-					Du har ingen registrerad orderhistorik än. Lägg din första beställning
-					nu!
-				</p>
+				{guestId ? (
+					<div className="orderHistory__container">
+						<p className="orderHistory__guestId">{guestId}</p>
+						<OrderHistoryList orders={sortedOrders} />
+					</div>
+				) : (
+					<div className="orderHistory">
+						<h2 className="orderHistory__title">Hitta dina tidigare ordrar</h2>
+						<p className="orderHistory__text">
+							Vänligen ange ditt namn och telefonnummer för att hämta dina
+							tidigare ordrar
+						</p>
+
+						<form className="orderHistory__form" onSubmit={handleSubmit}>
+							<div className="orderHistory__formContent">
+								<label className="orderHistory__label">Namn:</label>
+								<input
+									className="orderHistory__input"
+									type="text"
+									placeholder="Namn"
+									value={name}
+									onChange={(e) => setName(e.target.value)}
+									required
+								/>
+								<label className="orderHistory__label">Telefonnummer:</label>
+								<input
+									className="orderHistory__input"
+									type="tel"
+									placeholder="Telefonnummer"
+									value={phoneNumber}
+									onChange={(e) => setPhoneNumber(e.target.value)}
+									required
+								/>
+							</div>
+							<button className="orderHistory__button" type="submit">
+								Hämta Ordrar
+							</button>
+						</form>
+					</div>
+				)}
 			</ContentContainer>
-		</>
+		</article>
 	);
 }
 

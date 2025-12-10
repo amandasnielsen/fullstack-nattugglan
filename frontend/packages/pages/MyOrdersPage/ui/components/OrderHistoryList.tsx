@@ -1,43 +1,54 @@
+import './OrderHistoryList.css';
 import type { orderDetailInterface } from '@nattugglan/orderconfirmationpage';
+import type { CartItem } from '@nattugglan/core';
+import { useCartStore } from '@nattugglan/core';
 
 interface OrderHistoryListProps {
 	orders: orderDetailInterface[];
 }
 
 export function OrderHistoryList({ orders }: OrderHistoryListProps) {
+	const { addItem } = useCartStore();
 	if (!orders || orders.length === 0) {
 		return <p>Hittade ingen historik</p>;
 	}
 
-	const handleReorder = (orderId: string) => {
-		console.log(`Vill återbeställa order: ${orderId}`);
+	const handleReorder = (orderId: string, itemsToReorder: CartItem[]) => {
+		itemsToReorder.forEach((item) => {
+			addItem(item);
+		});
+		console.log(`Vill återbeställa order: ${orderId}.`);
 		//här ska logik för att lägga till i varukorgen hamna
 	};
 
 	return (
-		<div className="order__historyContainer">
-			<h3>Tidigare Beställningar ({orders.length}) st</h3>
-
+		<div className="orderHistory__cardContainer">
 			{orders.map((order) => (
-				<div key={order.orderNumber} className="order__card">
-					<h4>Beställning #{order.orderNumber}</h4>
-					<p>Datum: {new Date(order.createdAt).toLocaleDateString()}</p>
-					<p>Totalt: {order.totalPrice} kr</p>
+				<div key={order.orderNumber} className="orderHistory__card">
+					<div className="orderHistory__card-top">
+						<h4>#{order.orderNumber}</h4>
+						<p>{new Date(order.createdAt).toLocaleDateString()}</p>
+					</div>
 
-					<ul>
+					<ul className="orderHistory__cardList">
 						{order.items.map((item, index) => (
-							<li key={index}>
-								{item.quantity} x {item.name}
+							<li key={index} className="orderHistory__cardListItem">
+								<p>
+									{item.quantity} x {item.name}
+								</p>
+								<p>{item.price} :-</p>
 							</li>
 						))}
 					</ul>
-
-					<button
-						onClick={() => handleReorder(order.orderNumber)}
-						className="reorder-button"
-					>
-						Återbeställ denna order
-					</button>
+					<div className="orderHistory__card-bottom">
+						<p>Totalt: {order.totalPrice} kr</p>
+						<button
+							onClick={() => handleReorder(order.orderNumber, order.items)}
+							className="reorder-button"
+						>
+							Beställ igen!
+						</button>
+					</div>
 				</div>
 			))}
 		</div>
