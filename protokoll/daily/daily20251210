@@ -1,0 +1,41 @@
+Mötesprotokoll Daily Scrum (10 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Fixade klart att kunden kan avbryta sin beställning innan admin har låst order. Sedan började
+  med att man kan se sina ordrar
+* Göra stylingen på mina ordrar-sidan och få klart den
+* Ska iväg på läkarbesök under dagen
+
+Person 2 (Amanda)
+* Gjorde klart admin status-sidan. Sedan började jag med admin ändra meny-sidan
+* Göra klart ändra meny-sidan för admin
+* Nej
+
+Person 3 (Belinda)
+* Blev nästan klar med Error-sidan
+* Göra klart den och få in den i App.tsx
+* Inga hinder
+
+Person 4 (Rasmus)
+* Gjorde orderstatus-sidan och logiken bakom varje steg. Sedan började jag med notis-funktionen
+* Fixa styling för notiserna och lägga till den lilla ringklockan. Samt bugfixar
+* Jobbmöte på eftermiddagen, annars nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
