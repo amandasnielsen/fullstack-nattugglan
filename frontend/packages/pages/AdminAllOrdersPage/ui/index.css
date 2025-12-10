@@ -33,8 +33,9 @@
 	display: flex;
   justify-content: space-between;
 	margin-bottom: 1em;
-	font-family: 'MerriweatherSans-Bold';
-  font-size: 0.8em;
+	font-family: 'MerriweatherSans';
+	font-weight: 700;  
+	font-size: 0.8em;
 }
 
 .order__products-list {
@@ -155,7 +156,8 @@
 	font-weight: bold;
 	margin-bottom: 5px;
 	font-size: 0.8em;
-	font-family: 'MerriweatherSans-Bold';
+	font-family: 'MerriweatherSans';
+	font-weight: 700;
 }
 
 .reason__text {

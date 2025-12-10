@@ -1,4 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
+
+export interface MenuItemInterface extends Document {
+  _id: Types.ObjectId; 
+  name: string;
+  ingredients: string[];
+  price: number;
+  category?: string;
+  available: boolean;
+  createdAt: Date;
+  updatedAt: Date; 
+}
 
 const MenuItemSchema = new Schema({
   name: { type: String, required: true },
@@ -8,8 +19,7 @@ const MenuItemSchema = new Schema({
   available: { type: Boolean, default: true }
 }, { timestamps: true });
 
-
-export const MenuItemModel = model(
+export const MenuItemModel = model<MenuItemInterface>(
   "MenuItem",
   MenuItemSchema,
   "menu" 

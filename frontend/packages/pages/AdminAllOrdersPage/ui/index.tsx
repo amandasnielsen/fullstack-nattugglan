@@ -7,27 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 import { StatusDropdown } from '@nattugglan/statusdropdown';
 import { Button } from '@nattugglan/button';
+import { startOrdersPolling, type Order, type OrderStatus } from '../data/fetchOrders'; 
 import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 
 
-type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
 type FilterStatus = OrderStatus | 'All';
-
-interface OrderItem {
-  name: string;
-  quantity: number;
-}
-
-interface Order {
-  _id: string; 
-  orderNumber: string;
-  status: OrderStatus;
-  totalPrice: number;
-  items: OrderItem[];
-  name: string;
-  createdAt: string;
-  cancellationReason?: string;
-}
 
 interface CancelModalState {
   isOpen: boolean;
@@ -37,20 +21,13 @@ interface CancelModalState {
 }
 
 const STATUS_ORDER: OrderStatus[] = [
-  'Pending', 
-  'Confirmed', 
-  'Ready',
-  'Done', 
-  'Cancelled'
+  'Pending', 'Confirmed', 'Ready', 'Done', 'Cancelled'
 ];
 
 const FILTER_OPTIONS: FilterStatus[] = ['All', ...STATUS_ORDER];
 
 const STATUS_OPTIONS: OrderStatus[] = [
-  'Confirmed', 
-  'Ready', 
-  'Done',
-  'Cancelled'
+  'Confirmed', 'Ready', 'Done', 'Cancelled'
 ];
 
 // namnen på kategorierna som visas
@@ -86,69 +63,25 @@ function AdminAllOrdersPage() {
     currentComment: '',
   });
 
-  // använd useRef för att lagra senaste datan och undvika blinkning
   const latestOrdersRef = useRef<Order[] | null>(null); 
   
   const token = useAuthStore(state => state.token);
   const logout = useAuthStore(state => state.logout); 
   const navigate = useNavigate();
 
-  // hämtar ordrar från backend (med Polling och det kommer inte blinka till
   useEffect(() => {
-    let isCancelled = false; 
+    // startOrdersPolling returnerar cleanup-funktionen direkt
+    const cleanup = startOrdersPolling(
+			token,
+			logout,
+			navigate,
+			latestOrdersRef,
+			setOrders,
+			setLoading,
+			loading
+    );
 
-    const fetchOrders = async () => {
-      if (!token || isCancelled) return;
-
-			console.log('Hämtar nya ordrar från backend');
-
-      try {
-        const response = await fetch('http://localhost:3000/api/admin/orders', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.status === 401 || response.status === 403) {
-          logout(); // logga ut om behörighet saknas
-          navigate('/access-denied');
-          return;
-        }
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch orders: ${response.statusText}`);
-        }
-        const data: Order[] = await response.json(); 
-        
-        // jämför de nya hämtade datan med den befintliga datan
-				// renderas om bara om det är nya ordrar
-        if (JSON.stringify(latestOrdersRef.current) !== JSON.stringify(data)) {
-					// om det finns något nytt
-					latestOrdersRef.current = data; // uppdaterar och lagrar den nya datan
-					setOrders(data); // renderar om sidan
-        }
-
-				// om det inte är någon ny data, hoppas den över setOrders
-				// då blir det ingen ful "blinkning" vid varje omladdning
-
-      } catch (error) {
-        console.error("Fel vid hämtning av ordrar:", error);
-      } finally {
-        if (loading) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchOrders();
-    const intervalId = setInterval(fetchOrders, 10000); // laddar om (polling) var 10e sekund
-
-    return () => {
-      clearInterval(intervalId); // rensar intervallet
-      isCancelled = true;
-    };
+    return cleanup;
     
   }, [token, navigate, logout, loading]); 
 
@@ -170,6 +103,9 @@ function AdminAllOrdersPage() {
   };
 
   const handleStatusChange = async (orderId: string, orderNumber: string, newStatus: OrderStatus, comment?: string) => {
+
+    const API_STATUS_URL = `http://localhost:3000/api/admin/orders/${orderNumber}/status`;
+    
     if (!token) return;
 
     if (newStatus === 'Cancelled' && !comment) {
@@ -188,7 +124,7 @@ function AdminAllOrdersPage() {
         requestBody.comment = comment;
       }
 
-      const response = await fetch(`http://localhost:3000/api/admin/orders/${orderNumber}/status`, {
+      const response = await fetch(API_STATUS_URL, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -224,8 +160,7 @@ function AdminAllOrdersPage() {
       console.error("Fel vid statusuppdatering:", error);
     }
   };
-
-  // gruppera och sortera orderkategorierna (pending först)
+  
   const groupedOrders = useMemo(() => {
     if (!orders) return {} as Record<OrderStatus, Order[]>;
 
@@ -260,7 +195,7 @@ function AdminAllOrdersPage() {
     return (
       <>
         <NavBarAdmin />
-				<h1>Alla beställningar</h1>
+        <h1>Alla beställningar</h1>
         <ContentContainer><p className="loading__message">Laddar beställningar...</p></ContentContainer>
         <Footer />
       </>

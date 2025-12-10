@@ -6,7 +6,7 @@ import { MyOrdersPage } from '@nattugglan/myorderspage';
 import { AboutUs } from '@nattugglan/aboutus';
 import { MapPage } from '@nattugglan/mappage';
 import { LoginPage } from '@nattugglan/loginpage';
-import { ChangeOrdersPage } from '@nattugglan/adminchangeorderspage';
+import { AdminChangeMenuPage } from '@nattugglan/adminchangemenupage';
 import { StockPage } from '@nattugglan/stockpage';
 import { AdminAllOrdersPage } from '@nattugglan/adminallorderspage';
 import { PaymentPage } from '@nattugglan/paymentpage';
@@ -29,7 +29,7 @@ function App() {
 					<Route path="/maps" element={<MapPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/allorders" element={<AdminAllOrdersPage />} />
-					<Route path="/updatemenu" element={<ChangeOrdersPage />} />
+					<Route path="/updatemenu" element={<AdminChangeMenuPage />} />
 					<Route path="/stock" element={<StockPage />} />
 					<Route path="/payment" element={<PaymentPage />} />
 					<Route

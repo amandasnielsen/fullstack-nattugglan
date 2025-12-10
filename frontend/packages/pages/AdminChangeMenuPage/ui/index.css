@@ -1,0 +1,112 @@
+.menu__category-group h2 {
+  font-size: 1.3rem;
+	margin-bottom: .5em;
+	text-align: center;
+	font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+}
+
+.admin__menu-page .container__card {
+	min-height: 55vh;
+	max-height: 55vh;
+}
+
+.admin__menu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+	margin-bottom: 1em;
+  border: 1px solid #585858;
+  border-radius: 5px;
+	font-family: 'MerriweatherSans';
+  font-size: 0.9em;
+}
+
+.admin__menu-card h3 {
+  margin-top: 0;
+	font-family: 'anton';
+  letter-spacing: var(--spacing-wide);
+	margin-bottom: .5em;
+	font-size: 16px;
+}
+
+.ingredients__container {
+  border-bottom: 1px solid #585858;
+  padding-bottom: 1em; 
+	width: 100%;
+}
+
+.admin__menu-card input[type="text"],
+.admin__menu-card input[type="number"],
+.admin__menu-card textarea
+{
+	padding: .5em;
+	border: 1px solid #585858;
+	background-color: transparent;
+	border-radius: 3px;
+	width: 80%;
+	box-sizing: border-box;
+	margin-bottom: .5em;
+	font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+}
+
+.category__radio-group {
+  margin-bottom: .5em;
+}
+
+.category__radio-group label {
+	display: block;
+}
+
+.category__options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1em; 
+	margin-top: 1em;
+}
+
+.category__option {
+  display: flex;
+  align-items: center;
+}
+
+.category__option input[type="radio"] {
+  margin-right: .5em;
+}
+
+.card__actions-menu {
+	display: flex;
+	align-self: flex-end;
+	gap: 1em;
+}
+
+.edit__button {
+  align-self: flex-end;
+	background-color: #172346;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+	color: white;
+	border: none;
+}
+
+.cancel__button {
+  align-self: flex-end;
+	background-color: transparent;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+	border: 1px solid #585858;
+}
+
+.save__button {
+  align-self: flex-end;
+	background-color: #172346;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+	color: white;
+	border: none;
+}

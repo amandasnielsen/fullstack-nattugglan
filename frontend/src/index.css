@@ -8,7 +8,7 @@
 	--bg-gradient: linear-gradient(
 		0deg,
 		rgba(2, 11, 40, 1) 0%,
-		rgba(23, 35, 70, 1) 100%
+		rgb(23, 35, 70) 100%
 	);
 	--box-white: rgba(255, 248, 231, 0.8);
 	--font-color-white: #f8f8f8;
@@ -63,10 +63,10 @@ h1 {
 }
 
 @font-face {
-	font-family: 'MerriweatherSans-Bold';
+	font-family: 'MerriweatherSans';
 	src: url('./assets/MerriweatherSans-Bold.ttf') format('truetype');
 	font-weight: 700;
-	font-style: bold;
+	font-style: normal;
 }
 
 html {

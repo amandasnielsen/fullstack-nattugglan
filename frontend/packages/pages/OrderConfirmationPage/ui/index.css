@@ -120,5 +120,6 @@
 
 .paymentMessage {
 	color: var(--font-color-white);
+	letter-spacing: var(--spacing-wide);
 	padding: 1rem;
 }
