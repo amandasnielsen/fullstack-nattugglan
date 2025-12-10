@@ -41,7 +41,7 @@ function MyOrdersPage() {
 			<ContentContainer>
 				{guestId ? (
 					<div className="orderHistory__container">
-						<p className="orderHistory__guestId">{guestId}</p>
+						<p className="orderHistory__guestId">GuestId: #{guestId}</p>
 						<OrderHistoryList orders={sortedOrders} />
 					</div>
 				) : (
