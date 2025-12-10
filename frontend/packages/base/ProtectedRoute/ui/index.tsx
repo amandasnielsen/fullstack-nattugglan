@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core'; 
 
-// ser till att admin krävs för admin-sidorna
 interface ProtectedRouteProps {
   component: React.ComponentType; 
   requiredRole?: 'admin'; 
@@ -15,6 +14,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, r
 
   if (!token) {
     return <Navigate to="/login" replace />;
+  }
+  
+  if (userRole === null) {
+      return <div>Laddar behörighet...</div>; 
   }
 
   if (requiredRole && userRole !== requiredRole) {
