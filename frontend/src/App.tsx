@@ -23,7 +23,7 @@ function App() {
 					<Route path="/menu" element={<MenuPage />} />
 					<Route path="/cart" element={<CartPage />} />
 					<Route path="/payment" element={<PaymentPage />} />
-					<Route path="/orderstatus" element={<OrderStatusPage />} />
+					<Route path="/orderstatus/:orderNumber" element={<OrderStatusPage />} />
 					<Route path="/myorders" element={<MyOrdersPage />} />
 					<Route path="/aboutUs" element={<AboutUs />} />
 					<Route path="/maps" element={<MapPage />} />

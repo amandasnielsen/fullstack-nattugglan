@@ -1,12 +1,20 @@
 import './index.css';
 import Logo from './assets/logo.png';
+import Bell from './assets/bell.png';
 import CartIcon from './assets/cart.png';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCartStore } from '@nattugglan/core';
+import { useOrderStore } from '@nattugglan/core/state/orderStore';
+import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 
 function NavBar() {
+	const hasNewOrderUpdate = useNotificationStore((s) => s.hasNewOrderUpdate);
+	const clearNotification = useNotificationStore((s) => s.clearNotification);
+  
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
+	const orderNumber = useOrderStore((state) => state.orderNumber);
+
 
 	const totalQuantity = useCartStore((state) => state.totalQuantity);
 
@@ -23,6 +31,7 @@ function NavBar() {
 					</NavLink>
 				</div>
 
+
 				<div className="navbar__icons-right">
 					<div className="navbar__icons-right">
 						<NavLink to="/cart" className="navbar__cart-link">
@@ -37,6 +46,17 @@ function NavBar() {
 								</>
 							)}
 						</NavLink>
+
+						<div className="navbar__bell">
+						{hasNewOrderUpdate && (
+						<NavLink to={`/orderstatus/${orderNumber}`}
+							className="notification-bell"
+							onClick={() => clearNotification()}
+						>
+							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
+						</NavLink>
+						)}
+					</div>
 
 						<div
 							className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
@@ -66,7 +86,7 @@ function NavBar() {
 							className={({ isActive }) =>
 								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
 							}
-							to="/orderstatus"
+							to={`/orderstatus/${orderNumber}`}
 							onClick={toggleMenu}
 						>
 							Orderstatus
@@ -118,7 +138,18 @@ function NavBar() {
 							<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
 						</NavLink>
 					</div>
+
 					<div className="navbar__desktop-group">
+					<div className="navbar__bell">
+						{hasNewOrderUpdate && (
+						<NavLink to={`/orderstatus/${orderNumber}`}
+							className="notification-bell"
+							onClick={() => clearNotification()}
+						>
+							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
+						</NavLink>
+						)}
+					</div>
 						<NavLink
 							className={({ isActive }) =>
 								isActive
@@ -136,11 +167,11 @@ function NavBar() {
 									? 'navbar__desktop-links active-link-desktop'
 									: 'navbar__desktop-links'
 							}
-							to="/orderstatus"
+							to={`/orderstatus/${orderNumber}`}
 							onClick={toggleMenu}
-						>
+							>
 							Orderstatus
-						</NavLink>
+							</NavLink>
 						<NavLink
 							className={({ isActive }) =>
 								isActive
