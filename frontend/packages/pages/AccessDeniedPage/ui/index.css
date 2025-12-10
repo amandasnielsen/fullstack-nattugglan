@@ -1,0 +1,13 @@
+.access__denied {
+	display: flex;
+	justify-content: center;
+}
+
+.access__denied-title {
+	margin-top: 10em;
+	font-family: 'anton';
+	color: var(--font-color-white);
+	letter-spacing: var(--spacing-wide);
+	font-size: 30px;
+}
+

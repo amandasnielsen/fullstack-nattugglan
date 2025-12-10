@@ -120,5 +120,20 @@
 
 .paymentMessage {
 	color: var(--font-color-white);
+	letter-spacing: var(--spacing-wide);
 	padding: 1rem;
+}
+
+@media (max-height: 900px) {
+  .ConfirmationPage .container__card {
+    min-height: 50vh;
+    max-height: 50vh;
+  }
+}
+
+@media (max-height: 800px) {
+  .ConfirmationPage .container__card {
+    min-height: 45vh;
+    max-height: 45vh;
+  }
 }

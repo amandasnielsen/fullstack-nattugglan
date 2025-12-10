@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { login, logout } from '../../features/auth/controller';
-import { getMenu } from '../../features/menu/controller';
+import { getMenu, updateItem } from '../../features/menu/controller';
 import { requireApiKey } from '../middleware/apiKey';
 import { requireAuth, requireAdmin } from '../middleware/auth';
 import { UserModel } from '../database/models/user.model';
@@ -30,6 +30,7 @@ router.put(
 	requireAdmin,
 	putOrderStatus
 );
+router.put('/admin/menu/:itemId', requireAuth, requireAdmin, updateItem);
 
 //*DEBUGGING, RADERA * \\
 router.get('/debug/users', async (req, res) => {

@@ -48,6 +48,7 @@
   width: 80%;
   max-width: 260px;
   font-size: 0.9rem;
+	font-family: 'MerriweatherSans';
 }
 
 .map__text a {
