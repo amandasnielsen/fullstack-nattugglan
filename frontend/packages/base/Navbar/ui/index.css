@@ -182,6 +182,16 @@
   border-bottom: 1px solid var(--box-white); 
 }
 
+.notification-bell {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #ffcc00;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.3rem;
+}
+
+
 /* #endregion navbar-desktop */
 
 
