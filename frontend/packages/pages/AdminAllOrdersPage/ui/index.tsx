@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 import { StatusDropdown } from '@nattugglan/statusdropdown';
 import { Button } from '@nattugglan/button';
+import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
+
 
 type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
 type FilterStatus = OrderStatus | 'All';
@@ -72,6 +74,8 @@ const formatOrderDate = (dateString: string): string => {
 };
 
 function AdminAllOrdersPage() {
+  const setNewOrderUpdate = useNotificationStore.getState().setNewOrderUpdate;
+
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<FilterStatus>('All');
@@ -211,6 +215,8 @@ function AdminAllOrdersPage() {
           order._id === orderId ? updatedOrder : order
         ) : null
       );
+
+      setNewOrderUpdate(true);
     
       console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
 
