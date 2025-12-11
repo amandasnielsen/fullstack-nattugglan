@@ -6,11 +6,6 @@
   letter-spacing: var(--spacing-wide);
 }
 
-.admin__menu-page .container__card {
-	min-height: 55vh;
-	max-height: 55vh;
-}
-
 .admin__menu-card {
   display: flex;
   flex-direction: column;
@@ -109,4 +104,16 @@
   font-size: 0.85em;
 	color: white;
 	border: none;
+}
+
+.admin__menu-page .container__card {
+	min-height: 60vh;
+	max-height: 60vh;
+}
+
+@media (max-height: 800px) {
+  .admin__menu-page .container__card {
+    min-height: 35vh;
+    max-height: 50vh;
+  }
 }

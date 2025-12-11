@@ -12,11 +12,6 @@
   color: var(--font-color-dark);
 }
 
-.cart__page .container__card {
-  min-height: 55vh;
-  max-height: 55vh;
-}
-
 .total__label {
 	font-family: 'anton';
 	font-size: 2rem;
@@ -55,12 +50,10 @@
   padding: 15px 20px;
 }
 
-@media (max-height: 800px) {
-  .cart__page .container__card {
-    min-height: 45vh;
-  	max-height: 45vh;
-		max-width: 400px;
-  }
+.cart__page .container__card {
+  min-height: 45vh;
+  max-height: 60vh;
+	max-width: 400px;
 }
 
 @media (min-width: 900px) {
@@ -69,8 +62,6 @@
 	}
 
 	.cart__page .container__card {
-		min-height: 40vh;
-		max-height: 40vh;
-		max-width: 400px;
+		min-height: 45vh;
 	}
 }

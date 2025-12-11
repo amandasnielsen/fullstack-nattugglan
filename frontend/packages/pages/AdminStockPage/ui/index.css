@@ -1,0 +1,11 @@
+.admin__stock-page .container__card {
+	min-height: 60vh;
+	max-height: 60vh;
+}
+
+@media (max-height: 650px) {
+  .admin__stock-page .container__card {
+    min-height: 40vh;
+		max-height: 50vh;
+  }
+}
