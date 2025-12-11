@@ -1,16 +1,16 @@
-import "./index.css";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { NavBar } from "@nattugglan/navbar";
-import { Footer } from "@nattugglan/footer";
-import { ContentContainer } from "@nattugglan/contentcontainer";
-import { Button } from "@nattugglan/button";
-import { useNavigate } from "react-router-dom";
+import './index.css';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavBar } from '@nattugglan/navbar';
+import { Footer } from '@nattugglan/footer';
+import { ContentContainer } from '@nattugglan/contentcontainer';
+import { Button } from '@nattugglan/button';
+import { useNavigate, Link } from 'react-router-dom';
 import OwlChef from './assets/owl-chef.png';
 
 interface OrderResponse {
-  orderNumber: string;
-  status: "Pending" | "Confirmed" | "Ready" | "Cancelled";
+	orderNumber: string;
+	status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
 }
 
 export function OrderStatusPage() {
@@ -76,7 +76,7 @@ export function OrderStatusPage() {
         </>
       );
     }
-
+  
   // === CANCELLED ORDER ===
   if (order && order.status === "Cancelled") {
     return (
@@ -88,7 +88,9 @@ export function OrderStatusPage() {
 
 					<ContentContainer>
 						<div className="status-box">
-							<h2 className="status-box__order">Order #{order.orderNumber}</h2>
+							<Link className="status-box__link" to={`/order/${orderNumber}`}>
+							  <h2 className="status-box__order">Order #{order.orderNumber}</h2>
+						  </Link>
 							<p className="status-cancelled">
 								Den här beställningen har avbrutits av köket.
 							</p>
@@ -118,8 +120,10 @@ export function OrderStatusPage() {
 				<h1 className="status__title">Orderstatus</h1>
 
 				<ContentContainer>
-					<div className="status-box">
-						<h2 className="status-box__order">Order #{order.orderNumber}</h2>
+          <div className="status-box">
+            <Link className="status-box__link" to={`/order/${orderNumber}`}>
+              <h2 className="status-box__order">Order #{order.orderNumber}</h2>
+            </Link>
 
 							<div className="status-box__timeline">
 								{steps.map((step, index) => (

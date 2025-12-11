@@ -11,6 +11,11 @@
 	padding-bottom: 0.5rem;
 }
 
+.orderHistory__card-link {
+	text-decoration: none;
+	color: var(--font-color-dark);
+}
+
 .orderHistory__cardList {
 	display: flex;
 	flex-direction: column;

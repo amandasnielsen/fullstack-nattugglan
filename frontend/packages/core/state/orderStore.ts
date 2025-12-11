@@ -60,12 +60,9 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 					const newGuestId = data[0].guestId;
 					if (typeof newGuestId === 'string') {
 						get().setGuestId(newGuestId);
-						console.log(`gästen identifierad! Sparar guest id:, ${newGuestId}`);
 					}
 				}
 				set({ previousOrders: data });
-			} else {
-				console.log('Hittade inga ordrar för denna identifiering.');
 			}
 		} catch (error) {
 			console.error('Fel vid API-anrop:', error);

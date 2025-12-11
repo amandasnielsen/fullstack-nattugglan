@@ -108,8 +108,6 @@ function OrderConfirmationPage() {
 		try {
 			const updatedOrder = await updateOrder(orderNumber, editableItems);
 
-			console.log(updatedOrder);
-
 			setOrderData((prev) =>
 				prev
 					? {
@@ -245,8 +243,8 @@ function OrderConfirmationPage() {
 			</ContentContainer>
 			{renderPaymentMessage()}
 			<div className="button__checkout-wrapper">
-				<Button 
-					variant="secondary" 
+				<Button
+					variant="secondary"
 					onClick={handleClick}
 					className="button__checkout"
 				>
