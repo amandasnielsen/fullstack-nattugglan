@@ -10,7 +10,7 @@ interface OrderResponse {
 }
 
 async function fetchOrderStatus(orderNumber: string): Promise<OrderResponse | null> {
-	console.log(`GPolling for order ${orderNumber} at: ${new Date().toLocaleTimeString()}`);
+	console.log(`Polling for order ${orderNumber} at: ${new Date().toLocaleTimeString()}`);
 	
 	const res = await fetch(`http://localhost:3000/api/order/${orderNumber}`);
 	if (!res.ok) {
