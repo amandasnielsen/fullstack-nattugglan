@@ -17,8 +17,6 @@ function PaymentPage() {
 	const [name, setName] = useState('');
 	const [errors, setErrors] = useState<string[]>([]);
 
-	const API_URL = 'http://localhost:3000';
-
 	const handlePayment = async () => {
 		const newErrors: string[] = [];
 		if (!validateName(name)) {
@@ -33,12 +31,8 @@ function PaymentPage() {
 			return;
 		}
 
-		if (newErrors.length === 0) {
-			console.log('Allt är ok!');
-		}
-
 		if (items.length === 0) {
-			alert('Kundkorgen är tom');
+			setErrors(['Kundkorgen är tom']);
 			return;
 		}
 
@@ -51,7 +45,7 @@ function PaymentPage() {
 		};
 
 		try {
-			const response = await fetch(`${API_URL}/api/order`, {
+			const response = await fetch(`http://localhost:3000/api/order`, {
 				method: 'POST',
 				headers: {
 					//lägg till guest ID-cookien här, och api nyckeln
@@ -59,9 +53,6 @@ function PaymentPage() {
 				},
 				body: JSON.stringify(order),
 			});
-
-			
-
 
 			if (!response.ok) {
 				const errorData = await response.json();
@@ -77,7 +68,7 @@ function PaymentPage() {
 			navigate(`/order/${orderNumber}`);
 		} catch (error) {
 			console.error('Fel vid betalning: ', error);
-			alert('Något gick fel, försök igen');
+			setErrors(['Något gick fel, försök igen']);
 		}
 	};
 

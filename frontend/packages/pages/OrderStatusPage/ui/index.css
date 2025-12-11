@@ -1,28 +1,32 @@
 .status-box__order {
-  font-family: 'anton';
-  letter-spacing: var(--spacing-wide);
-  text-align: center;
-  border-bottom: 1px solid #000000;
-	padding: .5rem;
-  margin-bottom: 1.5rem; 
+	font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
+	text-align: center;
+	border-bottom: 1px solid #000000;
+	padding: 0.5rem;
+	margin-bottom: 1.5rem;
+	color: var(--font-color-dark);
 }
 
-.status-box__timeline { 
-  font-family: 'MerriweatherSans';
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1; 
-  justify-content: space-between; 
+.status-box__link {
+	text-decoration: none;
+}
+
+.status-box__timeline {
+	font-family: 'MerriweatherSans';
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	justify-content: space-between;
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
 	padding-top: 1rem;
-
 }
 
 .status-box {
-  min-height: 40vh; 
-  display: flex;
-  flex-direction: column;
+	min-height: 40vh;
+	display: flex;
+	flex-direction: column;
 	position: relative;
 }
 
@@ -32,13 +36,13 @@
 	bottom: 0;
 	width: 100px;
 	height: auto;
-  z-index: 100;
+	z-index: 100;
 }
 
 @media (max-width: 600px) {
 	.owl-chef {
 		bottom: 0;
-		right: 1rem; 
+		right: 1rem;
 		width: 70px;
 	}
 }
@@ -49,24 +53,24 @@
 	}
 }
 
-.status-step { 
-  display: flex; 
-  align-items: flex-start; 
-  gap: 1rem;
-  padding: 10px 0; 
-  position: relative; 
-  margin: 0;
+.status-step {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	padding: 10px 0;
+	position: relative;
+	margin: 0;
 }
 
-.status-dot { 
-  width: 22px; 
-  height: 22px; 
-  background: #999; 
-  border-radius: 50%; 
-  flex-shrink: 0; 
-  position: relative;
-  z-index: 10; 
-  margin-top: 2px;
+.status-dot {
+	width: 22px;
+	height: 22px;
+	background: #999;
+	border-radius: 50%;
+	flex-shrink: 0;
+	position: relative;
+	z-index: 10;
+	margin-top: 2px;
 }
 
 .status-dot.active { 
@@ -81,19 +85,19 @@
   animation: pulse 2s infinite; 
 }
 
-.status-text { 
-  font-size: .9rem; 
-  align-self: center;
-  margin-top: 0; 
+.status-text {
+	font-size: 0.9rem;
+	align-self: center;
+	margin-top: 0;
 }
 
 .status-cancelled {
-  font-family: 'anton';
-  letter-spacing: var(--spacing-wide);
-  font-size: 1.2rem;
-  color: #820101;
-  text-align: center;
-  margin-top: 2rem;
+	font-family: 'anton';
+	letter-spacing: var(--spacing-wide);
+	font-size: 1.2rem;
+	color: #820101;
+	text-align: center;
+	margin-top: 2rem;
 }
 
 @keyframes pulse {

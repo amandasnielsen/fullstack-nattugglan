@@ -53,7 +53,6 @@ export const patchOrderChange = async (
 		);
 
 		if (!response.ok) throw new Error('Kunde inte uppdatera ordern');
-		console.log(response);
 		return response.json();
 	} catch (error) {
 		console.error('Fel vid uppdatering av order', error);
@@ -76,7 +75,6 @@ export const putStatusChange = async (
 		);
 
 		if (!response.ok) throw new Error('Kunde inte uppdatera status på ordern');
-		console.log(response);
 		return response.json();
 	} catch (error) {
 		console.error('Fel vid uppdatering av order', error);
