@@ -41,10 +41,24 @@
 	justify-content: center;
 	text-decoration: none;
 	color: var(--box-white);
-	margin-right: 2rem;
+	margin-right: 1rem;
+}
+
+.navbar__bell-link {
+	position: relative;
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	color: var(--box-white);
 }
 
 .navbar__cart-icon {
+	width: 40px;
+	opacity: 0.8;
+}
+
+.navbar__bell-icon {
 	width: 40px;
 	opacity: 0.8;
 }
@@ -55,6 +69,25 @@
 	right: -6px;  
 	background-color: #020B28;
 	color: var(--font-color-white);
+	font-family: 'MerriweatherSans';
+	font-size: .8rem;
+	min-width: 24px; 
+	height: 24px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 4px;
+	line-height: 1;
+	z-index: 10;
+}
+
+.navbar__bell-badge {
+	position: absolute;
+	bottom: -6px;      
+	right: -6px;  
+	background-color: #ffcc00;
+	color: black;
 	font-family: 'MerriweatherSans';
 	font-size: .8rem;
 	min-width: 24px; 
@@ -182,15 +215,11 @@
   border-bottom: 1px solid var(--box-white); 
 }
 
-.notification-bell {
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #ffcc00;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 0.3rem;
+.cart__bell {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
 }
-
 
 /* #endregion navbar-desktop */
 

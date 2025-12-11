@@ -6,38 +6,31 @@ import { Footer } from '@nattugglan/footer';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 import { Button } from '@nattugglan/button';
 import { useNavigate, Link } from 'react-router-dom';
+import { useNotificationStore, useOrderStore } from '@nattugglan/core';
 import OwlChef from './assets/owl-chef.png';
 
 interface OrderResponse {
-	orderNumber: string;
-	status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
+  orderNumber: string;
+  status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
 }
 
 export function OrderStatusPage() {
-  const { orderNumber } = useParams();
-  const [order, setOrder] = useState<OrderResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { orderNumber: urlOrderNumber } = useParams();
   const navigate = useNavigate();
+  
+  const order = useOrderStore((state) => state.order as OrderResponse | null);
+  const globalOrderNumber = useOrderStore((state) => state.orderNumber); 
+  const [error, setError] = useState<string | null>(null);
+  const { clearNotification } = useNotificationStore();
 
   useEffect(() => {
-    if (!orderNumber) {
-      setError("Ingen order angiven.");
-      return;
+    clearNotification();
+    if (!globalOrderNumber || urlOrderNumber !== globalOrderNumber) {
+      setError("Kunde inte hitta eller spåra den ordern.");
+    } else {
+      setError(null);
     }
-
-    fetch(`http://localhost:3000/api/order/${orderNumber}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Order hittades inte");
-        return res.json();
-      })
-      .then((data) => {
-        setOrder(data);
-        setError(null);
-      })
-      .catch(() => {
-        setError("Kunde inte hitta någon order.");
-      });
-  }, [orderNumber]);
+  }, [urlOrderNumber, globalOrderNumber, clearNotification]); 
 
   const steps = [
     { key: "Pending", label: "Din beställning väntar på att bli bekräftad" },
@@ -45,37 +38,36 @@ export function OrderStatusPage() {
     { key: "Ready", label: "Din mat är redo för upphämtning!" },
   ];
 
-    // === NO ORDER FOUND ===
-    if (error || !order) {
-      return (
-        <>
-          <NavBar />
-          <Footer />
-					<section className="orderstatus__page">
-						<h1 className="status__title">
-							Orderstatus
-						</h1>
-			
-						<ContentContainer>
-							<p className="status-cancelled">
-								Du har inte gjort någon order än.</p>
-								<p className="status-cancelled"> Gå in på menyn och välj något gott!
-							</p>
-							
-						</ContentContainer>
-						<div className="button__checkout-wrapper">
-							<Button
-								variant="secondary"
-								fullWidth={true}
-								className="button__checkout"
-								onClick={() => navigate("/menu")}>
-									Meny
-							</Button>
-						</div>
-					</section>
-        </>
-      );
-    }
+  if (error || !order) {
+    return (
+      <>
+        <NavBar />
+        <Footer />
+        <section className="orderstatus__page">
+          <h1 className="status__title">
+            Orderstatus
+          </h1>
+    
+          <ContentContainer>
+            <p className="status-cancelled">
+              Du har inte gjort någon order än.</p>
+              <p className="status-cancelled"> Gå in på menyn och välj något gott!
+            </p>
+            
+          </ContentContainer>
+          <div className="button__checkout-wrapper">
+            <Button
+              variant="secondary"
+              fullWidth={true}
+              className="button__checkout"
+              onClick={() => navigate("/menu")}>
+                Meny
+            </Button>
+          </div>
+        </section>
+      </>
+    );
+  }
   
   // === CANCELLED ORDER ===
   if (order && order.status === "Cancelled") {
@@ -83,29 +75,29 @@ export function OrderStatusPage() {
       <>
         <NavBar />
         <Footer />
-				<section className="orderstatus__page">
-					<h1 className="status__title">Orderstatus</h1>
+        <section className="orderstatus__page">
+          <h1 className="status__title">Orderstatus</h1>
 
-					<ContentContainer>
-						<div className="status-box">
-							<Link className="status-box__link" to={`/order/${orderNumber}`}>
-							  <h2 className="status-box__order">Order #{order.orderNumber}</h2>
-						  </Link>
-							<p className="status-cancelled">
-								Den här beställningen har avbrutits av köket.
-							</p>
-						</div>
-					</ContentContainer>
-					<div className="button__checkout-wrapper">
-						<Button
-							variant="secondary"
-							fullWidth={true}
-							className="button__checkout"
-							onClick={() => navigate("/menu")}>
-								Meny
-						</Button>
-      		</div>
-				</section>
+          <ContentContainer>
+            <div className="status-box">
+              <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
+                <h2 className="status-box__order">Order #{order.orderNumber}</h2>
+              </Link>
+              <p className="status-cancelled">
+                Den här beställningen har avbrutits av köket.
+              </p>
+            </div>
+          </ContentContainer>
+          <div className="button__checkout-wrapper">
+            <Button
+              variant="secondary"
+              fullWidth={true}
+              className="button__checkout"
+              onClick={() => navigate("/menu")}>
+                Meny
+            </Button>
+          </div>
+        </section>
       </>
     );
   }
@@ -116,46 +108,46 @@ export function OrderStatusPage() {
     <>
       <NavBar />
       <Footer />
-			<section className="orderstatus__page">
-				<h1 className="status__title">Orderstatus</h1>
+      <section className="orderstatus__page">
+        <h1 className="status__title">Orderstatus</h1>
 
-				<ContentContainer>
+        <ContentContainer>
           <div className="status-box">
-            <Link className="status-box__link" to={`/order/${orderNumber}`}>
+            <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
               <h2 className="status-box__order">Order #{order.orderNumber}</h2>
             </Link>
 
-							<div className="status-box__timeline">
-								{steps.map((step, index) => (
-									<div key={step.key} className="status-step">
-										<div
-										className={
-											index <= currentStepIndex
-												? 
-												(index === currentStepIndex 
-														? "status-dot active pulsating" // active OCH pulsating
-														: "status-dot active")          // active
-												: "status-dot"                     
-										}
-									></div>
-										<p className="status-text">{step.label}</p>
-									</div>
-								))}
-							</div>
-							<img className="owl-chef" src={OwlChef} alt="Owl Chef" />
-						</div>
-					</ContentContainer>
-					<div className="button__checkout-wrapper">
-						<Button
-							variant="secondary"
-							fullWidth={true}
-							className="button__checkout"
-							onClick={() => navigate("/menu")}
-							>
-								Meny
-						</Button>
-				</div>
-			</section>
+              <div className="status-box__timeline">
+                {steps.map((step, index) => (
+                  <div key={step.key} className="status-step">
+                    <div
+                    className={
+                      index <= currentStepIndex
+                        ? 
+                        (index === currentStepIndex 
+                          ? "status-dot active pulsating"
+                          : "status-dot active")
+                        : "status-dot"                     
+                    }
+                  ></div>
+                    <p className="status-text">{step.label}</p>
+                  </div>
+                ))}
+              </div>
+              <img className="owl-chef" src={OwlChef} alt="Owl Chef" />
+            </div>
+          </ContentContainer>
+          <div className="button__checkout-wrapper">
+            <Button
+              variant="secondary"
+              fullWidth={true}
+              className="button__checkout"
+              onClick={() => navigate("/menu")}
+              >
+                Meny
+            </Button>
+        </div>
+      </section>
     </>
   );
 }

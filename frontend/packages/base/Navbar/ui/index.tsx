@@ -1,243 +1,239 @@
 import './index.css';
 import Logo from './assets/logo.png';
-import Bell from './assets/bell.png';
+import Bell from './assets/bell.svg';
 import CartIcon from './assets/cart.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCartStore } from '@nattugglan/core';
 import { useOrderStore } from '@nattugglan/core/state/orderStore';
 import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 
 function NavBar() {
-	const hasNewOrderUpdate = useNotificationStore((s) => s.hasNewOrderUpdate);
-	const clearNotification = useNotificationStore((s) => s.clearNotification);
+  const notificationCount = useNotificationStore((s) => s.notificationCount);
+  const clearNotification = useNotificationStore((s) => s.clearNotification);
+
+  const showNotification = notificationCount > 0;
   
-	const [menuOpen, setMenuOpen] = useState<boolean>(false);
-	const orderNumber = useOrderStore((state) => state.orderNumber);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const orderNumber = useOrderStore((state) => state.orderNumber);
+  const totalQuantity = useCartStore((state) => state.totalQuantity);
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
-	const totalQuantity = useCartStore((state) => state.totalQuantity);
+  useEffect(() => {
+		if (!orderNumber) {
+				console.log("Ingen orderNumber hittades, rensar notifikationer.");
+				clearNotification();
+		}
+  }, [orderNumber, clearNotification]);
 
-	const toggleMenu = () => {
-		setMenuOpen(!menuOpen);
-	};
+  // rendera klockan och dess badge
+  const renderBell = () => (
+    <NavLink 
+      to={`/orderstatus/${orderNumber}`}
+      className="navbar__bell-link"
+      onClick={() => clearNotification()}
+    >
+      <img src={Bell} className='navbar__bell-icon' alt="Nofifikation" />
+      {showNotification && ( 
+        <span className="navbar__bell-badge">{notificationCount}</span> 
+      )}
+    </NavLink>
+  );
+  
+  // rendera varukorgen
+  const renderCart = () => (
+    <NavLink to="/cart" className="navbar__cart-link">
+      <img
+        src={CartIcon}
+        className="navbar__cart-icon"
+        alt="Kundkorg"
+      />
+      {totalQuantity > 0 && (
+        <span className="navbar__cart-badge">{totalQuantity}</span>
+      )}
+    </NavLink>
+  );
 
-	return (
-		<section className="navbar">
-			<header className="navbar__container-phone">
-				<div>
-					<NavLink to="/menu">
-						<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
-					</NavLink>
-				</div>
+  return (
+    <section className="navbar">
+      <header className="navbar__container-phone">
+        <div>
+          <NavLink to="/menu">
+            <img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
+          </NavLink>
+        </div>
 
+        <div className="navbar__icons-right">
+          <div className="navbar__icons-right">
+            
 
-				<div className="navbar__icons-right">
-					<div className="navbar__icons-right">
-						<NavLink to="/cart" className="navbar__cart-link">
-							{totalQuantity > 0 && (
-								<>
-									<img
-										src={CartIcon}
-										className="navbar__cart-icon"
-										alt="Kundkorg"
-									/>
-									<span className="navbar__cart-badge">{totalQuantity}</span>
-								</>
-							)}
-						</NavLink>
+            <div className="cart__bell"> 
+							{renderBell()}
+							{renderCart()}
+          	</div>
 
-						<div className="navbar__bell">
-						{hasNewOrderUpdate && (
-						<NavLink to={`/orderstatus/${orderNumber}`}
-							className="notification-bell"
-							onClick={() => clearNotification()}
-						>
-							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
-						</NavLink>
-						)}
-					</div>
+            <div
+              className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
+              onClick={toggleMenu}
+              aria-label={menuOpen ? 'Stäng Meny' : 'Öppna Meny'}
+              role="button"
+            >
+              <div className="bar bar1"></div>
+              <div className="bar bar2"></div>
+              <div className="bar bar3"></div>
+            </div>
+          </div>
+        </div>
+        
+        <nav className={`navbar__menu ${menuOpen ? 'visible' : ''}`}>
+          <div className="navbar__menu-top">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+              }
+              to="/menu"
+              onClick={toggleMenu}
+            >
+              Meny
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+              }
+              to={`/orderstatus/${orderNumber}`}
+              onClick={toggleMenu}
+            >
+              Orderstatus
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+              }
+              to="/myorders"
+              onClick={toggleMenu}
+            >
+              Mina Beställningar
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+              }
+              to="/aboutUs"
+              onClick={toggleMenu}
+            >
+              Om oss
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+              }
+              to="/maps"
+              onClick={toggleMenu}
+            >
+              Vart finns vi?
+            </NavLink>
+          </div>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+            }
+            to="/login"
+            onClick={toggleMenu}
+          >
+            Logga in som Admin
+          </NavLink>
+        </nav>
+      </header>
 
-						<div
-							className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
-							onClick={toggleMenu}
-							aria-label={menuOpen ? 'Stäng Meny' : 'Öppna Meny'}
-							role="button"
-						>
-							<div className="bar bar1"></div>
-							<div className="bar bar2"></div>
-							<div className="bar bar3"></div>
-						</div>
-					</div>
-				</div>
+      <header className="navbar__container-desktop">
+        <section className="navbar__container-span">
+          <div>
+            <NavLink to="/menu">
+              <img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
+            </NavLink>
+          </div>
 
-				<nav className={`navbar__menu ${menuOpen ? 'visible' : ''}`}>
-					<div className="navbar__menu-top">
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/menu"
-							onClick={toggleMenu}
-						>
-							Meny
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to={`/orderstatus/${orderNumber}`}
-							onClick={toggleMenu}
-						>
-							Orderstatus
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/myorders"
-							onClick={toggleMenu}
-						>
-							Mina Beställningar
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/aboutUs"
-							onClick={toggleMenu}
-						>
-							Om oss
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-							}
-							to="/maps"
-							onClick={toggleMenu}
-						>
-							Vart finns vi?
-						</NavLink>
-					</div>
-					<NavLink
-						className={({ isActive }) =>
-							isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-						}
-						to="/login"
-						onClick={toggleMenu}
-					>
-						Logga in som Admin
-					</NavLink>
-				</nav>
-			</header>
-
-			<header className="navbar__container-desktop">
-				<section className="navbar__container-span">
-					<div>
-						<NavLink to="/menu">
-							<img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
-						</NavLink>
-					</div>
-
-					<div className="navbar__desktop-group">
-					<div className="navbar__bell">
-						{hasNewOrderUpdate && (
-						<NavLink to={`/orderstatus/${orderNumber}`}
-							className="notification-bell"
-							onClick={() => clearNotification()}
-						>
-							<img src={Bell} className='navbar__bell' alt="Nofifikation" />
-						</NavLink>
-						)}
-					</div>
-						<NavLink
-							className={({ isActive }) =>
-								isActive
-									? 'navbar__desktop-links active-link-desktop'
-									: 'navbar__desktop-links'
-							}
-							to="/menu"
-							onClick={toggleMenu}
-						>
-							Meny
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive
-									? 'navbar__desktop-links active-link-desktop'
-									: 'navbar__desktop-links'
-							}
-							to={`/orderstatus/${orderNumber}`}
-							onClick={toggleMenu}
-							>
-							Orderstatus
-							</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive
-									? 'navbar__desktop-links active-link-desktop'
-									: 'navbar__desktop-links'
-							}
-							to="/myorders"
-							onClick={toggleMenu}
-						>
-							Beställningar
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive
-									? 'navbar__desktop-links active-link-desktop'
-									: 'navbar__desktop-links'
-							}
-							to="/aboutUs"
-							onClick={toggleMenu}
-						>
-							Om oss
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive
-									? 'navbar__desktop-links active-link-desktop'
-									: 'navbar__desktop-links'
-							}
-							to="/maps"
-							onClick={toggleMenu}
-						>
-							Vart finns vi?
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive
-									? 'navbar__desktop-links active-link-desktop'
-									: 'navbar__desktop-links'
-							}
-							to="/login"
-							onClick={toggleMenu}
-						>
-							Admin
-						</NavLink>
-					</div>
-					<section className="cart__desktop">
-						<div className="navbar__desktop-cart">
-							<NavLink to="/cart" className="navbar__cart-link">
-								{totalQuantity > 0 && (
-									<>
-										<img
-											src={CartIcon}
-											className="navbar__cart-icon"
-											alt="Kundkorg"
-										/>
-
-										<span className="navbar__cart-badge">{totalQuantity}</span>
-									</>
-								)}
-							</NavLink>
-						</div>
-					</section>
-				</section>
-			</header>
-		</section>
-	);
+          <div className="navbar__desktop-group">
+            {/* ... (Desktop-länkar) ... */}
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__desktop-links active-link-desktop'
+                  : 'navbar__desktop-links'
+              }
+              to="/menu"
+              onClick={toggleMenu}
+            >
+              Meny
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__desktop-links active-link-desktop'
+                  : 'navbar__desktop-links'
+              }
+              to={`/orderstatus/${orderNumber}`}
+              onClick={toggleMenu}
+              >
+              Orderstatus
+              </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__desktop-links active-link-desktop'
+                  : 'navbar__desktop-links'
+              }
+              to="/myorders"
+              onClick={toggleMenu}
+            >
+              Beställningar
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__desktop-links active-link-desktop'
+                  : 'navbar__desktop-links'
+              }
+              to="/aboutUs"
+              onClick={toggleMenu}
+            >
+              Om oss
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__desktop-links active-link-desktop'
+                  : 'navbar__desktop-links'
+              }
+              to="/maps"
+              onClick={toggleMenu}
+            >
+              Vart finns vi?
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__desktop-links active-link-desktop'
+                  : 'navbar__desktop-links'
+              }
+              to="/login"
+              onClick={toggleMenu}
+            >
+              Admin
+            </NavLink>
+          </div>
+          
+          <div className="cart__bell"> 
+            {renderBell()}
+            {renderCart()}
+          </div>
+        </section>
+      </header>
+    </section>
+  );
 }
 
 export { NavBar };
