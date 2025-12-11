@@ -3,11 +3,6 @@
   letter-spacing: var(--spacing-wide);
 }
 
-.allorders__page .container__card {
-	min-height: 60vh;
-	max-height: 60vh;
-}
-
 .group__title {
 	font-size: 1.3rem;
 	margin-bottom: .5em;
@@ -166,6 +161,11 @@
 	margin: 0;
 	color: #333;
 	font-family: 'MerriweatherSans';
+}
+
+.allorders__page .container__card {
+	min-height: 60vh;
+	max-height: 60vh;
 }
 
 @media (max-height: 800px) {

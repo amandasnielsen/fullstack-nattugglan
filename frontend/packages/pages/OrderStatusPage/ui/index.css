@@ -33,33 +33,19 @@
 .owl-chef {
 	position: absolute;
 	right: 1.5rem;
-	bottom: 0;
+	bottom: -4rem;
 	width: 100px;
 	height: auto;
 	z-index: 100;
 }
 
-@media (max-width: 600px) {
-	.owl-chef {
-		bottom: 0;
-		right: 1rem;
-		width: 70px;
-	}
-}
-
-@media (max-width: 400px) {
-	.owl-chef {
-		width: 60px;
-	}
-}
-
-.status-step {
-	display: flex;
-	align-items: flex-start;
-	gap: 1rem;
-	padding: 10px 0;
-	position: relative;
-	margin: 0;
+.status-step { 
+  display: flex; 
+  align-items: flex-start; 
+  gap: 1rem;
+  padding: 10px 0; 
+  position: relative; 
+  margin: 0;
 }
 
 .status-dot {
@@ -100,6 +86,10 @@
 	margin-top: 2rem;
 }
 
+.orderstatus__page .container__card {
+	min-height: 50vh;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(0.98); 
@@ -113,4 +103,29 @@
     transform: scale(0.98); 
     box-shadow: 0 0 0 0 rgba(0, 27, 78, 0);
   }
+}
+
+@media (max-width: 400px) {
+	.owl-chef {
+		width: 60px;
+	}
+}
+
+@media (max-width: 600px) {
+	.owl-chef {
+		right: .5rem; 
+		width: 70px;
+	}
+}
+
+@media (max-height: 800px) {
+  .orderstatus__page .container__card {
+    min-height: 40vh;
+    max-height: 50vh;
+  }
+
+	.owl-chef {
+		right: .5rem; 
+		bottom: -.5rem;
+	}
 }

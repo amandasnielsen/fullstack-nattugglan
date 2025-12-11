@@ -19,8 +19,7 @@
 .button__group-two {
 	width: 280px; 
   padding: 15px 20px;
-	position: absolute;
-	bottom: 2em;
+	margin-top: 6em;
 }
 
 @media (max-height: 800px) {
@@ -35,5 +34,9 @@
 
 	.button__group-one {
 		margin-top: 2em;
+	}
+
+	.button__group-two {
+	 margin-top: 4em;
 	}
 }
