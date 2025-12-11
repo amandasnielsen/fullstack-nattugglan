@@ -7,15 +7,6 @@
 	font-family: 'MerriweatherSans';
 }
 
-.paymentpage .container__card {
-	display: flex;
-	flex-direction: column;
-
-	max-width: 400px;
-	min-height: 55vh;
-	max-height: 60vh;
-}
-
 .payment__boxContent h3 {
 	width: 100%;
 	text-align: center;
@@ -84,13 +75,22 @@
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	margin-bottom: 80px;
+	margin-bottom: 70px;
 	z-index: 990;
 }
 
 .payment__button {
 	width: 280px;
 	padding: 15px 20px;
+}
+
+.paymentpage .container__card {
+	display: flex;
+	flex-direction: column;
+
+	min-height: 50vh;
+	max-height: 60vh;
+	max-width: 400px;
 }
 
 @media (min-width: 900px) {
@@ -100,6 +100,6 @@
 
 	.paymentpage .container__card {
 		min-height: 45vh;
-		max-height: 45vh;
+		max-height: 40vh;
 	}
 }

@@ -8,10 +8,12 @@ function StockPage() {
 		<>
 			<NavBarAdmin />
 			<FooterAdmin />
-			<h1>Lagerstatus</h1>
-			<ContentContainer>
-				<p>Text</p>
-			</ContentContainer>
+			<section className="admin__stock-page">
+				<h1>Lagerstatus</h1>
+				<ContentContainer>
+					<p>Text</p>
+				</ContentContainer>
+			</section>
 		</>
 	)
 }

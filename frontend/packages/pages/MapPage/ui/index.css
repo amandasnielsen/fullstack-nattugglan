@@ -4,10 +4,6 @@
   overflow: hidden;
 }
 
-.map .container__card {
-	max-height: 60vh;
-}
-
 .map__content {
   font-family: "Anton";
 	letter-spacing: var(--spacing-wide);
@@ -61,11 +57,6 @@
 }
 
 @media (min-width: 900px) {
-	.map .container__card {
-		max-height: 55vh;
-		max-width: 600px;
-	}
-
 	.map__iframe-wrapper {
 		max-width: 400px;
 	}

@@ -10,14 +10,6 @@
 	gap: 0.5rem;
 }
 
-.ConfirmationPage .container__card {
-	display: flex;
-	flex-direction: column;
-
-	min-height: 55vh;
-	max-height: 60vh;
-}
-
 .ConfirmationPage__content {
 	display: flex;
 	flex-direction: column;
@@ -124,16 +116,15 @@
 	padding: 1rem;
 }
 
-@media (max-height: 900px) {
-  .ConfirmationPage .container__card {
-    min-height: 50vh;
-    max-height: 50vh;
-  }
+.ConfirmationPage .container__card {
+	display: flex;
+	flex-direction: column;
+	min-height: 50vh;
 }
 
 @media (max-height: 800px) {
   .ConfirmationPage .container__card {
-    min-height: 45vh;
-    max-height: 45vh;
+    min-height: 40vh;
+    max-height: 50vh;
   }
 }

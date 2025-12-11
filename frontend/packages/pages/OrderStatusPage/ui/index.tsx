@@ -51,27 +51,28 @@ export function OrderStatusPage() {
         <>
           <NavBar />
           <Footer />
-    
-          <h1 className="status__title">
-            Orderstatus
-          </h1>
-    
-          <ContentContainer>
-            <p className="status-cancelled">
-              Du har inte gjort någon order än.</p>
-              <p className="status-cancelled"> Gå in på menyn och välj något gott!
-            </p>
-            
-          </ContentContainer>
-          <div className="button__checkout-wrapper">
-						<Button
-							variant="secondary"
-							fullWidth={true}
-							className="button__checkout"
-							onClick={() => navigate("/menu")}>
-							Meny
-					</Button>
-				</div>
+					<section className="orderstatus__page">
+						<h1 className="status__title">
+							Orderstatus
+						</h1>
+			
+						<ContentContainer>
+							<p className="status-cancelled">
+								Du har inte gjort någon order än.</p>
+								<p className="status-cancelled"> Gå in på menyn och välj något gott!
+							</p>
+							
+						</ContentContainer>
+						<div className="button__checkout-wrapper">
+							<Button
+								variant="secondary"
+								fullWidth={true}
+								className="button__checkout"
+								onClick={() => navigate("/menu")}>
+									Meny
+							</Button>
+						</div>
+					</section>
         </>
       );
     }
@@ -82,26 +83,27 @@ export function OrderStatusPage() {
       <>
         <NavBar />
         <Footer />
+				<section className="orderstatus__page">
+					<h1 className="status__title">Orderstatus</h1>
 
-        <h1 className="status__title">Orderstatus</h1>
-
-        <ContentContainer>
-          <div className="status-box">
-            <h2 className="status-box__order">Order #{order.orderNumber}</h2>
-            <p className="status-cancelled">
-              Den här beställningen har avbrutits av köket.
-            </p>
-          </div>
-        </ContentContainer>
-        <div className="button__checkout-wrapper">
-          <Button
-            variant="secondary"
-            fullWidth={true}
-            className="button__checkout"
-            onClick={() => navigate("/menu")}>
-            Meny
-        </Button>
-      </div>
+					<ContentContainer>
+						<div className="status-box">
+							<h2 className="status-box__order">Order #{order.orderNumber}</h2>
+							<p className="status-cancelled">
+								Den här beställningen har avbrutits av köket.
+							</p>
+						</div>
+					</ContentContainer>
+					<div className="button__checkout-wrapper">
+						<Button
+							variant="secondary"
+							fullWidth={true}
+							className="button__checkout"
+							onClick={() => navigate("/menu")}>
+								Meny
+						</Button>
+      		</div>
+				</section>
       </>
     );
   }
@@ -112,43 +114,44 @@ export function OrderStatusPage() {
     <>
       <NavBar />
       <Footer />
+			<section className="orderstatus__page">
+				<h1 className="status__title">Orderstatus</h1>
 
-      <h1 className="status__title">Orderstatus</h1>
+				<ContentContainer>
+					<div className="status-box">
+						<h2 className="status-box__order">Order #{order.orderNumber}</h2>
 
-      <ContentContainer>
-        <div className="status-box">
-          <h2 className="status-box__order">Order #{order.orderNumber}</h2>
-
-						<div className="status-box__timeline">
-							{steps.map((step, index) => (
-								<div key={step.key} className="status-step">
-									<div
-                  className={
-                    index <= currentStepIndex
-                      ? 
-                      (index === currentStepIndex 
-                          ? "status-dot active pulsating" // active OCH pulsating
-                          : "status-dot active")          // active
-                      : "status-dot"                     
-                  }
-                ></div>
-									<p className="status-text">{step.label}</p>
-								</div>
-							))}
+							<div className="status-box__timeline">
+								{steps.map((step, index) => (
+									<div key={step.key} className="status-step">
+										<div
+										className={
+											index <= currentStepIndex
+												? 
+												(index === currentStepIndex 
+														? "status-dot active pulsating" // active OCH pulsating
+														: "status-dot active")          // active
+												: "status-dot"                     
+										}
+									></div>
+										<p className="status-text">{step.label}</p>
+									</div>
+								))}
+							</div>
+							<img className="owl-chef" src={OwlChef} alt="Owl Chef" />
 						</div>
-						<img className="owl-chef" src={OwlChef} alt="Owl Chef" />
-					</div>
-      	</ContentContainer>
-      	<div className="button__checkout-wrapper">
-          <Button
-            variant="secondary"
-            fullWidth={true}
-            className="button__checkout"
-            onClick={() => navigate("/menu")}
-						>
-            	Meny
-        	</Button>
-      </div>
+					</ContentContainer>
+					<div className="button__checkout-wrapper">
+						<Button
+							variant="secondary"
+							fullWidth={true}
+							className="button__checkout"
+							onClick={() => navigate("/menu")}
+							>
+								Meny
+						</Button>
+				</div>
+			</section>
     </>
   );
 }

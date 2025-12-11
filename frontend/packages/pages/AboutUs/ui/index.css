@@ -52,11 +52,3 @@
   flex-direction: column;
   gap: 0.4rem;
 }
-
-@media (min-width: 900px) {
-	.aboutus .container__card {
-		max-height: 55vh;
-		max-width: 600px;
-	}
-	
-}
