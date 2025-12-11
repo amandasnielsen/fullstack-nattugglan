@@ -1,12 +1,11 @@
 import { create } from 'zustand';
 import type { orderDetailInterface } from '@nattugglan/orderconfirmationpage';
 
-interface ActiveOrder {
+export interface ActiveOrder {
   orderNumber: string;
   status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
   [key: string]: any; 
 }
-
 
 interface OrderState {
   orderNumber: string | null;
