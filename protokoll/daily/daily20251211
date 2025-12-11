@@ -1,0 +1,41 @@
+Mötesprotokoll Daily Scrum (11 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Gjorde klart orderhistorik-sidan
+* Lite planering för redovisning och opponering. Samt byta ut alerts till modal
+* Nej
+
+Person 2 (Amanda)
+* Gjorde klart uppdatera menyn för admin. Fixade en footer för admin och en ProtectedRoutes för adminsidorna
+* Samt planera redovisning och opponering. Sen kolla bugfix på den vita komponenten
+* Nej
+
+Person 3 (Belinda)
+* Gjorde klart Error-sidan
+* Få in imports i App-silen och dubbelkolla responsivitet. Samt planera redovisning och opponering
+* Nej
+
+Person 4 (Rasmus)
+* Gjorde färdigt notis-tjohejsan. Nu dyker det upp en notis-ikon när status har ändrats
+* Kolla om det går att uppdatera status när det görs en änding med status i backend.
+  Samt kollar på buggen på ordetstatus. Samt planera redovisning och opponering
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
