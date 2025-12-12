@@ -2,6 +2,12 @@ import { useEffect, useCallback, useRef } from 'react';
 import { useOrderStore } from '@nattugglan/core/state/orderStore';
 import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 
+// global polling funktion som var femte sekund hämtar statusuppdayeringen på den pågående ordern
+// om det finns ett aktivt ordernummer.
+// denna funktion lyssnas på i App.tsx, så att orderstatus hämtas
+// oavsett vilken sida man är inne på.
+// detta ör att orderbekräftelsen, orderstatussidan och ringklockan uppdateras när
+// admin ändrar statusen
 const POLLING_INTERVAL = 5000; 
 
 interface OrderResponse {
