@@ -6,7 +6,7 @@ import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 // om det finns ett aktivt ordernummer.
 // denna funktion lyssnas på i App.tsx, så att orderstatus hämtas
 // oavsett vilken sida man är inne på.
-// detta ör att orderbekräftelsen, orderstatussidan och ringklockan uppdateras när
+// detta gör att orderbekräftelsen, orderstatussidan och ringklockan uppdateras när
 // admin ändrar statusen
 const POLLING_INTERVAL = 5000; 
 

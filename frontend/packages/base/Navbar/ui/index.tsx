@@ -23,10 +23,10 @@ function NavBar() {
   };
 
   useEffect(() => {
-		if (!orderNumber) {
-			console.log("Ingen orderNumber hittades, rensar notifikationer.");
-			clearNotification();
-		}
+    if (!orderNumber) {
+      console.log("Ingen orderNumber hittades, rensar notifikationer.");
+      clearNotification();
+    }
   }, [orderNumber, clearNotification]);
 
   // rendera klockan och dess badge
@@ -37,9 +37,7 @@ function NavBar() {
       onClick={() => clearNotification()}
     >
       <img src={Bell} className='navbar__bell-icon' alt="Nofifikation" />
-      {showNotification && ( 
-        <span className="navbar__bell-badge">{notificationCount}</span> 
-      )}
+      <span className="navbar__bell-badge">{notificationCount}</span> 
     </NavLink>
   );
   
@@ -68,12 +66,9 @@ function NavBar() {
 
         <div className="navbar__icons-right">
           <div className="navbar__icons-right">
-            
 
-            <div className="cart__bell"> 
-							{renderBell()}
-							{renderCart()}
-          	</div>
+            {showNotification && renderBell()}
+            {renderCart()}
 
             <div
               className={`navbar__menuIcon ${menuOpen ? 'open' : ''}`}
@@ -157,7 +152,6 @@ function NavBar() {
           </div>
 
           <div className="navbar__desktop-group">
-            {/* ... (Desktop-länkar) ... */}
             <NavLink
               className={({ isActive }) =>
                 isActive
@@ -227,7 +221,7 @@ function NavBar() {
           </div>
           
           <div className="cart__bell"> 
-            {renderBell()}
+            {showNotification && renderBell()}
             {renderCart()}
           </div>
         </section>

@@ -8,7 +8,7 @@ import { useAuthStore } from '@nattugglan/core';
 import { StatusDropdown } from '@nattugglan/statusdropdown';
 import { Button } from '@nattugglan/button';
 import { startOrdersPolling, type Order, type OrderStatus } from '../data/fetchOrders'; 
-import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
+import { useNotificationStore } from '@nattugglan/core';
 
 
 type FilterStatus = OrderStatus | 'All';
@@ -51,7 +51,6 @@ const formatOrderDate = (dateString: string): string => {
 };
 
 function AdminAllOrdersPage() {
-  const setNewOrderUpdate = useNotificationStore.getState().setNewOrderUpdate;
 
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -70,15 +69,14 @@ function AdminAllOrdersPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // startOrdersPolling returnerar cleanup-funktionen direkt
     const cleanup = startOrdersPolling(
-			token,
-			logout,
-			navigate,
-			latestOrdersRef,
-			setOrders,
-			setLoading,
-			loading
+      token,
+      logout,
+      navigate,
+      latestOrdersRef,
+      setOrders,
+      setLoading,
+      loading
     );
 
     return cleanup;
@@ -152,7 +150,7 @@ function AdminAllOrdersPage() {
         ) : null
       );
 
-      setNewOrderUpdate(true);
+      useNotificationStore.getState().addNotification(orderNumber);
     
       console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
 

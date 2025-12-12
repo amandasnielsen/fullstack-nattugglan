@@ -41,7 +41,7 @@
 	justify-content: center;
 	text-decoration: none;
 	color: var(--box-white);
-	margin-right: 1rem;
+	margin-right: 1.2rem;
 }
 
 .navbar__bell-link {
@@ -51,6 +51,7 @@
 	justify-content: center;
 	text-decoration: none;
 	color: var(--box-white);
+	margin-right: 1.1rem;
 }
 
 .navbar__cart-icon {
@@ -71,8 +72,8 @@
 	color: var(--font-color-white);
 	font-family: 'MerriweatherSans';
 	font-size: .8rem;
-	min-width: 24px; 
-	height: 24px;
+	min-width: 20px; 
+	height: 20px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -90,8 +91,8 @@
 	color: black;
 	font-family: 'MerriweatherSans';
 	font-size: .8rem;
-	min-width: 24px; 
-	height: 24px;
+	min-width: 20px; 
+	height: 20px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -218,7 +219,6 @@
 .cart__bell {
 	display: flex;
 	flex-direction: row;
-	gap: 1rem;
 }
 
 /* #endregion navbar-desktop */
@@ -237,15 +237,5 @@
 
 	.navbar__logo {
   	width: 70px;
-	}
-
-	.navbar__cart-icon {
-		width: 40px;
-		opacity: 0.8;
-	}
-
-	.navbar__bell-icon {
-		width: 40px;
-		opacity: 0.8;
 	}
 }

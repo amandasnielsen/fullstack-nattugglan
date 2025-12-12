@@ -16,7 +16,7 @@ export interface Order {
 }
 
 const API_ORDERS_URL = 'http://localhost:3000/api/admin/orders';
-const POLLING_INTERVAL = 10000;
+const POLLING_INTERVAL = 5000;
 
 async function fetchOrdersData(
 	token: string | null,
