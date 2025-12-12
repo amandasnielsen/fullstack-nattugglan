@@ -11,246 +11,275 @@ import { OrderTotal } from './components/OrderTotal.tsx';
 import { OrderActions } from './components/OrderActions.tsx';
 import { updateOrder } from './utils/Orderutils.ts';
 import { Button } from '@nattugglan/button';
-import { useOrderStore } from '@nattugglan/core/state/orderStore';
+import { useOrderStore } from '@nattugglan/core';
+import type { ActiveOrder } from '@nattugglan/core';
 
 export interface orderDetailInterface {
-	orderNumber: string;
-	guestId: string;
-	totalPrice: number;
-	items: CartItem[];
-	status: 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
-	createdAt: string;
-	name: string;
+  orderNumber: string;
+  guestId: string;
+  totalPrice: number;
+  items: CartItem[];
+  status: 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
+  createdAt: string;
+  name: string;
 }
 
 interface OrderNumberParams {
-	orderNumber: string;
+  orderNumber: string;
 }
 
 interface GroupedItems {
-	[category: string]: CartItem[];
+  [category: string]: CartItem[];
 }
 
 function OrderConfirmationPage() {
-	const { orderNumber } = useParams<
-		keyof OrderNumberParams
-	>() as OrderNumberParams;
-	const navigate = useNavigate();
-	const [orderData, setOrderData] = useState<orderDetailInterface | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [isChange, setIsChange] = useState(false);
-	const [editableItems, setEditableItems] = useState<CartItem[]>([]);
-	const [originalTotal, setOriginalTotal] = useState<number>(0);
-	const [newTotal, setNewTotal] = useState<number>(0);
-	const [showPaymentMessage, setShowPaymentMessage] = useState(false);
-	const { setGuestId } = useOrderStore();
+  const { orderNumber } = useParams<
+    keyof OrderNumberParams
+  >() as OrderNumberParams;
+  const navigate = useNavigate();
 
-	// hämta orderDetails
-	useEffect(() => {
-		if (!orderNumber) {
-			setError('Inget ordernummer specificerat i url:n');
-			setIsLoading(false);
-			return;
-		}
+  const { setGuestId, setOrder, setOrderNumber } = useOrderStore();
+  const globalActiveOrder = useOrderStore((state) => state.order as ActiveOrder | null);
+  const [orderData, setOrderData] = useState<orderDetailInterface | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isChange, setIsChange] = useState(false);
+  const [editableItems, setEditableItems] = useState<CartItem[]>([]);
+  const [originalTotal, setOriginalTotal] = useState<number>(0);
+  const [newTotal, setNewTotal] = useState<number>(0);
+  const [showPaymentMessage, setShowPaymentMessage] = useState(false);
 
-		setIsLoading(true);
-		setError(null);
-		setOrderData(null);
+  useEffect(() => {
+    if (!orderNumber) {
+      setError('Inget ordernummer specificerat i url:n');
+      setIsLoading(false);
+      return;
+    }
 
-		fetchOrderDetails(orderNumber)
-			.then((data) => {
-				setOrderData(data);
-				setEditableItems(data.items);
+    setIsLoading(true);
+    setError(null);
+    setOrderNumber(orderNumber);
 
-				if (data.guestId) {
-					setGuestId(data.guestId);
+    fetchOrderDetails(orderNumber)
+      .then((data: orderDetailInterface) => {
+        setOrder(data as ActiveOrder); 
+        setOrderData(data);
+        setEditableItems(data.items);
+
+        if (data.guestId) {
+          setGuestId(data.guestId);
+        }
+
+        const total = data.items.reduce(
+          (sum: number, i: CartItem) => sum + i.price * i.quantity,
+          0
+        );
+
+        setOriginalTotal(total);
+        setNewTotal(total);
+        setIsLoading(false);
+      })
+      .catch((error: any) => {
+        setError(error);
+        setIsLoading(false);
+      });
+  }, [orderNumber, setGuestId, setOrder, setOrderNumber]);
+
+  useEffect(() => {
+    if (globalActiveOrder && globalActiveOrder.orderNumber === orderNumber) {
+        
+			setOrderData(prevData => {
+				if (!prevData) return null;
+
+				let updated = false;
+				let newData = prevData;
+
+				if (prevData.status !== globalActiveOrder.status) {
+					newData = { ...newData, status: globalActiveOrder.status };
+					updated = true;
+				}
+				
+				if (!isChange && prevData.totalPrice !== globalActiveOrder.totalPrice) {
+					newData = { ...newData, totalPrice: globalActiveOrder.totalPrice };
+					updated = true;
 				}
 
-				const total = data.items.reduce(
-					(sum: number, i: CartItem) => sum + i.price * i.quantity,
-					0
-				);
-
-				setOriginalTotal(total);
-				setNewTotal(total);
-				setIsLoading(false);
-			})
-			.catch((error: any) => {
-				setError(error);
-				setIsLoading(false);
+				return updated ? newData : prevData;
 			});
-	}, [orderNumber]);
+    }
+  }, [globalActiveOrder, orderNumber, isChange]); 
 
-	const updateLocalQuantity = (id: string, newQty: number) => {
-		if (newQty < 0) return;
 
-		const updatedItems = editableItems.map((item) =>
-			item._id === id ? { ...item, quantity: newQty } : item
-		);
+  const updateLocalQuantity = (id: string, newQty: number) => {
+    if (newQty < 0) return;
 
-		setEditableItems(updatedItems);
+    const updatedItems = editableItems.map((item) =>
+      item._id === id ? { ...item, quantity: newQty } : item
+    );
 
-		const total = updatedItems.reduce(
-			(sum, i) => sum + i.price * i.quantity,
-			0
-		);
+    setEditableItems(updatedItems);
 
-		setNewTotal(total);
-	};
+    const total = updatedItems.reduce(
+      (sum, i) => sum + i.price * i.quantity,
+      0
+    );
 
-	const changeOrder = () => {
-		setIsChange(true);
-		setShowPaymentMessage(false);
-	};
+    setNewTotal(total);
+  };
 
-	const doneChange = async () => {
-		try {
-			const updatedOrder = await updateOrder(orderNumber, editableItems);
+  const changeOrder = () => {
+    setIsChange(true);
+    setShowPaymentMessage(false);
+  };
 
-			setOrderData((prev) =>
-				prev
-					? {
-							...prev,
-							items: editableItems,
-							totalPrice: updatedOrder.order.totalPrice,
-					  }
-					: prev
-			);
+  const doneChange = async () => {
+    try {
+      const updatedOrder = await updateOrder(orderNumber, editableItems);
 
-			setShowPaymentMessage(true);
-			setIsChange(false);
-		} catch (error) {
-			console.error('Kunde inte uppdatera ordern:', error);
-		}
-	};
+      setOrder(updatedOrder.order as ActiveOrder); 
+      
+      setOrderData((prev) =>
+        prev
+          ? {
+						...prev,
+						items: editableItems,
+						totalPrice: updatedOrder.order.totalPrice,
+            }
+          : prev
+      );
 
-	const renderPaymentMessage = () => {
-		if (!orderData || !showPaymentMessage) return null;
+      setShowPaymentMessage(true);
+      setIsChange(false);
+    } catch (error) {
+      console.error('Kunde inte uppdatera ordern:', error);
+    }
+  };
 
-		const difference = newTotal - originalTotal;
+  const renderPaymentMessage = () => {
+    if (!orderData || !showPaymentMessage) return null;
 
-		if (difference > 0)
-			return (
-				<p className="paymentMessage">
-					Betala {difference}:- när du hämtar upp din mat
-				</p>
-			);
+    const difference = newTotal - originalTotal;
 
-		if (difference < 0)
-			return (
-				<p className="paymentMessage">Vi återbetalar dig {-difference}:-</p>
-			);
+    if (difference > 0)
+      return (
+        <p className="paymentMessage">
+          Betala {difference}:- när du hämtar upp din mat
+        </p>
+      );
 
-		return null;
-	};
+    if (difference < 0)
+      return (
+        <p className="paymentMessage">Vi återbetalar dig {-difference}:-</p>
+      );
 
-	const cancellOrder = async () => {
-		const cancellationComment = 'kund avbröt beställningen';
-		try {
-			const newStatus = await putStatusChange(orderNumber, {
-				status: 'Cancelled',
-				comment: cancellationComment,
-			});
+    return null;
+  };
 
-			setOrderData(newStatus);
-			setIsChange(false);
-			setShowPaymentMessage(false);
-		} catch (error) {
-			console.error('Fel vid avbokning av order', error);
-			setError('Kunde inte avboka ordern. Försök igen.');
-		}
-	};
+  const cancellOrder = async () => {
+    const cancellationComment = 'kund avbröt beställningen';
+    try {
+      const newStatus = await putStatusChange(orderNumber, {
+        status: 'Cancelled',
+        comment: cancellationComment,
+      });
 
-	const handleClick = () => {
-		if (status === 'Pending' || status === 'Confirmed' || status === 'Ready') {
-			navigate(`/orderstatus/${orderNumber}`);
-		} else {
-			navigate(`/myorders`);
-		}
-	};
+      setOrderData(newStatus);
+      setOrder(newStatus as ActiveOrder); 
+      
+      setIsChange(false);
+      setShowPaymentMessage(false);
+    } catch (error) {
+      console.error('Fel vid avbokning av order', error);
+      setError('Kunde inte avboka ordern. Försök igen.');
+    }
+  };
 
-	if (isLoading || !orderData) return <div>Hämtar order...</div>;
+  const handleClick = () => {
+    if (orderData?.status === 'Pending' || orderData?.status === 'Confirmed' || orderData?.status === 'Ready') {
+      navigate(`/orderstatus/${orderNumber}`);
+    } else {
+      navigate(`/myorders`);
+    }
+  };
 
-	if (error) return <div>Fel vid hämtning av order..</div>;
+  if (isLoading || !orderData) return <div>Hämtar order...</div>;
 
-	const { guestId, status, createdAt, name } = orderData;
+  if (error) return <div>Fel vid hämtning av order..</div>;
 
-	// gruppera items efter kategori
-	const itemsByCategory = editableItems.reduce<GroupedItems>((acc, item) => {
-		const category = item.category;
+  const { guestId, status, createdAt, name } = orderData;
 
-		if (!acc[category]) {
-			acc[category] = [];
-		}
+  // gruppera items efter kategori
+  const itemsByCategory = editableItems.reduce<GroupedItems>((acc, item) => {
+    const category = item.category;
 
-		acc[category].push(item);
-		return acc;
-	}, {});
+    if (!acc[category]) {
+      acc[category] = [];
+    }
 
-	const sortedCategories = Object.keys(itemsByCategory).sort();
+    acc[category].push(item);
+    return acc;
+  }, {});
 
-	const dateObject = new Date(createdAt);
+  const sortedCategories = Object.keys(itemsByCategory).sort();
 
-	const formattedDate = dateObject.toLocaleDateString('sv-SE', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+  const dateObject = new Date(createdAt);
 
-	const totalPrice = editableItems?.reduce(
-		(sum, item) => sum + item.price * item.quantity,
-		0
-	);
+  const formattedDate = dateObject.toLocaleDateString('sv-SE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
-	return (
-		<section className="ConfirmationPage">
-			<NavBar />
-			<Footer />
+  const totalPrice = editableItems?.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
-			<h1>Orderbekräftelse</h1>
+  return (
+    <section className="ConfirmationPage">
+      <NavBar />
+      <Footer />
 
-			<ContentContainer>
-				<section className="ConfirmationPage__content">
-					<div>
-						<h3 className="Confirmation__ordnr">Order #{orderNumber}</h3>
+      <h1>Orderbekräftelse</h1>
 
-						{/* Item Lista */}
-						<OrderItemsList
-							sortedCategories={sortedCategories}
-							itemsByCategory={itemsByCategory}
-							isChange={isChange}
-							updateLocalQuantity={updateLocalQuantity}
-						/>
-					</div>
+      <ContentContainer>
+        <section className="ConfirmationPage__content">
+          <div>
+            <h3 className="Confirmation__ordnr">Order #{orderNumber}</h3>
 
-					{/* totalsumma */}
-					<OrderTotal name={name} totalPrice={totalPrice} />
+            <OrderItemsList
+              sortedCategories={sortedCategories}
+              itemsByCategory={itemsByCategory}
+              isChange={isChange}
+              updateLocalQuantity={updateLocalQuantity}
+            />
+          </div>
 
-					{/* OrderInfo och knappar */}
-					<OrderActions
-						guestId={guestId}
-						formattedDate={formattedDate}
-						status={status}
-						isChange={isChange}
-						doneChange={doneChange}
-						changeOrder={changeOrder}
-						cancellOrder={cancellOrder}
-					/>
-				</section>
-			</ContentContainer>
-			{renderPaymentMessage()}
-			<div className="button__checkout-wrapper">
-				<Button
-					variant="secondary"
-					onClick={handleClick}
-					className="button__checkout"
-				>
-					Följ din beställning
-				</Button>
-			</div>
-		</section>
-	);
+          <OrderTotal name={name} totalPrice={totalPrice} />
+
+          <OrderActions
+            guestId={guestId}
+            formattedDate={formattedDate}
+            status={status}
+            isChange={isChange}
+            doneChange={doneChange}
+            changeOrder={changeOrder}
+            cancellOrder={cancellOrder}
+          />
+        </section>
+      </ContentContainer>
+      {renderPaymentMessage()}
+      <div className="button__checkout-wrapper">
+        <Button
+          variant="secondary"
+          onClick={handleClick}
+          className="button__checkout"
+        >
+          Följ din beställning
+        </Button>
+      </div>
+    </section>
+  );
 }
 
 export { OrderConfirmationPage };

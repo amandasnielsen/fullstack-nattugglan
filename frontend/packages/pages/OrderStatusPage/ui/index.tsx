@@ -5,54 +5,48 @@ import { NavBar } from '@nattugglan/navbar';
 import { Footer } from '@nattugglan/footer';
 import { ContentContainer } from '@nattugglan/contentcontainer';
 import { Button } from '@nattugglan/button';
+import { useNotificationStore, useOrderStore } from '@nattugglan/core';
 import OwlChef from './assets/owl-chef.png';
 
 interface OrderResponse {
   orderNumber: string;
-  status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
+  status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled' | 'Done';
 }
 
 export function OrderStatusPage() {
-  const { orderNumber } = useParams();
-  const [order, setOrder] = useState<OrderResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { orderNumber: urlOrderNumber } = useParams();
   const navigate = useNavigate();
+  const order = useOrderStore((state) => state.order as OrderResponse | null);
+  const globalOrderNumber = useOrderStore((state) => state.orderNumber); 
+  const [error, setError] = useState<string | null>(null);
+  const { clearNotification } = useNotificationStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!orderNumber) {
-      setError('Ingen order angiven.');
+    clearNotification();
+    if (globalOrderNumber) {
       setLoading(false);
-      return;
     }
 
-    setLoading(true);
-    setError(null);
+    if (!globalOrderNumber || urlOrderNumber !== globalOrderNumber) {
+      setError("Kunde inte hitta eller spåra den ordern.");
+      setLoading(false);
+    } else {
+      setError(null);
+    }
+    
+    if (order && order.orderNumber === urlOrderNumber) {
+      setLoading(false);
+    }
 
-    fetch(`http://localhost:3000/api/order/${orderNumber}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Order hittades inte');
-        return res.json();
-      })
-      .then((data: OrderResponse) => {
-        setOrder(data);
-        setError(null);
-        setLoading(false);
-      })
-      .catch(() => {
-        setOrder(null);
-        setError('Kunde inte hitta någon order.');
-        setLoading(false);
-      });
-  }, [orderNumber]);
-
+  }, [urlOrderNumber, globalOrderNumber, clearNotification, order]); 
+  
   const steps = [
     { key: 'Pending', label: 'Din beställning väntar på att bli bekräftad' },
     { key: 'Confirmed', label: 'Vi lagar din mat' },
     { key: 'Ready', label: 'Din mat är redo för upphämtning!' },
   ];
 
-  // === LOADING STATE ===
   if (loading) {
     return (
       <>
@@ -68,41 +62,8 @@ export function OrderStatusPage() {
     );
   }
 
-  // === NO ORDER FOUND ===
-  if (error || !order) {
-    return (
-      <>
-        <NavBar />
-        <Footer />
-        <section className="orderstatus__page">
-          <h1 className="status__title">Orderstatus</h1>
 
-          <ContentContainer>
-            <p className="status-cancelled">
-              Du har inte gjort någon order än.
-            </p>
-            <p className="status-cancelled">
-              Gå in på menyn och välj något gott!
-            </p>
-          </ContentContainer>
-
-          <div className="button__checkout-wrapper">
-            <Button
-              variant="secondary"
-              fullWidth={true}
-              className="button__checkout"
-              onClick={() => navigate('/menu')}
-            >
-              Meny
-            </Button>
-          </div>
-        </section>
-      </>
-    );
-  }
-
-  // === CANCELLED ORDER ===
-  if (order.status === 'Cancelled') {
+  if (order && order.status === 'Cancelled') {
     return (
       <>
         <NavBar />
@@ -112,15 +73,17 @@ export function OrderStatusPage() {
 
           <ContentContainer>
             <div className="status-box">
-              <Link className="status-box__link" to={`/order/${orderNumber}`}>
+              <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
                 <h2 className="status-box__order">Order #{order.orderNumber}</h2>
               </Link>
               <p className="status-cancelled">
                 Den här beställningen har avbrutits av köket.
               </p>
+              <p className="status-cancelled">
+                Lägg en ny order eller kontakta oss om du har frågor!
+              </p>
             </div>
           </ContentContainer>
-
           <div className="button__checkout-wrapper">
             <Button
               variant="secondary"
@@ -136,6 +99,36 @@ export function OrderStatusPage() {
     );
   }
 
+  if (error || !order || order.status === "Done") {
+    return (
+      <>
+        <NavBar />
+        <Footer />
+        <section className="orderstatus__page">
+          <h1 className="status__title">
+            Orderstatus
+          </h1>
+    
+          <ContentContainer>
+            <p className="status-cancelled">
+              Du har ingen aktiv order just nu.</p>
+              <p className="status-cancelled"> Gå in på menyn och välj något gott!
+            </p>
+          </ContentContainer>
+          <div className="button__checkout-wrapper">
+            <Button
+              variant="secondary"
+              fullWidth={true}
+              className="button__checkout"
+              onClick={() => navigate("/menu")}>
+                Meny
+            </Button>
+          </div>
+        </section>
+      </>
+    );
+  }
+  
   const currentStepIndex = steps.findIndex((step) => step.key === order.status);
 
   return (
@@ -147,20 +140,20 @@ export function OrderStatusPage() {
 
         <ContentContainer>
           <div className="status-box">
-            <Link className="status-box__link" to={`/order/${orderNumber}`}>
+            <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
               <h2 className="status-box__order">Order #{order.orderNumber}</h2>
             </Link>
-
             <div className="status-box__timeline">
               {steps.map((step, index) => (
                 <div key={step.key} className="status-step">
                   <div
                     className={
                       index <= currentStepIndex
-                        ? index === currentStepIndex
-                          ? 'status-dot active pulsating'
-                          : 'status-dot active'
-                        : 'status-dot'
+                        ? 
+                        (index === currentStepIndex 
+                          ? "status-dot active pulsating" 
+                          : "status-dot active")
+                        : "status-dot"                     
                     }
                   ></div>
                   <p className="status-text">{step.label}</p>

@@ -15,8 +15,12 @@ import { CartPage } from '@nattugglan/cartpage';
 import ForrestBackground from './assets/BG-forrest.jpg';
 import { ProtectedRoute } from '@nattugglan/protectedroute';
 import { AccessDenied } from '@nattugglan/accessdenied';
+import { useGlobalOrderStatusPolling } from '@nattugglan/core';
 
 function App() {
+
+	useGlobalOrderStatusPolling();
+	
   return (
     <BrowserRouter>
       <section>

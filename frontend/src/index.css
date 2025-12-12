@@ -10,7 +10,7 @@
 		rgba(2, 11, 40, 1) 0%,
 		rgb(23, 35, 70) 100%
 	);
-	--box-white: rgba(255, 248, 231, 0.8);
+	--box-white: #fff8e7cc;
 	--font-color-white: #f8f8f8;
 	--font-color-dark: #020b28;
 
