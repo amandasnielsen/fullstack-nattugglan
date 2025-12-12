@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch src --exec ts-node --max-old-space-size=1024 src/index.ts"
+    "dev": "nodemon --watch src --exec \"ts-node --max-old-space-size=1024 src/index.ts\""
   },
   "keywords": [],
   "author": "",
