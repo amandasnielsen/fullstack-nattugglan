@@ -24,8 +24,8 @@ function NavBar() {
 
   useEffect(() => {
 		if (!orderNumber) {
-				console.log("Ingen orderNumber hittades, rensar notifikationer.");
-				clearNotification();
+			console.log("Ingen orderNumber hittades, rensar notifikationer.");
+			clearNotification();
 		}
   }, [orderNumber, clearNotification]);
 

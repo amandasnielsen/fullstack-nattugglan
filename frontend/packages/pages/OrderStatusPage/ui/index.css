@@ -80,8 +80,7 @@
 .status-cancelled {
 	font-family: 'anton';
 	letter-spacing: var(--spacing-wide);
-	font-size: 1.2rem;
-	color: #820101;
+	font-size: 1rem;
 	text-align: center;
 	margin-top: 2rem;
 }

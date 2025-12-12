@@ -14,7 +14,7 @@
 }
 
 .navbar__logo {
-  width: 70px;
+  width: 60px;
 }
 
 .navbar__icons-right {
@@ -23,8 +23,8 @@
 }
 
 .navbar__menuIcon {
-  width: 35px;
-  height: 30px;
+  width: 30px;
+  height: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -54,12 +54,12 @@
 }
 
 .navbar__cart-icon {
-	width: 40px;
+	width: 35px;
 	opacity: 0.8;
 }
 
 .navbar__bell-icon {
-	width: 40px;
+	width: 35px;
 	opacity: 0.8;
 }
 
@@ -233,5 +233,19 @@
 @media (min-width: 900px) {
   .navbar__container-phone {
 		display: none;
+	}
+
+	.navbar__logo {
+  	width: 70px;
+	}
+
+	.navbar__cart-icon {
+		width: 40px;
+		opacity: 0.8;
+	}
+
+	.navbar__bell-icon {
+		width: 40px;
+		opacity: 0.8;
 	}
 }

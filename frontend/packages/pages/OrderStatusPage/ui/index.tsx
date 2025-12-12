@@ -11,7 +11,7 @@ import OwlChef from './assets/owl-chef.png';
 
 interface OrderResponse {
   orderNumber: string;
-  status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
+  status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled' | 'Done';
 }
 
 export function OrderStatusPage() {
@@ -34,11 +34,46 @@ export function OrderStatusPage() {
 
   const steps = [
     { key: "Pending", label: "Din beställning väntar på att bli bekräftad" },
-    { key: "Confirmed", label: "Vi lagar din mat" },
+    { key: "Confirmed", label: "Vi lagar din mat!" },
     { key: "Ready", label: "Din mat är redo för upphämtning!" },
   ];
 
-  if (error || !order) {
+  if (order && order.status === "Cancelled") {
+    return (
+      <>
+        <NavBar />
+        <Footer />
+        <section className="orderstatus__page">
+          <h1 className="status__title">Orderstatus</h1>
+
+          <ContentContainer>
+            <div className="status-box">
+              <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
+                <h2 className="status-box__order">Order #{order.orderNumber}</h2>
+              </Link>
+              <p className="status-cancelled">
+                Den här beställningen har avbrutits av köket.
+              </p>
+							<p className="status-cancelled">
+                Lägg en ny order eller kontakta oss om du har frågor!
+              </p>
+            </div>
+          </ContentContainer>
+          <div className="button__checkout-wrapper">
+            <Button
+              variant="secondary"
+              fullWidth={true}
+              className="button__checkout"
+              onClick={() => navigate("/menu")}>
+                Meny
+            </Button>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (error || !order || order.status === "Done") {
     return (
       <>
         <NavBar />
@@ -50,7 +85,7 @@ export function OrderStatusPage() {
     
           <ContentContainer>
             <p className="status-cancelled">
-              Du har inte gjort någon order än.</p>
+              Du har ingen aktiv order just nu.</p>
               <p className="status-cancelled"> Gå in på menyn och välj något gott!
             </p>
             
@@ -69,39 +104,6 @@ export function OrderStatusPage() {
     );
   }
   
-  // === CANCELLED ORDER ===
-  if (order && order.status === "Cancelled") {
-    return (
-      <>
-        <NavBar />
-        <Footer />
-        <section className="orderstatus__page">
-          <h1 className="status__title">Orderstatus</h1>
-
-          <ContentContainer>
-            <div className="status-box">
-              <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
-                <h2 className="status-box__order">Order #{order.orderNumber}</h2>
-              </Link>
-              <p className="status-cancelled">
-                Den här beställningen har avbrutits av köket.
-              </p>
-            </div>
-          </ContentContainer>
-          <div className="button__checkout-wrapper">
-            <Button
-              variant="secondary"
-              fullWidth={true}
-              className="button__checkout"
-              onClick={() => navigate("/menu")}>
-                Meny
-            </Button>
-          </div>
-        </section>
-      </>
-    );
-  }
-
   const currentStepIndex = steps.findIndex((step) => step.key === order.status);
 
   return (
