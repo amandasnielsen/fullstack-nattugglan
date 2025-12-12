@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const useAuth = () => {
   const navigate = useNavigate();
   const logoutAction = useAuthStore(state => state.logout); 
 
   const logout = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auth/logout', {
+      const response = await fetch(`${BASE_URL}/auth/logout`, {
         method: 'POST',
       });
 

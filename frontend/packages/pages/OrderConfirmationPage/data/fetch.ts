@@ -1,3 +1,5 @@
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface OrderChangeProp {
 	items: {
 		_id: string;
@@ -18,7 +20,7 @@ type StatusChange = {
 
 export const fetchOrderDetails = async (orderNumber: string) => {
 	try {
-		const URL = `http://localhost:3000/api/order/${orderNumber}`;
+		const URL = `${BASE_URL}/api/order/${orderNumber}`;
 
 		const response = await fetch(URL);
 
@@ -44,7 +46,7 @@ export const patchOrderChange = async (
 ) => {
 	try {
 		const response = await fetch(
-			`http://localhost:3000/api/order/${orderNumber}`,
+			`${BASE_URL}/api/order/${orderNumber}`,
 			{
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
@@ -66,7 +68,7 @@ export const putStatusChange = async (
 ) => {
 	try {
 		const response = await fetch(
-			`http://localhost:3000/api/orders/${orderNumber}`,
+			`${BASE_URL}/api/orders/${orderNumber}`,
 			{
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },

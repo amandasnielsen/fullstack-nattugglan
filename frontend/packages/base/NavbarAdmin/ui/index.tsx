@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core'
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function NavBarAdmin() {
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
 	const navigate = useNavigate();
@@ -18,7 +20,7 @@ function NavBarAdmin() {
     }
     
     try {
-      await fetch('http://localhost:3000/api/auth/logout', {
+      await fetch(`${BASE_URL}/api/auth/logout`, {
         method: 'POST',
       });
       console.log("Admin logged out from backend.");

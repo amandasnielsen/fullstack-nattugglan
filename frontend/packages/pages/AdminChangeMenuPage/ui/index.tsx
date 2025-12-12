@@ -9,6 +9,8 @@ import { MenuItemCard } from './MenuItemCard';
 import { Button } from '@nattugglan/button';
 import { fetchMenuItems } from '../data/fetchMenu'; 
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export interface MenuItem {
   _id: string;
   name: string;
@@ -23,7 +25,7 @@ interface GroupedItems {
 }
 
 const CATEGORIES = ['Visa allt', 'Kött', 'Vego', 'Snacks', 'Dricka'];
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = `${BASE_URL}/api`;
 
 function AdminChangeMenuPage() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
