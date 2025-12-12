@@ -16,8 +16,6 @@ interface OrderResponse {
 }
 
 async function fetchOrderStatus(orderNumber: string): Promise<OrderResponse | null> {
-	console.log(`Polling for order ${orderNumber} at: ${new Date().toLocaleTimeString()}`);
-	
 	const res = await fetch(`http://localhost:3000/api/order/${orderNumber}`);
 	if (!res.ok) {
 		if (res.status === 404) return null;
@@ -59,7 +57,6 @@ export const useGlobalOrderStatusPolling = () => {
 				setOrder(newOrder); 
 					
 			} else {
-				console.error("Polling: Kunde inte hitta aktiv order (404/Null).");
 				clearNotification(); 
 			}
 		} catch (e) {
