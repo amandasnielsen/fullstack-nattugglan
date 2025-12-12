@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core/state/authStore';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function LoginPage() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -16,7 +18,7 @@ function LoginPage() {
 
 	async function handleLogin() {
 		try {
-			const res = await fetch('http://localhost:3000/api/auth/login', {
+			const res = await fetch(`${BASE_URL}/api/auth/login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

@@ -10,6 +10,7 @@ import { Button } from '@nattugglan/button';
 import { startOrdersPolling, type Order, type OrderStatus } from '../data/fetchOrders'; 
 import { useNotificationStore } from '@nattugglan/core';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 type FilterStatus = OrderStatus | 'All';
 
@@ -102,7 +103,7 @@ function AdminAllOrdersPage() {
 
   const handleStatusChange = async (orderId: string, orderNumber: string, newStatus: OrderStatus, comment?: string) => {
 
-    const API_STATUS_URL = `http://localhost:3000/api/admin/orders/${orderNumber}/status`;
+    const API_STATUS_URL = `${BASE_URL}/api/admin/orders/${orderNumber}/status`;
     
     if (!token) return;
 

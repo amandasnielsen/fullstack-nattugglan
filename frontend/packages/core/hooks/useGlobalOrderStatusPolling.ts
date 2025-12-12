@@ -10,13 +10,15 @@ import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 // admin ändrar statusen
 const POLLING_INTERVAL = 5000; 
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface OrderResponse {
   orderNumber: string;
   status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
 }
 
 async function fetchOrderStatus(orderNumber: string): Promise<OrderResponse | null> {
-	const res = await fetch(`http://localhost:3000/api/order/${orderNumber}`);
+	const res = await fetch(`${BASE_URL}/api/order/${orderNumber}`);
 	if (!res.ok) {
 		if (res.status === 404) return null;
 		throw new Error("Kunde inte hämta orderstatus.");

@@ -4,6 +4,8 @@ export interface OrderItem {
   quantity: number;
 }
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export interface Order {
   _id: string; 
   orderNumber: string;
@@ -15,7 +17,7 @@ export interface Order {
   cancellationReason?: string;
 }
 
-const API_ORDERS_URL = 'http://localhost:3000/api/admin/orders';
+const API_ORDERS_URL = `${BASE_URL}/api/admin/orders`;
 const POLLING_INTERVAL = 5000;
 
 async function fetchOrdersData(

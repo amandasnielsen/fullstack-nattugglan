@@ -10,6 +10,8 @@ import type { OrderInterface } from '@nattugglan/core';
 import { validateName, validatePhone } from '../data/validation';
 import { useOrderStore } from '@nattugglan/core/state/orderStore';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function PaymentPage() {
 	const navigate = useNavigate();
 	const { items, totalPrice, clearCart } = useCartStore();
@@ -45,7 +47,7 @@ function PaymentPage() {
 		};
 
 		try {
-			const response = await fetch(`http://localhost:3000/api/order`, {
+			const response = await fetch(`${BASE_URL}/api/order`, {
 				method: 'POST',
 				headers: {
 					//lägg till guest ID-cookien här, och api nyckeln

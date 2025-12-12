@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import type { orderDetailInterface } from '@nattugglan/orderconfirmationpage';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export interface ActiveOrder {
   orderNumber: string;
   status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
@@ -43,10 +45,10 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 
       if (currentGuestId) {
         response = await fetch(
-          `http://localhost:3000/api/order/session?guestId=${currentGuestId}`
+          `${BASE_URL}/api/order/session?guestId=${currentGuestId}`
         );
       } else if (name && phoneNumber) {
-        response = await fetch(`http://localhost:3000/api/order/lookup`, {
+        response = await fetch(`${BASE_URL}/api/order/lookup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, phoneNumber }),
