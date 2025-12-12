@@ -1,0 +1,43 @@
+Mötesprotokoll Daily Scrum (12 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+* Rasmus
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Planerade redovisningen. Tog bort alerts och fixade lite länkar
+* Sprint review. Lägga till cancellation-kommentaren på bekräftelse-sidan och tidigare ordrar.
+  Och kolla på beställ-igen-funktionen
+* Nej
+
+Person 2 (Amanda)
+* Planerade redovisningen. Jag gjorde polling-funktionen för att lyssna efter orderstatus
+* Sprint review. Göra klart polling-funktionen och mergea till dev
+* Nej
+
+Person 3 (Belinda)
+* Planerade redovisningen. Försökte få in error-sidorna till App
+* Sprint review. Ska göra klart error-sidorna in i App.tsx
+* Nej
+
+Person 4 (Rasmus)
+* Planerade redovisningen. Fixade glitchen på orderstatus-sidan
+* Sprint review, sen får vi se
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
+
+Få in appen och backend i Render och AWS Bucket
