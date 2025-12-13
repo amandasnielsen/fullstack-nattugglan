@@ -113,7 +113,7 @@
 
 @media (max-height: 800px) {
   .admin__menu-page .container__card {
-    min-height: 35vh;
-    max-height: 50vh;
+    min-height: 40vh;
+    max-height: 40vh;
   }
 }

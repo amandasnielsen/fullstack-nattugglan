@@ -84,8 +84,8 @@ function NavBarAdmin() {
 						>
 							Lagerstatus
 						</NavLink>
+						<a className="navbar__menuLinks" onClick={handleLogout}>Logga ut</a>
 					</div>
-				<a className="navbar__menuLinks" onClick={handleLogout}>Logga ut</a>
 				</nav>
 
 			</header>

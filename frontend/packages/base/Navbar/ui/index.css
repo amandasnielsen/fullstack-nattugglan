@@ -24,12 +24,12 @@
 
 .navbar__menuIcon {
   width: 30px;
-  height: 25px;
+  height: 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   cursor: pointer;
-  gap: 0.4rem;
+  gap: 0.3rem;
   z-index: 1001; 
 	margin-right: .5rem;
 }
@@ -130,7 +130,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 5rem 1rem;
   background: var(--bg-gradient);
   border-radius: 3px;
   z-index: 1000; 

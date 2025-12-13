@@ -7,8 +7,8 @@
 	width: 80%;
 	max-width: 600px;
 	height: auto !important;
-	min-height: 40vh;
-	max-height: 65vh;
+	min-height: 20vh;
+	max-height: 55vh;
 	overflow: auto;
 	background: var(--box-white);
 	border-radius: 3px;

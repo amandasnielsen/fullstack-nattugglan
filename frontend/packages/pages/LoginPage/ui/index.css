@@ -1,5 +1,4 @@
 .login {
-	height: 100vh;
 	position: relative;
 	overflow: hidden;
 
@@ -38,20 +37,18 @@
 	border: none;
 
 	background-color: #e6e2da;
-	font-family: 'MerriweatherSans', system-ui, -apple-system, BlinkMacSystemFont,
-		sans-serif;
+	font-family: 'MerriweatherSans';
 	font-size: 0.95rem;
 }
 
 .login__button {
 	margin-top: 1.75rem;
-	max-width: 260px;
+	max-width: 280px;
 	align-self: center;
 }
 
 .error__message {
 	color: red;
-	font-family: 'MerriweatherSans', system-ui, -apple-system, BlinkMacSystemFont,
-		sans-serif;
+	font-family: 'MerriweatherSans';
 	text-align: center;
 }

@@ -130,16 +130,16 @@ function NavBar() {
             >
               Vart finns vi?
             </NavLink>
+						<NavLink
+							className={({ isActive }) =>
+								isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
+							}
+							to="/login"
+							onClick={toggleMenu}
+						>
+            	Logga in som Admin
+          	</NavLink>
           </div>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? 'navbar__menuLinks active-link' : 'navbar__menuLinks'
-            }
-            to="/login"
-            onClick={toggleMenu}
-          >
-            Logga in som Admin
-          </NavLink>
         </nav>
       </header>
 

@@ -47,12 +47,11 @@
 
 .order__button {
   width: 280px;
-  padding: 15px 20px;
 }
 
 .cart__page .container__card {
-  min-height: 45vh;
-  max-height: 60vh;
+  min-height: 40vh;
+  max-height: 40vh;
 	max-width: 400px;
 }
 

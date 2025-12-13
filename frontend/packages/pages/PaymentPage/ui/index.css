@@ -68,6 +68,7 @@
 	color: var(--font-color-dark);
 	font-size: 0.8rem;
 }
+
 .payment__buttonContainer {
 	position: fixed;
 	bottom: 0;
@@ -81,15 +82,14 @@
 
 .payment__button {
 	width: 280px;
-	padding: 15px 20px;
 }
 
 .paymentpage .container__card {
 	display: flex;
 	flex-direction: column;
 
-	min-height: 50vh;
-	max-height: 60vh;
+	min-height: 40vh;
+	max-height: 40vh;
 	max-width: 400px;
 }
 

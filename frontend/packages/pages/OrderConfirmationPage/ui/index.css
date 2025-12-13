@@ -119,12 +119,6 @@
 .ConfirmationPage .container__card {
 	display: flex;
 	flex-direction: column;
-	min-height: 50vh;
-}
-
-@media (max-height: 800px) {
-  .ConfirmationPage .container__card {
-    min-height: 40vh;
-    max-height: 50vh;
-  }
+	min-height: 40vh;
+	max-height: 40vh;
 }
