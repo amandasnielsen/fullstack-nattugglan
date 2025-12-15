@@ -117,7 +117,7 @@ function AdminChangeMenuPage() {
       <>
         <NavBarAdmin />
         <h1>Uppdatera menyn</h1>
-        <ContentContainer><p>Laddar meny...</p></ContentContainer>
+        <ContentContainer><p className="loading__message">Laddar meny...</p></ContentContainer>
         <FooterAdmin />
       </>
     );
