@@ -3,7 +3,6 @@ import type { orderDetailInterface } from '@nattugglan/orderconfirmationpage';
 import type { CartItem } from '@nattugglan/core';
 import { useCartStore } from '@nattugglan/core';
 import { Link } from 'react-router-dom';
-import { useState } from "react"
 
 interface OrderHistoryListProps {
 	orders: orderDetailInterface[];

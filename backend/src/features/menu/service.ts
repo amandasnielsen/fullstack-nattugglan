@@ -10,11 +10,11 @@ export interface MenuUpdateInput {
 }
 
 export type ProcessedMenuUpdate = {
-	name?: string | undefined;
-	price?: number | undefined;
-	category?: string | undefined;
-	ingredients?: string[] | undefined; 
-	available?: boolean | undefined;
+  name?: string | undefined;
+  price?: number | undefined;
+  category?: string | undefined;
+  ingredients?: string[] | undefined;
+  available?: boolean | undefined;
 }
 
 export const updateMenuItem = async (
@@ -22,20 +22,20 @@ export const updateMenuItem = async (
   updateData: MenuUpdateInput
 ): Promise<MenuItemInterface | null> => {
   
-  const processedData: ProcessedMenuUpdate = {
-    name: updateData.name,
-    price: updateData.price,
-    category: updateData.category,
-    available: updateData.available,
-  };
+  const processedData: ProcessedMenuUpdate = { ...updateData } as any; 
 
-  if (updateData.ingredients && typeof updateData.ingredients === 'string') {
-    processedData.ingredients = updateData.ingredients
+  if (processedData.ingredients && typeof processedData.ingredients === 'string') {
+    
+    const ingredientsString: string = processedData.ingredients;
+
+    const ingredientsArray = ingredientsString
       .split(',')
       .map(s => s.trim())
       .filter(s => s.length > 0);
+      
+    processedData.ingredients = ingredientsArray;
   }
-	
+  
   return await updateMenuItemRepo(itemId, processedData as Partial<MenuItemInterface>);
 };
 
