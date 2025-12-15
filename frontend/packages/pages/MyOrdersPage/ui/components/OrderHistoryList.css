@@ -37,6 +37,12 @@
 	font-size: 0.9rem;
 }
 
+.orderHistory__card-bottom-text {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
 .reorder-button {
 	padding: 0.5rem 1rem;
 	background: none;

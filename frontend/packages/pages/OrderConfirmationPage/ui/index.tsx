@@ -22,6 +22,7 @@ export interface orderDetailInterface {
   status: 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
   createdAt: string;
   name: string;
+  cancellationReason?: string;
 }
 
 interface OrderNumberParams {

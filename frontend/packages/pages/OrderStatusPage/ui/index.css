@@ -85,6 +85,14 @@
 	margin-top: 2rem;
 }
 
+.status-cancelled__cancellationReason {
+	font-family: "anton";
+	text-align: center;
+	margin-top: 1rem;
+	letter-spacing: var(--spacing-wide);
+
+}
+
 .orderstatus__page .container__card {
 	min-height: 50vh;
 }

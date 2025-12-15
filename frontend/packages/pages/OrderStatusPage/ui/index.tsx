@@ -11,13 +11,14 @@ import OwlChef from './assets/owl-chef.png';
 interface OrderResponse {
   orderNumber: string;
   status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled' | 'Done';
+  cancellationReason?: string;
 }
 
 export function OrderStatusPage() {
   const { orderNumber: urlOrderNumber } = useParams();
   const navigate = useNavigate();
   const order = useOrderStore((state) => state.order as OrderResponse | null);
-  const globalOrderNumber = useOrderStore((state) => state.orderNumber); 
+  const globalOrderNumber = useOrderStore((state) => state.orderNumber);
   const [error, setError] = useState<string | null>(null);
   const { clearNotification } = useNotificationStore();
   const [loading, setLoading] = useState(true);
@@ -34,13 +35,13 @@ export function OrderStatusPage() {
     } else {
       setError(null);
     }
-    
+
     if (order && order.orderNumber === urlOrderNumber) {
       setLoading(false);
     }
 
-  }, [urlOrderNumber, globalOrderNumber, clearNotification, order]); 
-  
+  }, [urlOrderNumber, globalOrderNumber, clearNotification, order]);
+
   const steps = [
     { key: 'Pending', label: 'Din beställning väntar på att bli bekräftad' },
     { key: 'Confirmed', label: 'Vi lagar din mat' },
@@ -76,9 +77,16 @@ export function OrderStatusPage() {
               <Link className="status-box__link" to={`/order/${order.orderNumber}`}>
                 <h2 className="status-box__order">Order #{order.orderNumber}</h2>
               </Link>
-              <p className="status-cancelled">
-                Den här beställningen har avbrutits av köket.
-              </p>
+              {order.cancellationReason && (
+                <>
+                  <p className="status-cancelled">
+                    Den här beställningen har avbrutits av köket.
+                  </p>
+                  <p className="status-cancelled__cancellationReason">
+                    Anledning: {order.cancellationReason}
+                  </p>
+                </>
+              )}
               <p className="status-cancelled">
                 Lägg en ny order eller kontakta oss om du har frågor!
               </p>
@@ -108,11 +116,11 @@ export function OrderStatusPage() {
           <h1 className="status__title">
             Orderstatus
           </h1>
-    
+
           <ContentContainer>
             <p className="status-cancelled">
               Du har ingen aktiv order just nu.</p>
-              <p className="status-cancelled"> Gå in på menyn och välj något gott!
+            <p className="status-cancelled"> Gå in på menyn och välj något gott!
             </p>
           </ContentContainer>
           <div className="button__checkout-wrapper">
@@ -121,14 +129,14 @@ export function OrderStatusPage() {
               fullWidth={true}
               className="button__checkout"
               onClick={() => navigate("/menu")}>
-                Meny
+              Meny
             </Button>
           </div>
         </section>
       </>
     );
   }
-  
+
   const currentStepIndex = steps.findIndex((step) => step.key === order.status);
 
   return (
@@ -149,11 +157,11 @@ export function OrderStatusPage() {
                   <div
                     className={
                       index <= currentStepIndex
-                        ? 
-                        (index === currentStepIndex 
-                          ? "status-dot active pulsating" 
+                        ?
+                        (index === currentStepIndex
+                          ? "status-dot active pulsating"
                           : "status-dot active")
-                        : "status-dot"                     
+                        : "status-dot"
                     }
                   ></div>
                   <p className="status-text">{step.label}</p>

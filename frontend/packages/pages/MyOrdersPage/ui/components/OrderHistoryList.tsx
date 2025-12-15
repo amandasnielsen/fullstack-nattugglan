@@ -3,16 +3,22 @@ import type { orderDetailInterface } from '@nattugglan/orderconfirmationpage';
 import type { CartItem } from '@nattugglan/core';
 import { useCartStore } from '@nattugglan/core';
 import { Link } from 'react-router-dom';
+import { useState } from "react"
 
 interface OrderHistoryListProps {
 	orders: orderDetailInterface[];
 }
 
 export function OrderHistoryList({ orders }: OrderHistoryListProps) {
+	// const [ message, setMessage ] = useState("")
 	const { addItem } = useCartStore();
 	if (!orders || orders.length === 0) {
 		return <p>Hittade ingen historik</p>;
 	}
+
+	// const setCancellationMessage = () => {
+	// 	setMessage()
+	// }
 
 	const handleReorder = (itemsToReorder: CartItem[]) => {
 		itemsToReorder.forEach((item) => {
@@ -21,6 +27,8 @@ export function OrderHistoryList({ orders }: OrderHistoryListProps) {
 			}
 		});
 	};
+
+	console.log(orders)
 
 	return (
 		<div className="orderHistory__cardContainer">
@@ -47,7 +55,14 @@ export function OrderHistoryList({ orders }: OrderHistoryListProps) {
 						))}
 					</ul>
 					<div className="orderHistory__card-bottom">
-						<p>Totalt: {order.totalPrice} kr</p>
+						<div className="orderHistory__card-bottom-text">
+						{order.cancellationReason && (
+							<p className="orderHistory__cancellationReason">
+								<b>Avbokad:</b> {order.cancellationReason}
+							</p>
+						)}
+						<p><b>Totalt:</b> {order.totalPrice} kr</p>
+						</div>
 						<button
 							onClick={() => handleReorder(order.items)}
 							className="reorder-button"
