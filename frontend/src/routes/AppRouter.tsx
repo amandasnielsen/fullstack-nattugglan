@@ -14,6 +14,7 @@ import { OrderConfirmationPage } from '@nattugglan/orderconfirmationpage';
 import { CartPage } from '@nattugglan/cartpage';
 import { ProtectedRoute } from '@nattugglan/protectedroute';
 import { AccessDenied } from '@nattugglan/accessdenied';
+import '../index.css';
 
 export function AppRouter() {
   return (
