@@ -120,12 +120,12 @@
 	}
 }*/
 
-/*@media (max-height: 900px) {
+@media (min-height: 850px) {
   .menu__page .container__card {
-    min-height: 40vh;
+    min-height: 50vh;
     max-height: 50vh;
   }
-}*/
+}
 
 @media (max-height: 850px) {
   .menu__page .container__card {
