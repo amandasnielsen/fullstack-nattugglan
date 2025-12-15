@@ -168,7 +168,14 @@
 	max-height: 60vh;
 }
 
-@media (max-height: 800px) {
+@media (max-height: 750px) {
+  .allorders__page .container__card {
+    min-height: 45vh;
+    max-height: 45vh;
+  }
+}
+
+@media (min-height: 750px) {
   .allorders__page .container__card {
     min-height: 40vh;
     max-height: 40vh;
