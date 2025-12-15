@@ -16,7 +16,9 @@ export function OrderHistoryList({ orders }: OrderHistoryListProps) {
 
 	const handleReorder = (itemsToReorder: CartItem[]) => {
 		itemsToReorder.forEach((item) => {
-			addItem(item);
+			for(let i = 0; i < item.quantity; i++) {
+				addItem(item);
+			}
 		});
 	};
 
