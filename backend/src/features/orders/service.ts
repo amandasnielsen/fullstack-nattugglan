@@ -1,4 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
+import { decreaseIngredients } from '../ingredients/repository';
+
+
 import {
 	createOrder,
 	findOrderById,
@@ -72,6 +75,11 @@ export async function updateOrderStatus(orderNumber: string, status: string, com
         throw new Error('Invalid status');
     }
 
+	const existingOrder = await OrderModel.findOne({ orderNumber });
+	if (!existingOrder) throw new Error("Order not found");
+  
+	const previousStatus = existingOrder.status;
+
     const updateData: any = { status };
 
     if (status === "Cancelled" && !comment) {
@@ -82,11 +90,26 @@ export async function updateOrderStatus(orderNumber: string, status: string, com
         updateData.cancellationReason = comment; 
     }
 
+
     const order = await OrderModel.findOneAndUpdate(
         { orderNumber },
         updateData,
         { new: true }
     );
+
+	if (status === "Confirmed" && previousStatus !== "Confirmed") {
+		const ingredientsToRemove: string[] = [];
+	
+		order!.items.forEach(item => {
+		  item.ingredients.forEach(ingredient => {
+			ingredientsToRemove.push(ingredient);
+		  });
+		});
+	
+		await decreaseIngredients(ingredientsToRemove);
+	  }
+
+
 
     return order;
 }
@@ -111,3 +134,4 @@ export const updateOrderbyId = async (
 	await order.save();
 	return order;
 };
+
