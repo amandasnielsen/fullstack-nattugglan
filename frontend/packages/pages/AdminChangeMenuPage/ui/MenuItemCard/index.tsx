@@ -42,15 +42,20 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
   const handleSave = async () => {
     const dataToSave: Partial<MenuItem> = {};
 
-    // sparar namn, pris, kategori och ingredienser
     if (name !== item.name) dataToSave.name = name;
     if (price !== String(item.price)) dataToSave.price = Number(price); 
     if (category !== item.category) dataToSave.category = category; 
+    
     const newIngredientsArray = ingredients 
-      ? ingredients.split(',').map(s => s.trim()).filter(s => s.length > 0) 
+      ? ingredients.split(',')
+          .map(s => s.trim())
+          .filter(s => s.length > 0) 
       : [];
-        
-    if (JSON.stringify(newIngredientsArray) !== JSON.stringify(item.ingredients)) {
+
+    const normalizedNew = newIngredientsArray.slice().sort().join('|');
+    const normalizedOriginal = item.ingredients.slice().sort().join('|');
+
+    if (normalizedNew !== normalizedOriginal) {
       dataToSave.ingredients = newIngredientsArray; 
     }
 
@@ -59,7 +64,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
     }
     
     setIsEditing(false);
-  };
+	};
 
   if (!isEditing) {
     return (
