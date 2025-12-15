@@ -41,14 +41,12 @@ function MenuPage() {
 
   // grupperar menyn baserat på vald kategori
   const menuToDisplay = useMemo(() => {
-    // filtrera alla objekt baserat på vald kategori
     const filtered = (activeCategory === 'Visa allt')
       ? menu
       : menu.filter(item => item.category.toUpperCase() === activeCategory.toUpperCase());
     
-    // gruppera de filtrerade objekten
     const grouped: GroupedMenu = filtered.reduce((acc, item) => {
-      const categoryKey = item.category || 'Övrigt'; // Använd kategorin som nyckel
+      const categoryKey = item.category || 'Övrigt';
       
       if (!acc[categoryKey]) {
         acc[categoryKey] = [];
@@ -89,48 +87,51 @@ function MenuPage() {
           {!menu || menu.length === 0 ? (
             <p className="loading__message">Laddar menyn...</p>
           ) : (
-            
-            // LOOPA ÖVER KATEGORIERNA (Nycklar i 'menuToDisplay')
-            Object.keys(menuToDisplay).map(categoryKey => (
-              <div key={categoryKey} className="menu__category-section">
+
+            CATEGORIES.filter(c => c !== 'Visa allt').map(categoryKey => {
                 
-                {/* 1. KATEGORIRUBRIK */}
-                <h2 className="category__title">{categoryKey}</h2>
+							const items = menuToDisplay[categoryKey];
 
-                {/* 2. LOOPA ÖVER ARTIKLARNA INOM DENNA KATEGORI */}
-                {menuToDisplay[categoryKey].map((item, index, array) => {
-                  const description = item.ingredients.join(', ');
+							if (!items || items.length === 0) {
+								return null;
+							}
 
-                  // Bestäm om detta är det sista kortet i KATEGORIN (för att ta bort border)
-                  const isLastItem = index === array.length - 1;
+							return (
+								<div key={categoryKey} className="menu__category-section">
+									
+									<h2 className="category__title">{categoryKey}</h2>
 
-                  return (
-                    // VIKTIGT: Lägg till villkorlig klass för att hantera sista border
-                    <div key={item._id} 
-                         className={`menu__item-card ${isLastItem ? 'menu__item-card--last-in-section' : ''}`}
-                    >
-                      <div className="item__details">
-                        <h3 className="item__name">{item.name}
-                          {item.category.toUpperCase() === 'VEGO' && (
-                            <img 
-                              src={Leaf} 
-                              alt="Vegansk ikon" 
-                              className="item__vego-icon"
-                            />
-                          )}
-                        </h3>
-                        <p className="item__description">{description}</p>
-                      </div>
+									{items.map((item, index, array) => {
+										const description = item.ingredients.join(', ');
+										const isLastItem = index === array.length - 1;
 
-                      <div className="item__price-control">
-                        <span className="item__price">{item.price}:-</span>
-                        <QuantityControl item={item} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ))
+										return (
+											<div key={item._id} 
+														className={`menu__item-card ${isLastItem ? 'menu__item-card--last-in-section' : ''}`}
+											>
+												<div className="item__details">
+													<h3 className="item__name">{item.name}
+														{item.category.toUpperCase() === 'VEGO' && (
+															<img 
+																src={Leaf} 
+																alt="Vegansk ikon" 
+																className="item__vego-icon"
+															/>
+														)}
+													</h3>
+													<p className="item__description">{description}</p>
+												</div>
+
+												<div className="item__price-control">
+													<span className="item__price">{item.price}:-</span>
+													<QuantityControl item={item} />
+												</div>
+											</div>
+										);
+									})}
+								</div>
+							);
+            })
           )}
         </div>
       </ContentContainer>
