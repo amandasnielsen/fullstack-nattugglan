@@ -25,6 +25,9 @@ export function OrderStatusPage() {
 
   useEffect(() => {
     clearNotification();
+  }, [clearNotification]); 
+
+  useEffect(() => {
     if (globalOrderNumber) {
       setLoading(false);
     }
@@ -40,7 +43,7 @@ export function OrderStatusPage() {
       setLoading(false);
     }
 
-  }, [urlOrderNumber, globalOrderNumber, clearNotification, order]);
+  }, [urlOrderNumber, globalOrderNumber, order]);
 
   const steps = [
     { key: 'Pending', label: 'Din beställning väntar på att bli bekräftad' },
@@ -62,7 +65,6 @@ export function OrderStatusPage() {
       </>
     );
   }
-
 
   if (order && order.status === 'Cancelled') {
     return (
@@ -131,8 +133,8 @@ export function OrderStatusPage() {
               onClick={() => navigate("/menu")}>
               Meny
             </Button>
-          </div>
-        </section>
+          </div >
+        </section >
       </>
     );
   }
