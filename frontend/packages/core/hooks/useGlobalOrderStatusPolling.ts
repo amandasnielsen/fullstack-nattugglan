@@ -18,62 +18,58 @@ interface OrderResponse {
 }
 
 async function fetchOrderStatus(orderNumber: string): Promise<OrderResponse | null> {
-	const res = await fetch(`${BASE_URL}/api/order/${orderNumber}`);
-	if (!res.ok) {
-		if (res.status === 404) return null;
-		throw new Error("Kunde inte hämta orderstatus.");
-	}
-	return res.json();
+  const res = await fetch(`${BASE_URL}/api/order/${orderNumber}`);
+  if (!res.ok) {
+    if (res.status === 404) return null;
+    throw new Error("Kunde inte hämta orderstatus.");
+  }
+  return res.json();
 }
 
 export const useGlobalOrderStatusPolling = () => {
-	const orderNumber = useOrderStore((state) => state.orderNumber); 
-	const currentOrder = useOrderStore((state) => state.order); 
-	const setOrder = useOrderStore((state) => state.setOrder); 
-	const { addNotification, clearNotification } = useNotificationStore();
-	const currentOrderRef = useRef(currentOrder);
-	
-	useEffect(() => {
-		currentOrderRef.current = currentOrder;
-	}, [currentOrder]);
+  const orderNumber = useOrderStore((state) => state.orderNumber); 
+  const currentOrder = useOrderStore((state) => state.order); 
+  const setOrder = useOrderStore((state) => state.setOrder); 
+  const { addNotification, clearNotification } = useNotificationStore();
+  const currentOrderRef = useRef(currentOrder);
+  
+  useEffect(() => {
+    currentOrderRef.current = currentOrder;
+  }, [currentOrder]);
 
-	const pollStatus = useCallback(async () => {
-		if (!orderNumber) {
-			clearNotification(); 
-			return; 
-		}
+  const pollStatus = useCallback(async () => {
+    
+    if (!orderNumber) {
+      return; 
+    }
 
-		try {
-			const newOrder = await fetchOrderStatus(orderNumber);
+    try {
+      const newOrder = await fetchOrderStatus(orderNumber);
 
-			if (newOrder) {
+      if (newOrder) {
+        
+        if (currentOrderRef.current && currentOrderRef.current.status !== newOrder.status) {
+          addNotification(orderNumber);
+        }
+        
+        setOrder(newOrder); 
+          
+      } else {
+        clearNotification();
+      }
+    } catch (e) {
+      console.error("Polling Error:", e);
+    }
+  }, [orderNumber, setOrder, addNotification, clearNotification]); 
 
-				if (newOrder.status === 'Ready' || newOrder.status === 'Cancelled') {
-					clearNotification(); 
-				}
+  useEffect(() => {
+    if (orderNumber) {
+      pollStatus();
+    }
 
-				if (currentOrderRef.current && currentOrderRef.current.status !== newOrder.status) {
-					addNotification(orderNumber);
-				}
-				
-				setOrder(newOrder); 
-					
-			} else {
-				clearNotification(); 
-			}
-		} catch (e) {
-			console.error("Polling Error:", e);
-		}
-	}, [orderNumber, setOrder, addNotification, clearNotification]); 
+    const intervalId = setInterval(pollStatus, POLLING_INTERVAL);
 
-	useEffect(() => {
-		if (orderNumber) {
-			pollStatus();
-		}
+    return () => clearInterval(intervalId);
 
-		const intervalId = setInterval(pollStatus, POLLING_INTERVAL);
-
-		return () => clearInterval(intervalId);
-
-	}, [pollStatus, orderNumber]); 
+  }, [pollStatus, orderNumber]); 
 };
