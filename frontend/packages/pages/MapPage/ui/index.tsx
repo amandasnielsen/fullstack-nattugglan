@@ -31,13 +31,13 @@ function MapPage() {
 							</div>
 
 							<p className="map__text">
-								Lingonstigen 19 i Jokkmokk
+								Lingonstigen 19, Jokkmokk
 							</p>
 
 							<p className="map__text">
 								<strong>Öppettider:</strong>
 								<br />
-								Alla dagar 07 - 23
+								Alla dagar 23 - 07
 							</p>
 
 							<p className="map__text">
