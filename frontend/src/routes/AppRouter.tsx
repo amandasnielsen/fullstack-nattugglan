@@ -14,6 +14,7 @@ import { OrderConfirmationPage } from '@nattugglan/orderconfirmationpage';
 import { CartPage } from '@nattugglan/cartpage';
 import { ProtectedRoute } from '@nattugglan/protectedroute';
 import { AccessDenied } from '@nattugglan/accessdenied';
+import { NotFoundPage } from '@nattugglan/notfoundpage';
 import '../index.css';
 
 export function AppRouter() {
@@ -42,7 +43,8 @@ export function AppRouter() {
         path="/stock" 
         element={<ProtectedRoute component={StockPage} requiredRole="admin" />} 
       />
-      <Route path="/access-denied" element={<AccessDenied />} />        
+      <Route path="/access-denied" element={<AccessDenied />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
