@@ -1,6 +1,16 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
+export class CustomError extends Error {
+	status?: number
+
+	constructor(status?: number) {
+		super()
+
+		this.status = status
+	}
+}
+
 export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
 	
 	const url = `${API_BASE_URL}/api${endpoint}`;
@@ -21,7 +31,11 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
 
 	if (!response.ok) {
 		const errorData = await response.json().catch(() => ({}));
-		throw new Error(errorData.message || `Fel vid anropet: ${response.status}`);
+		const customError = new CustomError(errorData.message || `Fel vid anropet: ${response.status}`);
+
+		customError.status = response.status
+
+		throw customError
 	}
 
 	const data = await response.json();

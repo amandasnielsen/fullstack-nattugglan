@@ -132,12 +132,6 @@ function AdminAllOrdersPage() {
         body: JSON.stringify(requestBody), 
       });
 
-      //if (response.status === 401 || response.status === 403) {
-      //  logout();
-      //  navigate('/access-denied');
-      //  return;
-      //}
-
       //if (!response.ok) {
       //  const errorData = await response.json();
       //  throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
@@ -156,6 +150,11 @@ function AdminAllOrdersPage() {
       console.log(`Order ${orderNumber} uppdaterad till ${newStatus}`);
 
     } catch (error: any) {
+      if (error.status === 401 || error.status === 403) {
+        logout();
+        navigate('/access-denied');
+        return;
+      }
       console.error("Fel vid statusuppdatering:", error);
     }
   };
