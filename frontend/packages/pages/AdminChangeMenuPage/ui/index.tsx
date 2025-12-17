@@ -9,8 +9,7 @@ import { MenuItemCard } from './MenuItemCard';
 import { Button } from '@nattugglan/button';
 import { fetchMenuItems } from '../data/fetchMenu'; 
 
-//const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export interface MenuItem {
   _id: string;

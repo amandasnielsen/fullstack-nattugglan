@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@nattugglan/button'; 
 import { useAuthStore } from '@nattugglan/core';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface MenuItem {
   _id: string;
   name: string;
@@ -24,8 +26,7 @@ const IngredientsDropDown = ({ onSelect, currentIngredients }: { onSelect: (name
   useEffect(() => {
     const fetchIng = async () => {
       try {
-				// ÄNDRA TILL BASE_URL
-        const res = await fetch("http://localhost:3000/api/admin/ingredients", {
+        const res = await fetch(`${BASE_URL}/api/admin/ingredients`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
