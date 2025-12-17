@@ -11,8 +11,6 @@ import { validateName, validatePhone } from '../data/validation';
 import { useOrderStore } from '@nattugglan/core/state/orderStore';
 import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 function PaymentPage() {
 	const navigate = useNavigate();
 	const { items, totalPrice, clearCart } = useCartStore();
