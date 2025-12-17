@@ -11,8 +11,6 @@ import { startOrdersPolling, type Order, type OrderStatus } from '../data/fetchO
 import { useNotificationStore } from '@nattugglan/core';
 import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 type FilterStatus = OrderStatus | 'All';
 
 interface CancelModalState {
@@ -131,11 +129,6 @@ function AdminAllOrdersPage() {
         },
         body: JSON.stringify(requestBody), 
       });
-
-      //if (!response.ok) {
-      //  const errorData = await response.json();
-      //  throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
-      //}
       
       const updatedOrder: Order = response; 
 
