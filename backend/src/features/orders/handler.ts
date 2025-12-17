@@ -8,13 +8,22 @@ export const handleNewOrder = async (body: any): Promise<OrderInterface> => {
   const newOrder = await placeOrder(validateData);
 
   try {
-    const ingredientNames = newOrder.items.flatMap(item => item.ingredients);
+    const allIngredientNames: string[] = [];
 
-    if (ingredientNames.length > 0) {
-      await decreaseStock(ingredientNames);
+    newOrder.items.forEach(item => {
+      const quantity = item.quantity || 1; 
+      
+      for (let i = 0; i < quantity; i++) {
+        allIngredientNames.push(...item.ingredients);
+      }
+    });
+
+    if (allIngredientNames.length > 0) {
+      await decreaseStock(allIngredientNames);
     }
   } catch (error) {
-    console.error("Lagret kunde inte uppdateras efter lagd order:", error);
+    console.error("Lagret kunde inte uppdateras:", error);
   }
+
   return newOrder;
 };

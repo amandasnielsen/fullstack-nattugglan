@@ -1,12 +1,19 @@
 import { IngredientModel } from '../../core/database/models/ingredient.model';
 
 // kopplar ihop att beställningarna gör att lagerstatus per ingrediens justeras
+// ser även till att antalet ingredienser i samma beställning blir korrekt
 export const decreaseStock = async (ingredientNames: string[]) => {
+  const counts: Record<string, number> = {};
   
-  const updatePromises = ingredientNames.map(name => 
+  ingredientNames.forEach(name => {
+    const n = name.toLowerCase();
+    counts[n] = (counts[n] || 0) - 1;
+  });
+	
+  const updatePromises = Object.entries(counts).map(([name, amount]) => 
     IngredientModel.updateOne(
-      { name: name.toLowerCase() },
-      { $inc: { stock: -1 } }
+      { name: name },
+      { $inc: { stock: amount } } // här skickas t.ex. -4
     )
   );
 
