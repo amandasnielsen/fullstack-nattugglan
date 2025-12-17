@@ -20,9 +20,9 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
 
 	if (!response.ok) {
 		const errorData = await response.json().catch(() => ({}));
-		throw new Error(errorData.message || 'Något gick fel vid anropet');
+		throw new Error(errorData.message || `Fel vid anropet: ${response.status}`);
 	}
 
-	const data = response.json();
+	const data = await response.json();
 	return data;
 };
