@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node --max-old-space-size=1024 dist/index.js",
-    "seed:ingredients": "ts-node src/features/ingredients/seedIngredients.ts",
+    "seed:ingredients": "ts-node src/features/ingredients/data/seedIngredients.ts",
     "dev": "nodemon --watch src --exec ts-node src/index.ts"
   },
   "keywords": [],
