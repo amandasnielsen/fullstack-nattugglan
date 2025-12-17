@@ -49,7 +49,7 @@
 .item__bottom {
 	display: flex;
 	margin-top: auto;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 }
 

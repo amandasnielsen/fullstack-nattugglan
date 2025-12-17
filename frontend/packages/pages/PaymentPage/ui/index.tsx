@@ -9,6 +9,7 @@ import { useCartStore } from '@nattugglan/core';
 import type { OrderInterface } from '@nattugglan/core';
 import { validateName, validatePhone } from '../data/validation';
 import { useOrderStore } from '@nattugglan/core/state/orderStore';
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,21 +48,11 @@ function PaymentPage() {
 		};
 
 		try {
-			const response = await fetch(`${BASE_URL}/api/order`, {
+			const result = await apiFetch(`/order`, {
 				method: 'POST',
-				headers: {
-					//lägg till guest ID-cookien här, och api nyckeln
-					'Content-Type': 'application/json',
-				},
 				body: JSON.stringify(order),
 			});
 
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.message || `Serverfel: ${response.status}`);
-			}
-
-			const result = await response.json();
 			const orderNumber = result.orderNumber;
 			useOrderStore.getState().setOrderNumber(result.orderNumber);
 

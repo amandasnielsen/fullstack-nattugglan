@@ -1,44 +1,32 @@
 import type { MenuItem } from '../ui/index';
-
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_BASE_URL = `${BASE_URL}/api`; 
-const MENU_ENDPOINT = `${API_BASE_URL}/menu`;
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
 export async function fetchMenuItems(
-	token: string | null, 
-	logout: () => void, 
+	token: string | null,
+	logout: () => void,
 	navigate: (path: string) => void
 ): Promise<MenuItem[]> {
-    
 	if (!token) {
 		navigate('/login');
 		throw new Error('No authentication token provided.');
 	}
 
 	try {
-		const response = await fetch(MENU_ENDPOINT, {
+		const data = await apiFetch('/menu', {
 			method: 'GET',
 			headers: {
-				'Authorization': `Bearer ${token}`, 
-				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
 			},
 		});
 
-		if (response.status === 401 || response.status === 403) {
-			logout(); 
-			navigate('/access-denied');
-			throw new Error('Authentication failed or access denied.'); 
-		}
-		
-		if (!response.ok) {
-			throw new Error(`Failed to fetch menu: ${response.statusText}`);
-		}
-
-		const data: MenuItem[] = await response.json();
 		return data;
+	} catch (error: any) {
+		console.error('Fel vid hämtning av menyn:', error);
 
-	} catch (error) {
-		console.error("Fel vid hämtning av menyn:", error);
+		if (error.status === 401 || error.status === 403) {
+			logout();
+			navigate('/access-denied');
+		}
 		throw error;
 	}
 }

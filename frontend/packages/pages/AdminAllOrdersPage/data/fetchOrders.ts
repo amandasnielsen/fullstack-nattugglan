@@ -1,23 +1,27 @@
-export type OrderStatus = 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
-export interface OrderItem {
-  name: string;
-  quantity: number;
-}
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export type OrderStatus =
+	| 'Pending'
+	| 'Confirmed'
+	| 'Ready'
+	| 'Done'
+	| 'Cancelled';
+export interface OrderItem {
+	name: string;
+	quantity: number;
+}
 
 export interface Order {
-  _id: string; 
-  orderNumber: string;
-  status: OrderStatus;
-  totalPrice: number;
-  items: OrderItem[];
-  name: string;
-  createdAt: string;
-  cancellationReason?: string;
+	_id: string;
+	orderNumber: string;
+	status: OrderStatus;
+	totalPrice: number;
+	items: OrderItem[];
+	name: string;
+	createdAt: string;
+	cancellationReason?: string;
 }
 
-const API_ORDERS_URL = `${BASE_URL}/api/admin/orders`;
 const POLLING_INTERVAL = 5000;
 
 async function fetchOrdersData(
@@ -30,26 +34,24 @@ async function fetchOrdersData(
 		throw new Error('No token provided.');
 	}
 
-	const response = await fetch(API_ORDERS_URL, {
-		method: 'GET',
-		headers: {
-			'Authorization': `Bearer ${token}`,
-			'Content-Type': 'application/json',
-		},
-	});
+	try {
+		const data = await apiFetch('/admin/orders', {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return data;
+	} catch (error: any) {
+		console.error('Authentication failed or access denied.');
 
-	if (response.status === 401 || response.status === 403) {
-		logout();
-		navigate('/access-denied');
-		throw new Error('Authentication failed or access denied.');
-	}
-	
-	if (!response.ok) {
-		throw new Error(`Failed to fetch orders: ${response.statusText}`);
-	}
+		if (error.status === 401 || error.status === 403) {
+			logout();
+			navigate('/access-denied');
+		}
 
-	const data: Order[] = await response.json(); 
-	return data;
+		throw error;
+	}
 }
 
 export function startOrdersPolling(
@@ -61,7 +63,7 @@ export function startOrdersPolling(
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 	loading: boolean
 ) {
-	let isCancelled = false; 
+	let isCancelled = false;
 
 	const fetchAndCheckOrders = async () => {
 		if (!token || isCancelled) return;
@@ -70,14 +72,14 @@ export function startOrdersPolling(
 
 		try {
 			const data = await fetchOrdersData(token, logout, navigate);
-			
+
 			// jämför de nya hämtade datan med den befintliga datan
 			if (JSON.stringify(latestOrdersRef.current) !== JSON.stringify(data)) {
 				latestOrdersRef.current = data;
 				setOrders(data);
-		}
+			}
 		} catch (error) {
-			console.error("Fel under polling:", error);
+			console.error('Fel under polling:', error);
 		} finally {
 			if (loading) {
 				setLoading(false);
@@ -86,7 +88,7 @@ export function startOrdersPolling(
 	};
 
 	fetchAndCheckOrders();
-	const intervalId = setInterval(fetchAndCheckOrders, POLLING_INTERVAL); 
+	const intervalId = setInterval(fetchAndCheckOrders, POLLING_INTERVAL);
 
 	return () => {
 		clearInterval(intervalId);
