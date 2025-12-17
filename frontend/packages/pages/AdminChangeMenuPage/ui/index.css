@@ -106,6 +106,17 @@
 	border: none;
 }
 
+.delete__button {
+  align-self: flex-end;
+	background-color: #172346;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.65em;
+	color: white;
+	border: none;
+	padding: 0.3rem;
+}
+
 .admin__menu-page .container__card {
 	min-height: 60vh;
 	max-height: 60vh;

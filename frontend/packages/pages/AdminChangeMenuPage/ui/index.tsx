@@ -9,7 +9,8 @@ import { MenuItemCard } from './MenuItemCard';
 import { Button } from '@nattugglan/button';
 import { fetchMenuItems } from '../data/fetchMenu'; 
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+//const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = "http://localhost:3000";
 
 export interface MenuItem {
   _id: string;
@@ -25,7 +26,6 @@ interface GroupedItems {
 }
 
 const CATEGORIES = ['Visa allt', 'Kött', 'Vego', 'Snacks', 'Dricka'];
-const API_BASE_URL = `${BASE_URL}/api`;
 
 function AdminChangeMenuPage() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -79,7 +79,7 @@ function AdminChangeMenuPage() {
     if (!token) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/menu/${itemId}`, { 
+      const response = await fetch(`${BASE_URL}/admin/menu/${itemId}`, { 
         method: 'PUT', 
         headers: { 
           'Content-Type': 'application/json',
@@ -104,13 +104,10 @@ function AdminChangeMenuPage() {
         item._id === itemId ? updatedItem : item
       ));
 
-      console.log(`Menyvara ${updatedItem.name} uppdaterad!`);
-
     } catch (error) {
       console.error("Uppdatering misslyckades:", error);
     }
   };
-
 
   if (loading) {
     return (
@@ -122,7 +119,6 @@ function AdminChangeMenuPage() {
       </>
     );
   }
-
 
   return (
     <section className="admin__menu-page">
@@ -147,20 +143,14 @@ function AdminChangeMenuPage() {
         <div className="menu__container">
           {CATEGORIES
             .filter(categoryName => 
-              categoryName === 'Visa allt' || groupedItems[categoryName]?.length > 0
+              categoryName === 'Visa allt' || (groupedItems[categoryName] && groupedItems[categoryName].length > 0)
             )
             .map(categoryName => {
-              
               if (categoryName === 'Visa allt') return null;
-              
               const items = groupedItems[categoryName];
-
               return (
                 <div key={categoryName} className="menu__category-group">
-                  {items && items.length > 0 && (
-                    <h2>{categoryName}</h2>
-                  )}
-          
+                  <h2>{categoryName}</h2>
                   {items?.map(item => (
                     <MenuItemCard 
                       key={item._id} 
@@ -173,9 +163,6 @@ function AdminChangeMenuPage() {
               );
             })
           }
-          {activeCategory === 'Visa allt' && Object.keys(groupedItems).length === 0 && (
-            <p>Inga produkter hittades</p>
-          )}
         </div>
       </ContentContainer>
       <FooterAdmin />
