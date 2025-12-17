@@ -78,7 +78,7 @@ function AdminChangeMenuPage() {
     if (!token) return;
 
     try {
-      const response = await fetch(`${BASE_URL}/admin/menu/${itemId}`, { 
+      const response = await fetch(`${BASE_URL}/api/admin/menu/${itemId}`, { 
         method: 'PUT', 
         headers: { 
           'Content-Type': 'application/json',
