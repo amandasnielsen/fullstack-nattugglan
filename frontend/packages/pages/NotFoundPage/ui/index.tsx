@@ -26,14 +26,16 @@ function NotFoundPage() {
           Antingen har du flugit fel, eller så finns inte sidan längre.
         </p>
 
-        <Button
-          variant="secondary"
-          fullWidth={true}
-          onClick={goHome}
-          className="notfound__button"
-        >
-          Till startsidan
-        </Button>
+				<div className="button__checkout-wrapper">
+					<Button
+						variant="secondary"
+						fullWidth={true}
+						onClick={goHome}
+						className="button__checkout"
+					>
+						Till startsidan
+					</Button>
+				</div>
       </main>
 
       <Footer />
