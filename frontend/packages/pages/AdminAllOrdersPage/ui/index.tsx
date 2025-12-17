@@ -9,6 +9,7 @@ import { StatusDropdown } from '@nattugglan/statusdropdown';
 import { Button } from '@nattugglan/button';
 import { startOrdersPolling, type Order, type OrderStatus } from '../data/fetchOrders'; 
 import { useNotificationStore } from '@nattugglan/core';
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -103,7 +104,7 @@ function AdminAllOrdersPage() {
 
   const handleStatusChange = async (orderId: string, orderNumber: string, newStatus: OrderStatus, comment?: string) => {
 
-    const API_STATUS_URL = `${BASE_URL}/api/admin/orders/${orderNumber}/status`;
+    const API_STATUS_URL = `/admin/orders/${orderNumber}/status`;
     
     if (!token) return;
 
@@ -123,27 +124,26 @@ function AdminAllOrdersPage() {
         requestBody.comment = comment;
       }
 
-      const response = await fetch(API_STATUS_URL, {
+      const response = await apiFetch(API_STATUS_URL, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody), 
       });
 
-      if (response.status === 401 || response.status === 403) {
-        logout();
-        navigate('/access-denied');
-        return;
-      }
+      //if (response.status === 401 || response.status === 403) {
+      //  logout();
+      //  navigate('/access-denied');
+      //  return;
+      //}
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
-      }
+      //if (!response.ok) {
+      //  const errorData = await response.json();
+      //  throw new Error(errorData.error || `Kunde inte uppdatera status: ${response.status}`);
+      //}
       
-      const updatedOrder: Order = await response.json(); 
+      const updatedOrder: Order = response; 
 
       setOrders(prevOrders => 
         prevOrders ? prevOrders.map(order => 
