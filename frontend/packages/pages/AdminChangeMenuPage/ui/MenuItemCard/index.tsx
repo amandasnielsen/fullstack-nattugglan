@@ -31,7 +31,9 @@ const IngredientsDropDown = ({ onSelect, currentIngredients }: { onSelect: (name
         });
         if (res.ok) {
           const names = await res.json();
-          setAllIngredients(names);
+          // sorterar ingredienserna i bokstavsordning (med å, ä, ö)
+          const sortedNames = names.sort((a: string, b: string) => a.localeCompare(b, 'sv'));
+          setAllIngredients(sortedNames);
         }
       } catch (e) { console.error("Kunde inte hämta ingredienslista", e); }
     };
@@ -171,7 +173,6 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
             </Button>
           </div>
         ))}
-        {/* Renderar den lokala dropdownen */}
         <IngredientsDropDown onSelect={handleAddIngredient} currentIngredients={ingredients} />
       </div>
 
