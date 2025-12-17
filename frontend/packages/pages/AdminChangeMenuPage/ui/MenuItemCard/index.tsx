@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@nattugglan/button'; 
+import { useAuthStore } from '@nattugglan/core';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface MenuItem {
   _id: string;
@@ -16,28 +19,72 @@ interface MenuItemCardProps {
   onSave: (itemId: string, updateData: Partial<MenuItem>) => Promise<void>;
 }
 
+const IngredientsDropDown = ({ onSelect, currentIngredients }: { onSelect: (name: string) => void, currentIngredients: string[] }) => {
+  const [allIngredients, setAllIngredients] = useState<string[]>([]);
+  const token = useAuthStore(state => state.token);
+
+  useEffect(() => {
+    const fetchIng = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/api/admin/ingredients`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const names = await res.json();
+          setAllIngredients(names);
+        }
+      } catch (e) { console.error("Kunde inte hämta ingredienslista", e); }
+    };
+    fetchIng();
+  }, [token]);
+
+  return (
+    <div className="ingredients__dropdown-wrapper">
+      <select 
+        className="ingredient__select"
+        defaultValue="" 
+        onChange={(e) => {
+          onSelect(e.target.value);
+          e.target.value = ""; 
+        }}
+      >
+        <option value="" disabled>+ Lägg till ingrediens</option>
+        {allIngredients
+          .filter(name => !currentIngredients.includes(name))
+          .map(name => <option key={name} value={name}>{name}</option>)
+        }
+      </select>
+    </div>
+  );
+};
+
 const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories }) => { 
   const [isEditing, setIsEditing] = useState(false);
 
-	// states för det som går att ändra
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price)); 
   const [category, setCategory] = useState(item.category); 
-  const [ingredients, setIngredients] = useState(item.ingredients.join(', ')); 
+  const [ingredients, setIngredients] = useState<string[]>(item.ingredients); 
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
     if (name === 'name') setName(value);
     else if (name === 'price') setPrice(value);
-    else if (name === 'ingredients') setIngredients(value);
   };
   
-	// kategori ändras genom checkboxar
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value); 
   };
 
+  const handleRemoveIngredient = (index: number) => {
+    setIngredients(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddIngredient = (newIngName: string) => {
+    if (!ingredients.includes(newIngName)) {
+      setIngredients(prev => [...prev, newIngName]);
+    }
+  };
 
   const handleSave = async () => {
     const dataToSave: Partial<MenuItem> = {};
@@ -46,17 +93,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
     if (price !== String(item.price)) dataToSave.price = Number(price); 
     if (category !== item.category) dataToSave.category = category; 
     
-    const newIngredientsArray = ingredients 
-      ? ingredients.split(',')
-          .map(s => s.trim())
-          .filter(s => s.length > 0) 
-      : [];
-
-    const normalizedNew = newIngredientsArray.slice().sort().join('|');
+    const normalizedNew = ingredients.slice().sort().join('|');
     const normalizedOriginal = item.ingredients.slice().sort().join('|');
 
     if (normalizedNew !== normalizedOriginal) {
-      dataToSave.ingredients = newIngredientsArray; 
+      dataToSave.ingredients = ingredients; 
     }
 
     if (Object.keys(dataToSave).length > 0) {
@@ -64,21 +105,18 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
     }
     
     setIsEditing(false);
-	};
+  };
 
   if (!isEditing) {
     return (
       <div className="admin__menu-card">
         <h3>{item.name}</h3>
         <p><strong>Pris:</strong> {item.price}:-</p> 
-        
         <p><strong>Kategori:</strong> {item.category}</p> 
-        
         <div className="ingredients__container">
           <p><strong>Ingredienser:</strong> {item.ingredients.join(', ')}</p> 
         </div>
-
-  		  <Button 
+        <Button 
           fullWidth={false} 
           variant="secondary"
           onClick={() => setIsEditing(true)}
@@ -95,20 +133,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
       <h3>{item.name} (Redigera)</h3>
         
       <label><strong>Namn:</strong></label>
-      <input 
-        type="text" 
-        name="name" 
-        value={name} 
-        onChange={handleTextChange}
-      />
+      <input type="text" name="name" value={name} onChange={handleTextChange} />
       
       <label><strong>Pris (kr):</strong></label>
-      <input 
-        type="number" 
-        name="price" 
-        value={price} 
-        onChange={handleTextChange}
-      />
+      <input type="number" name="price" value={price} onChange={handleTextChange} />
       
       <div className="category__radio-group">
         <label><strong>Kategori:</strong></label>
@@ -129,11 +157,23 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
       </div>
         
       <label><strong>Ingredienser:</strong></label>
-      <textarea 
-        name="ingredients" 
-        value={ingredients} 
-        onChange={handleTextChange as (e: React.ChangeEvent<HTMLTextAreaElement>) => void}
-      />
+      <div className="ingredients__edit-list">
+        {ingredients.map((ing, index) => (
+          <div key={index} className="ingredient__input-row">
+            <input type="text" value={ing} readOnly />
+            <Button 
+              fullWidth={false}
+              variant="primary"
+              onClick={() => handleRemoveIngredient(index)}
+              className='ingredients__delete-button'
+            >
+              Ta bort
+            </Button>
+          </div>
+        ))}
+        {/* Renderar den lokala dropdownen */}
+        <IngredientsDropDown onSelect={handleAddIngredient} currentIngredients={ingredients} />
+      </div>
 
       <div className="card__actions-menu">
         <Button 
@@ -144,7 +184,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
             setName(item.name);
             setPrice(String(item.price));
             setCategory(item.category);
-            setIngredients(item.ingredients.join(', '));
+            setIngredients(item.ingredients);
             setIsEditing(false);
           }}
         >

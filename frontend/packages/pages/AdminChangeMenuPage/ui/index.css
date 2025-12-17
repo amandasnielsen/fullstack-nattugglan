@@ -106,6 +106,44 @@
 	border: none;
 }
 
+.ingredients__edit-list {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+
+.ingredient__input-row {
+	width: 100%;
+}
+
+.ingredient__input-row input {
+	max-width: 60%;
+}
+
+.ingredients__delete-button {
+  align-self: flex-end;
+	background-color: #172346;
+	border-radius: 3px;
+  font-family: 'MerriweatherSans';
+  font-size: 0.65em;
+	color: white;
+	border: none;
+	padding: 0.3rem;
+	margin-left: 1em;
+}
+
+.ingredient__select {
+	width: 60%;
+	padding: .5em;
+	border: 1px solid #585858;
+	background-color: transparent;
+	border-radius: 3px;
+	box-sizing: border-box;
+	margin-bottom: .5em;
+	font-family: 'MerriweatherSans';
+  font-size: 0.85em;
+}
+
 .admin__menu-page .container__card {
 	min-height: 60vh;
 	max-height: 60vh;

@@ -134,4 +134,3 @@ export const updateOrderbyId = async (
 	await order.save();
 	return order;
 };
-
