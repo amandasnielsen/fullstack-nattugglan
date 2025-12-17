@@ -9,25 +9,18 @@ interface OrderHistoryListProps {
 }
 
 export function OrderHistoryList({ orders }: OrderHistoryListProps) {
-	// const [ message, setMessage ] = useState("")
 	const { addItem } = useCartStore();
 	if (!orders || orders.length === 0) {
 		return <p>Hittade ingen historik</p>;
 	}
 
-	// const setCancellationMessage = () => {
-	// 	setMessage()
-	// }
-
 	const handleReorder = (itemsToReorder: CartItem[]) => {
 		itemsToReorder.forEach((item) => {
-			for(let i = 0; i < item.quantity; i++) {
+			for (let i = 0; i < item.quantity; i++) {
 				addItem(item);
 			}
 		});
 	};
-
-	console.log(orders)
 
 	return (
 		<div className="orderHistory__cardContainer">
@@ -55,12 +48,14 @@ export function OrderHistoryList({ orders }: OrderHistoryListProps) {
 					</ul>
 					<div className="orderHistory__card-bottom">
 						<div className="orderHistory__card-bottom-text">
-						{order.cancellationReason && (
-							<p className="orderHistory__cancellationReason">
-								<b>Avbokad:</b> {order.cancellationReason}
+							{order.cancellationReason && (
+								<p className="orderHistory__cancellationReason">
+									<b>Avbokad:</b> {order.cancellationReason}
+								</p>
+							)}
+							<p>
+								<b>Totalt:</b> {order.totalPrice} kr
 							</p>
-						)}
-						<p><b>Totalt:</b> {order.totalPrice} kr</p>
 						</div>
 						<button
 							onClick={() => handleReorder(order.items)}

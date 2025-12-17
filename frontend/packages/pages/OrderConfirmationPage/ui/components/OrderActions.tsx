@@ -1,4 +1,5 @@
 interface OrderActionsProps {
+	name: string;
 	guestId: string;
 	formattedDate: string;
 	status: 'Pending' | 'Confirmed' | 'Ready' | 'Done' | 'Cancelled';
@@ -9,6 +10,7 @@ interface OrderActionsProps {
 }
 
 function OrderActions({
+	name,
 	guestId,
 	formattedDate,
 	status,
@@ -20,6 +22,7 @@ function OrderActions({
 	return (
 		<article className="Confirmation__info">
 			<section className="Confirmation__info-top">
+				<p>{name}</p>
 				<p>guestId: {guestId}</p>
 				<p>{formattedDate}</p>
 			</section>

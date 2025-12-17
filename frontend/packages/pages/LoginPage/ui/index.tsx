@@ -5,8 +5,7 @@ import { Button } from '@nattugglan/button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core/state/authStore';
-
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
 function LoginPage() {
 	const [username, setUsername] = useState('');
@@ -18,21 +17,11 @@ function LoginPage() {
 
 	async function handleLogin() {
 		try {
-			const res = await fetch(`${BASE_URL}/api/auth/login`, {
+			const data = await apiFetch(`/auth/login`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'x-api-key': 'yourapikey',
-				},
 				body: JSON.stringify({ username, password }),
 			});
 
-			const data = await res.json();
-
-			if (!res.ok) {
-				setError(data.error || 'Login failed');
-				return;
-			}
 			setError('');
 
 			const token = data.token;

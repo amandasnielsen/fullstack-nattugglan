@@ -1,6 +1,7 @@
-import { useEffect, useCallback, useRef } from 'react'; 
+import { useEffect, useCallback, useRef } from 'react';
 import { useOrderStore } from '@nattugglan/core/state/orderStore';
 import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
+import { apiFetch } from '../apiClient/apiClient';
 
 // global polling funktion som var femte sekund hämtar statusuppdayeringen på den pågående ordern
 // om det finns ett aktivt ordernummer.
@@ -8,68 +9,63 @@ import { useNotificationStore } from '@nattugglan/core/state/notificationStore';
 // oavsett vilken sida man är inne på.
 // detta gör att orderbekräftelsen, orderstatussidan och ringklockan uppdateras när
 // admin ändrar statusen
-const POLLING_INTERVAL = 5000; 
-
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const POLLING_INTERVAL = 5000;
 
 interface OrderResponse {
-  orderNumber: string;
-  status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
+	orderNumber: string;
+	status: 'Pending' | 'Confirmed' | 'Ready' | 'Cancelled';
 }
 
-async function fetchOrderStatus(orderNumber: string): Promise<OrderResponse | null> {
-  const res = await fetch(`${BASE_URL}/api/order/${orderNumber}`);
-  if (!res.ok) {
-    if (res.status === 404) return null;
-    throw new Error("Kunde inte hämta orderstatus.");
-  }
-  return res.json();
+async function fetchOrderStatus(
+	orderNumber: string
+): Promise<OrderResponse | null> {
+	const data = await apiFetch(`/order/${orderNumber}`);
+	return data;
 }
 
 export const useGlobalOrderStatusPolling = () => {
-  const orderNumber = useOrderStore((state) => state.orderNumber); 
-  const currentOrder = useOrderStore((state) => state.order); 
-  const setOrder = useOrderStore((state) => state.setOrder); 
-  const { addNotification, clearNotification } = useNotificationStore();
-  const currentOrderRef = useRef(currentOrder);
-  
-  useEffect(() => {
-    currentOrderRef.current = currentOrder;
-  }, [currentOrder]);
+	const orderNumber = useOrderStore((state) => state.orderNumber);
+	const currentOrder = useOrderStore((state) => state.order);
+	const setOrder = useOrderStore((state) => state.setOrder);
+	const { addNotification, clearNotification } = useNotificationStore();
+	const currentOrderRef = useRef(currentOrder);
 
-  const pollStatus = useCallback(async () => {
-    
-    if (!orderNumber) {
-      return; 
-    }
+	useEffect(() => {
+		currentOrderRef.current = currentOrder;
+	}, [currentOrder]);
 
-    try {
-      const newOrder = await fetchOrderStatus(orderNumber);
+	const pollStatus = useCallback(async () => {
+		if (!orderNumber) {
+			return;
+		}
 
-      if (newOrder) {
-        
-        if (currentOrderRef.current && currentOrderRef.current.status !== newOrder.status) {
-          addNotification(orderNumber);
-        }
-        
-        setOrder(newOrder); 
-          
-      } else {
-        clearNotification();
-      }
-    } catch (e) {
-      console.error("Polling Error:", e);
-    }
-  }, [orderNumber, setOrder, addNotification, clearNotification]); 
+		try {
+			const newOrder = await fetchOrderStatus(orderNumber);
 
-  useEffect(() => {
-    if (orderNumber) {
-      pollStatus();
-    }
+			if (newOrder) {
+				if (
+					currentOrderRef.current &&
+					currentOrderRef.current.status !== newOrder.status
+				) {
+					addNotification(orderNumber);
+				}
 
-    const intervalId = setInterval(pollStatus, POLLING_INTERVAL);
+				setOrder(newOrder);
+			} else {
+				clearNotification();
+			}
+		} catch (e) {
+			console.error('Polling Error:', e);
+		}
+	}, [orderNumber, setOrder, addNotification, clearNotification]);
 
-    return () => clearInterval(intervalId);
+	useEffect(() => {
+		if (orderNumber) {
+			pollStatus();
+		}
 
-  }, [pollStatus, orderNumber]); 
+		const intervalId = setInterval(pollStatus, POLLING_INTERVAL);
+
+		return () => clearInterval(intervalId);
+	}, [pollStatus, orderNumber]);
 };

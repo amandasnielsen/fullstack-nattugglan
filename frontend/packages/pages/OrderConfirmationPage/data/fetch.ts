@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
 interface OrderChangeProp {
 	items: {
@@ -20,18 +20,9 @@ type StatusChange = {
 
 export const fetchOrderDetails = async (orderNumber: string) => {
 	try {
-		const URL = `${BASE_URL}/api/order/${orderNumber}`;
+		const data = await apiFetch(`/order/${orderNumber}`);
 
-		const response = await fetch(URL);
-
-		if (!response.ok) {
-			if (response.status === 404) {
-				throw new Error('Ordern finns inte');
-			}
-			throw new Error('Kunde inte hämta order');
-		}
-
-		return await response.json();
+		return data;
 	} catch (error) {
 		console.error('Fel vid hämtning av orderdetaljer:', error);
 		throw error;
@@ -45,17 +36,12 @@ export const patchOrderChange = async (
 	payload: OrderChangeProp
 ) => {
 	try {
-		const response = await fetch(
-			`${BASE_URL}/api/order/${orderNumber}`,
-			{
-				method: 'PATCH',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(payload),
-			}
-		);
+		const data = await apiFetch(`/order/${orderNumber}`, {
+			method: 'PATCH',
+			body: JSON.stringify(payload),
+		});
 
-		if (!response.ok) throw new Error('Kunde inte uppdatera ordern');
-		return response.json();
+		return data;
 	} catch (error) {
 		console.error('Fel vid uppdatering av order', error);
 		throw error;
@@ -67,17 +53,12 @@ export const putStatusChange = async (
 	payload: StatusChange
 ) => {
 	try {
-		const response = await fetch(
-			`${BASE_URL}/api/orders/${orderNumber}`,
-			{
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(payload),
-			}
-		);
+		const data = await apiFetch(`/orders/${orderNumber}`, {
+			method: 'PUT',
+			body: JSON.stringify(payload),
+		});
 
-		if (!response.ok) throw new Error('Kunde inte uppdatera status på ordern');
-		return response.json();
+		return data;
 	} catch (error) {
 		console.error('Fel vid uppdatering av order', error);
 		throw error;
