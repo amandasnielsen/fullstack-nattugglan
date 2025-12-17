@@ -7,7 +7,10 @@ const app = express();
 
 app.use(
 	cors({
-		origin: 'http://nattugglan.s3-website.eu-north-1.amazonaws.com',
+		origin: [
+			'http://nattugglan.s3-website.eu-north-1.amazonaws.com',
+			'http://localhost:5173'
+		],
 		allowedHeaders: ['Content-Type', 'x-api-key', 'Authorization'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 	})

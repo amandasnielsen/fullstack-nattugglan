@@ -33,17 +33,14 @@ const IngredientsDropDown = ({
 	useEffect(() => {
 		const fetchIng = async () => {
 			try {
-				const res = await apiFetch(`/admin/ingredients`, {
+				const names = await apiFetch(`/admin/ingredients`, {
 					headers: { Authorization: `Bearer ${token}` },
 				});
-				if (res.ok) {
-					const names = await res.json();
-					// sorterar ingredienserna i bokstavsordning (med å, ä, ö)
-					const sortedNames = names.sort((a: string, b: string) =>
-						a.localeCompare(b, 'sv')
-					);
-					setAllIngredients(sortedNames);
-				}
+				
+				const sortedNames = names.sort((a: string, b: string) =>
+					a.localeCompare(b, 'sv')
+				);
+				setAllIngredients(sortedNames);
 			} catch (e) {
 				console.error('Kunde inte hämta ingredienslista', e);
 			}
