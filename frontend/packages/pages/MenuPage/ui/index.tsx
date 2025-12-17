@@ -34,25 +34,20 @@ function MenuPage() {
 
 	// grupperar menyn baserat på vald kategori
 	const menuToDisplay = useMemo(() => {
-		const filtered =
-			activeCategory === 'Visa allt'
-				? menu
-				: menu.filter(
-						(item) =>
-							item.category.toUpperCase() === activeCategory.toUpperCase()
-				  );
+		if (!Array.isArray(menu)) {
+			return {} as GroupedMenu;
+		}
 
-		const grouped: GroupedMenu = filtered.reduce((acc, item) => {
+		const filtered = activeCategory === 'Visa allt'
+			? menu
+			: menu.filter(item => item.category.toUpperCase() === activeCategory.toUpperCase());
+
+		return filtered.reduce((acc, item) => {
 			const categoryKey = item.category || 'Övrigt';
-
-			if (!acc[categoryKey]) {
-				acc[categoryKey] = [];
-			}
+			if (!acc[categoryKey]) acc[categoryKey] = [];
 			acc[categoryKey].push(item as MenuItem);
 			return acc;
 		}, {} as GroupedMenu);
-
-		return grouped;
 	}, [menu, activeCategory]);
 
 	return (
