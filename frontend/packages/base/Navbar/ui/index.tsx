@@ -59,7 +59,7 @@ function NavBar() {
     <section className="navbar">
       <header className="navbar__container-phone">
         <div>
-          <NavLink to="/menu">
+          <NavLink to="/">
             <img src={Logo} className="navbar__logo" alt="Företagslogotyp" />
           </NavLink>
         </div>
