@@ -38,7 +38,11 @@ const IngredientsDropDown = ({
 				});
 				if (res.ok) {
 					const names = await res.json();
-					setAllIngredients(names);
+					// sorterar ingredienserna i bokstavsordning (med å, ä, ö)
+					const sortedNames = names.sort((a: string, b: string) =>
+						a.localeCompare(b, 'sv')
+					);
+					setAllIngredients(sortedNames);
 				}
 			} catch (e) {
 				console.error('Kunde inte hämta ingredienslista', e);

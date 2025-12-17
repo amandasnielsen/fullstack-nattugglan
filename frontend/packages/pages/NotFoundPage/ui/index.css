@@ -1,10 +1,8 @@
 .notfound {
-  min-height: 100vh;
   padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
   color: var(--font-color-white);
   text-align: center;
 }
@@ -12,11 +10,12 @@
 .notfound__image {
   width: 220px;
   height: auto;
+	margin-bottom: -2em;
 }
 
 .notfound__title {
   font-family: "FjallaOne";
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   letter-spacing: var(--spacing-wide);
 }
 
