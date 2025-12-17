@@ -17,7 +17,6 @@ interface MenuItemCardProps {
   onSave: (itemId: string, updateData: Partial<MenuItem>) => Promise<void>;
 }
 
-// dropdown som hämtar ingredienserna från backend
 const IngredientsDropDown = ({ onSelect, currentIngredients }: { onSelect: (name: string) => void, currentIngredients: string[] }) => {
   const [allIngredients, setAllIngredients] = useState<string[]>([]);
   const token = useAuthStore(state => state.token);
@@ -25,7 +24,7 @@ const IngredientsDropDown = ({ onSelect, currentIngredients }: { onSelect: (name
   useEffect(() => {
     const fetchIng = async () => {
       try {
-        // BYT UT URL
+				// ÄNDRA TILL BASE_URL
         const res = await fetch("http://localhost:3000/api/admin/ingredients", {
           headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -39,26 +38,28 @@ const IngredientsDropDown = ({ onSelect, currentIngredients }: { onSelect: (name
   }, [token]);
 
   return (
-    <select 
-      defaultValue="" 
-      onChange={(e) => {
-        onSelect(e.target.value);
-        e.target.value = ""; 
-      }}
-    >
-      <option value="" disabled>+ Lägg till ingrediens</option>
-      {allIngredients
-        .filter(name => !currentIngredients.includes(name))
-        .map(name => <option key={name} value={name}>{name}</option>)
-      }
-    </select>
+    <div className="ingredients__dropdown-wrapper">
+      <select 
+        className="ingredient__select"
+        defaultValue="" 
+        onChange={(e) => {
+          onSelect(e.target.value);
+          e.target.value = ""; 
+        }}
+      >
+        <option value="" disabled>+ Lägg till ingrediens</option>
+        {allIngredients
+          .filter(name => !currentIngredients.includes(name))
+          .map(name => <option key={name} value={name}>{name}</option>)
+        }
+      </select>
+    </div>
   );
 };
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories }) => { 
   const [isEditing, setIsEditing] = useState(false);
 
-  // states för det som går att ändra
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price)); 
   const [category, setCategory] = useState(item.category); 
@@ -131,20 +132,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
       <h3>{item.name} (Redigera)</h3>
         
       <label><strong>Namn:</strong></label>
-      <input 
-        type="text" 
-        name="name" 
-        value={name} 
-        onChange={handleTextChange}
-      />
+      <input type="text" name="name" value={name} onChange={handleTextChange} />
       
       <label><strong>Pris (kr):</strong></label>
-      <input 
-        type="number" 
-        name="price" 
-        value={price} 
-        onChange={handleTextChange}
-      />
+      <input type="number" name="price" value={price} onChange={handleTextChange} />
       
       <div className="category__radio-group">
         <label><strong>Kategori:</strong></label>
@@ -168,21 +159,18 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onSave, categories })
       <div className="ingredients__edit-list">
         {ingredients.map((ing, index) => (
           <div key={index} className="ingredient__input-row">
-            <input 
-              type="text" 
-              value={ing} 
-              readOnly 
-            />
+            <input type="text" value={ing} readOnly />
             <Button 
               fullWidth={false}
               variant="primary"
               onClick={() => handleRemoveIngredient(index)}
-							className='delete__button'
+              className='ingredients__delete-button'
             >
               Ta bort
             </Button>
           </div>
         ))}
+        {/* Renderar den lokala dropdownen */}
         <IngredientsDropDown onSelect={handleAddIngredient} currentIngredients={ingredients} />
       </div>
 
