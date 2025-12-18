@@ -110,7 +110,7 @@ function MenuPage() {
 															/>
 														)}
 													</h3>
-													<p className="item__description">{description}</p>
+													<p className="item__description capitalize__text">{description}</p>
 												</div>
 
 												<div className="item__price-control">
