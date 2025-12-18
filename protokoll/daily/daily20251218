@@ -1,0 +1,40 @@
+Mötesprotokoll Daily Scrum (18 December 2025)
+
+Närvarande
+
+* Lisa
+* Amanda
+* Belinda
+  
+* Rasmus är ej med på mötet idag
+
+Protokoll
+
+Var och en svarar på frågorna nedan, 1 person antecknar
+
+*  Vad gjorde du igår?
+*  Vad ska du göra idag?
+*  Finns det några hinder?
+
+Person 1 (Lisa)
+* Gjorde klart API-nyckeln
+* Börja kolla på CSP
+  Sen sitta med den individuella reflektionen
+* Nej
+
+Person 2 (Amanda)
+* Gjorde färdigt ingrediens-ändringen för admin och kopplade ihop med backend så att lagerstatus justeras
+* Gå igenom alla anrop i frontend och lägga dom i egna data-mappar i packages.
+  Sen sitta med den individuella reflektionen
+* Nej
+
+Person 3 (Belinda)
+* Gick igenom koden från lektionen av Johan med simuleringarna 
+* Gå igenom kod och mappstruktur
+* Nej
+
+
+# Övrigt
+Är det någon som behöver hjälp? Bestäm vem som hoppar in och stöttar
+
+Få in appen och backend i Render och AWS Bucket
