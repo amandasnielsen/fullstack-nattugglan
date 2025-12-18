@@ -14,3 +14,13 @@ export const getAllIngredients = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Kunde inte hämta ingredienslista." });
   }
 };
+
+export const getIngredientStock = async (req: Request, res: Response) => {
+  try {
+    const ingredients = await IngredientModel.find({}).select('name stock');
+    res.json(ingredients); 
+  } catch (error) {
+    console.error("Fel vid hämtning av lagerstatus:", error);
+    res.status(500).json({ message: "Kunde inte hämta lagerstatus." });
+  }
+};

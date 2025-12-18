@@ -10,8 +10,6 @@ import { Button } from '@nattugglan/button';
 import { fetchMenuItems } from '../data/fetchMenu';
 import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 
-// const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 export interface MenuItem {
 	_id: string;
 	name: string;

@@ -4,7 +4,7 @@ import { getMenu, updateItem } from '../../features/menu/controller';
 import { requireApiKey } from '../middleware/apiKey';
 import { requireAuth, requireAdmin } from '../middleware/auth';
 import { UserModel } from '../database/models/user.model';
-import { getAllIngredients } from '../../features/ingredients/controller';
+import { getAllIngredients, getIngredientStock } from '../../features/ingredients/controller';
 import {
   postOrder,
   getOrderDetails,
@@ -28,6 +28,7 @@ router.get('/admin/orders', requireAuth, requireAdmin, getAllOrders);
 router.put('/admin/orders/:orderNumber/status', requireAuth, requireAdmin, putOrderStatus);
 router.put('/admin/menu/:itemId', requireAuth, requireAdmin, updateItem);
 router.get('/admin/ingredients', requireAuth, requireAdmin, getAllIngredients);
+router.get('/admin/stock', requireAuth, requireAdmin, getIngredientStock);
 
 //*DEBUGGING, RADERA * \\
 router.get('/debug/users', async (req, res) => {
