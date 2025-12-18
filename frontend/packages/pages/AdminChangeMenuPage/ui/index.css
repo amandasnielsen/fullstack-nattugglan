@@ -144,6 +144,10 @@
   font-size: 0.85em;
 }
 
+.capitalize__text {
+  text-transform: capitalize;
+}
+
 .admin__menu-page .container__card {
 	min-height: 60vh;
 	max-height: 60vh;
