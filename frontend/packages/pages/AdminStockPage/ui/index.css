@@ -9,3 +9,52 @@
 		max-height: 50vh;
   }
 }
+
+.stock__table-wrapper {
+	font-family: 'MerriweatherSans';
+	color: var(--font-color-dark);
+}
+
+.stock__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.stock__table th {
+  padding: 1rem;
+  border-bottom: 2px solid #585858;
+  font-weight: bold;
+	font-size: 18px;
+}
+
+.stock__table td {
+  padding: 1rem;
+  border-bottom: 1px solid #585858;
+}
+
+.stock__name {
+  text-transform: capitalize;
+  font-weight: 500;
+	font-size: 14px;
+}
+
+.stock__count-title {
+	text-align: right;
+}
+
+.stock__count {
+  font-family: monospace;
+	font-size: 14px;
+	text-align: right;
+}
+
+.stock--low {
+  color: #ce2e29;
+  font-weight: bold;
+}
+
+.error__message {
+  text-align: center;
+  margin-top: 3rem;
+}

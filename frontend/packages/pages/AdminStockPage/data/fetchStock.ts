@@ -1,3 +1,4 @@
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
 import { useAuthStore } from "@nattugglan/core";
 
 export interface IngredientStock {
@@ -13,19 +14,9 @@ export async function fetchIngredientStock(): Promise<IngredientStock[]> {
     throw new Error("Missing admin token");
   }
 
-  const res = await fetch(
-    `${import.meta.env.VITE_API_BASE_URL}/api/admin/stock`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error("Unauthorized");
-  }
-
-  return res.json();
+  return apiFetch('/admin/stock', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
-
