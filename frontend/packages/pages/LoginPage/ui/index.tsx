@@ -5,88 +5,76 @@ import { Button } from '@nattugglan/button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@nattugglan/core/state/authStore';
-import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
+import { loginRequest } from '../data/handleLogin'; 
 
 function LoginPage() {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
-	const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-	const authLogin = useAuthStore((state) => state.login);
+  const authLogin = useAuthStore((state) => state.login);
 
-	async function handleLogin() {
-		try {
-			const data = await apiFetch(`/auth/login`, {
-				method: 'POST',
-				body: JSON.stringify({ username, password }),
-			});
+  async function handleLogin() {
+    try {
+      const data = await loginRequest(username, password);
 
-			setError('');
+      setError('');
 
-			const token = data.token;
-			const role = data.role as 'admin' | 'user';
+      authLogin(data.token, data.role);
 
-			authLogin(token, role);
+      if (data.role === 'admin') {
+        navigate('/allorders');
+      } else {
+        navigate('/menu');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Inloggningen misslyckades. Kontrollera uppgifterna.');
+    }
+  }
 
-			if (role === 'admin') {
-				navigate('/allorders');
-			} else {
-				navigate('/menu');
-			}
-		} catch (err) {
-			console.error(err);
-			setError('Something went wrong');
-		}
-	}
+  return (
+    <>
+      <NavBar />
+      <main className="login">
+        <h1 className="login__title">Admin</h1>
+        <section className="login__container">
+          <div className="login__form">
+            <label className="login__label" htmlFor="username">Användarnamn</label>
+            <input
+              id="username"
+              type="text"
+              className="login__input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-	return (
-		<>
-			<NavBar />
+            <label className="login__label" htmlFor="password">Lösenord</label>
+            <input
+              id="password"
+              type="password"
+              className="login__input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            
+            {error && <p className="error__message" style={{ color: 'red' }}>{error}</p>}
 
-			<main className="login">
-				<h1 className="login__title">Admin</h1>
-
-				<section className="login__container">
-					<div className="login__form">
-						<label className="login__label" htmlFor="username">
-							Användarnamn
-						</label>
-						<input
-							id="username"
-							type="text"
-							className="login__input"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-
-						<label className="login__label" htmlFor="password">
-							Lösenord
-						</label>
-						<input
-							id="password"
-							type="password"
-							className="login__input"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						{error && <p className="error__message">{error}</p>}
-
-						<Button
-							variant="primary"
-							fullWidth={true}
-							className="landing__button-login login__button"
-							onClick={handleLogin}
-						>
-							Logga in
-						</Button>
-					</div>
-				</section>
-
-				<Footer />
-			</main>
-		</>
-	);
+            <Button
+              variant="primary"
+              fullWidth={true}
+              className="landing__button-login login__button"
+              onClick={handleLogin}
+            >
+              Logga in
+            </Button>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    </>
+  );
 }
 
 export { LoginPage };
