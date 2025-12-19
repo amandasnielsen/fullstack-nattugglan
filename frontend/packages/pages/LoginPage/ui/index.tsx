@@ -1,0 +1,80 @@
+import './index.css';
+import { NavBar } from '@nattugglan/navbar';
+import { Footer } from '@nattugglan/footer';
+import { Button } from '@nattugglan/button';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@nattugglan/core/state/authStore';
+import { loginRequest } from '../data/handleLogin'; 
+
+function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const authLogin = useAuthStore((state) => state.login);
+
+  async function handleLogin() {
+    try {
+      const data = await loginRequest(username, password);
+
+      setError('');
+
+      authLogin(data.token, data.role);
+
+      if (data.role === 'admin') {
+        navigate('/allorders');
+      } else {
+        navigate('/menu');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Inloggningen misslyckades. Kontrollera uppgifterna.');
+    }
+  }
+
+  return (
+    <>
+      <NavBar />
+      <main className="login">
+        <h1 className="login__title">Admin</h1>
+        <section className="login__container">
+          <div className="login__form">
+            <label className="login__label" htmlFor="username">Användarnamn</label>
+            <input
+              id="username"
+              type="text"
+              className="login__input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <label className="login__label" htmlFor="password">Lösenord</label>
+            <input
+              id="password"
+              type="password"
+              className="login__input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            
+            {error && <p className="error__message" style={{ color: 'red' }}>{error}</p>}
+
+            <Button
+              variant="primary"
+              fullWidth={true}
+              className="landing__button-login login__button"
+              onClick={handleLogin}
+            >
+              Logga in
+            </Button>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    </>
+  );
+}
+
+export { LoginPage };

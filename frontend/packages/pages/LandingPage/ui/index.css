@@ -1,0 +1,46 @@
+.landing__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo__landing {
+	margin-top: 3em;
+	width: 250px;
+}
+
+.landing__button-menu {
+	text-decoration: none;
+}
+
+.button__group-one {
+	width: 280px; 
+  padding: 15px 20px;
+	margin-top: 4em;
+}
+
+.button__group-two {
+	width: 280px; 
+  padding: 15px 20px;
+	margin-top: 4em;
+}
+
+@media (max-height: 800px) {
+	.landing__header {
+		margin-top: 2em;
+	}
+
+	.logo__landing {
+	margin-top: 1em;
+	width: 250px;
+	}
+
+	.button__group-one {
+		margin-top: 2em;
+	}
+
+	.button__group-two {
+	 margin-top: 2em;
+	}
+}

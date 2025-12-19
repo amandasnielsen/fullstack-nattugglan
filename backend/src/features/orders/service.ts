@@ -1,0 +1,136 @@
+import { v4 as uuidv4 } from 'uuid';
+import { decreaseIngredients } from '../ingredients/repository';
+
+
+import {
+	createOrder,
+	findOrderById,
+	findOrderByNameAndPhone,
+	NewOrderData,
+	findAllOrders as findAllOrdersRepo,
+} from './repository';
+import {
+	OrderInterface,
+	OrderModel,
+	CartItem,
+} from '../../core/database/models/order.model';
+
+//input från frontend
+export interface NewOrderInput {
+	items: CartItem[];
+	totalPrice: number;
+	name: string;
+	phoneNumber: string;
+}
+
+//place order
+export const placeOrder = async (
+	input: NewOrderInput
+): Promise<OrderInterface> => {
+	//generera ordernummer
+	const orderNumber = uuidv4().slice(0, 5).toLocaleUpperCase();
+
+	//kontrollera om de finns en tidigare order med samma name+phone
+	let guestId: string;
+	const existingOrder = await findOrderByNameAndPhone(
+		input.name,
+		input.phoneNumber
+	);
+
+	if (existingOrder) {
+		guestId = existingOrder.guestId;
+	} else {
+		guestId = uuidv4().slice(0, 4).toLocaleUpperCase();
+	}
+
+	//skapa orderdata för mongoose
+	const orderData: NewOrderData = {
+		...input,
+		phoneNumber: input.phoneNumber.replace(/\s+/g, ''),
+		orderNumber,
+		guestId,
+		createdAt: new Date(),
+		status: 'Pending',
+	};
+
+	//skapa och spara order
+	const newOrder = await createOrder(orderData);
+	return newOrder;
+};
+
+//hämta order via orderNumber
+export const getOrderByID = async (orderNumber: string) => {
+	return await findOrderById(orderNumber);
+};
+
+// hämta alla ordrar för admin
+export const findAllOrders = async () => {
+  return await findAllOrdersRepo();
+};
+
+export async function updateOrderStatus(orderNumber: string, status: string, comment?: string) {
+   const allowed = ["Confirmed", "Ready", "Done", "Cancelled"];
+
+   if (!allowed.includes(status)) {
+        throw new Error('Invalid status');
+    }
+
+	const existingOrder = await OrderModel.findOne({ orderNumber });
+	if (!existingOrder) throw new Error("Order not found");
+  
+	const previousStatus = existingOrder.status;
+
+    const updateData: any = { status };
+
+    if (status === "Cancelled" && !comment) {
+        throw new Error("Kommentar krävs för att avbryta ordern.");
+    }
+
+    if (status === "Cancelled" && comment) {
+        updateData.cancellationReason = comment; 
+    }
+
+
+    const order = await OrderModel.findOneAndUpdate(
+        { orderNumber },
+        updateData,
+        { new: true }
+    );
+
+	if (status === "Confirmed" && previousStatus !== "Confirmed") {
+		const ingredientsToRemove: string[] = [];
+	
+		order!.items.forEach(item => {
+		  item.ingredients.forEach(ingredient => {
+			ingredientsToRemove.push(ingredient);
+		  });
+		});
+	
+		await decreaseIngredients(ingredientsToRemove);
+	  }
+
+
+
+    return order;
+}
+  
+  
+export const updateOrderbyId = async (
+	orderNumber: string,
+	updateData: Partial<OrderInterface>
+): Promise<OrderInterface> => {
+	const order = await getOrderByID(orderNumber);
+	if (!order) throw new Error('Order not found');
+
+	if (updateData.items) {
+		updateData.totalPrice = updateData.items.reduce(
+			(sum, i) => sum + i.price * i.quantity,
+			0
+		);
+	}
+
+	Object.assign(order, updateData);
+
+	await order.save();
+	return order;
+};

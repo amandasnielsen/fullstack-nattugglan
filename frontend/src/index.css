@@ -1,0 +1,93 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--bg-gradient: linear-gradient(
+		0deg,
+		rgba(2, 11, 40, 1) 0%,
+		rgb(23, 35, 70) 100%
+	);
+	--box-white: #fff8e7cc;
+	--font-color-white: #f8f8f8;
+	--font-color-dark: #020b28;
+
+	--header-size: 28px;
+	--menu-item: 14px;
+	--body-text: 12px;
+	--spacing-wide: 0.08em;
+}
+
+h1 {
+	font-family: 'anton';
+	font-size: var(--header-size);
+	letter-spacing: var(--spacing-wide);
+	color: var(--font-color-white);
+	margin-top: 3em;
+	margin-bottom: .5em;
+	font-weight: 500;
+	text-align: center;
+	position: relative;
+	z-index: 10;
+}
+
+@media (min-width: 900px) {
+  h1 {
+		margin-top: 3em;
+		margin-bottom: 1em;
+		font-size: 32px;
+	}
+}
+
+@font-face {
+	font-family: 'anton';
+	src: url('./assets/Anton.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FjallaOne';
+	src: url('./assets/FjallaOne.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'MerriweatherSans';
+	src: url('./assets/MerriweatherSans.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'MerriweatherSans';
+	src: url('./assets/MerriweatherSans-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+html {
+  background: var(--bg-gradient);
+	height: 100%;
+}
+
+.app {
+  max-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+.forrest {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center bottom;
+  opacity: 0.15;
+  z-index: -1;
+}

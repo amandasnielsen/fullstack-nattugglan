@@ -1,0 +1,166 @@
+import './index.css';
+import { NavBarAdmin } from '@nattugglan/navbaradmin';
+import { FooterAdmin } from '@nattugglan/footeradmin';
+import { ContentContainer } from '@nattugglan/contentcontainer';
+import { useState, useEffect, useMemo } from 'react';
+import { useAuthStore } from '@nattugglan/core';
+import { useNavigate } from 'react-router-dom';
+import { MenuItemCard } from './MenuItemCard';
+import { Button } from '@nattugglan/button';
+import { fetchMenuItems } from '../data/fetchMenu';
+import { apiFetch } from '@nattugglan/core/apiClient/apiClient';
+
+export interface MenuItem {
+	_id: string;
+	name: string;
+	price: number;
+	category: string;
+	ingredients: string[];
+	available: boolean;
+}
+
+interface GroupedItems {
+	[category: string]: MenuItem[];
+}
+
+const CATEGORIES = ['Visa allt', 'Kött', 'Vego', 'Snacks', 'Dricka'];
+
+function AdminChangeMenuPage() {
+	const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [activeCategory, setActiveCategory] = useState<string>('Visa allt');
+
+	const token = useAuthStore((state) => state.token);
+	const logout = useAuthStore((state) => state.logout);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const loadMenuItems = async () => {
+			if (!token) {
+				navigate('/login');
+				return;
+			}
+
+			try {
+				const data = await fetchMenuItems(token, logout, navigate);
+				setMenuItems(data);
+			} catch (error) {
+				console.error('Kunde inte ladda menydata:', error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		loadMenuItems();
+	}, [token, navigate, logout]);
+
+	const filteredMenuItems = useMemo(() => {
+		return activeCategory === 'Visa allt'
+			? menuItems
+			: menuItems.filter(
+					(item) => item.category.toUpperCase() === activeCategory.toUpperCase()
+			  );
+	}, [menuItems, activeCategory]);
+
+	const groupedItems = useMemo(() => {
+		return filteredMenuItems.reduce<GroupedItems>((acc, item) => {
+			const category = item.category || 'Övrigt';
+			if (!acc[category]) {
+				acc[category] = [];
+			}
+			acc[category].push(item);
+			return acc;
+		}, {});
+	}, [filteredMenuItems]);
+
+	const handleUpdate = async (
+		itemId: string,
+		updateData: Partial<MenuItem>
+	) => {
+		if (!token) return;
+
+		try {
+			const updatedItem = await apiFetch(`/admin/menu/${itemId}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(updateData),
+			});
+
+			setMenuItems((prev) =>
+				prev.map((item) => (item._id === itemId ? updatedItem : item))
+			);
+		} catch (error: any) {
+			console.error('Uppdatering misslyckades:', error);
+			if (error.message.includes('401') || error.message.includes('403')) {
+				logout();
+				navigate('/access-denied');
+			}
+		}
+	};
+
+	if (loading) {
+		return (
+			<>
+				<NavBarAdmin />
+				<h1>Uppdatera menyn</h1>
+				<ContentContainer>
+					<p className="loading__message">Laddar meny...</p>
+				</ContentContainer>
+				<FooterAdmin />
+			</>
+		);
+	}
+
+	return (
+		<section className="admin__menu-page">
+			<NavBarAdmin />
+			<h1>Uppdatera menyn</h1>
+			<div className="filter__bar-wrapper">
+				<div className="filter__bar">
+					{CATEGORIES.map((category) => (
+						<Button
+							key={category}
+							fullWidth={false}
+							variant={activeCategory === category ? 'filterActive' : 'filter'}
+							onClick={() => setActiveCategory(category)}
+							className="filter__button"
+						>
+							{category}
+						</Button>
+					))}
+				</div>
+			</div>
+			<ContentContainer>
+				<div className="menu__container">
+					{CATEGORIES.filter(
+						(categoryName) =>
+							categoryName === 'Visa allt' ||
+							(groupedItems[categoryName] &&
+								groupedItems[categoryName].length > 0)
+					).map((categoryName) => {
+						if (categoryName === 'Visa allt') return null;
+						const items = groupedItems[categoryName];
+						return (
+							<div key={categoryName} className="menu__category-group">
+								<h2>{categoryName}</h2>
+								{items?.map((item) => (
+									<MenuItemCard
+										key={item._id}
+										item={item}
+										onSave={handleUpdate}
+										categories={CATEGORIES.filter((c) => c !== 'Visa allt')}
+									/>
+								))}
+							</div>
+						);
+					})}
+				</div>
+			</ContentContainer>
+			<FooterAdmin />
+		</section>
+	);
+}
+
+export { AdminChangeMenuPage };

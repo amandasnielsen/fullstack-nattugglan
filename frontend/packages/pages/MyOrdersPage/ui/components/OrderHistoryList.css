@@ -1,0 +1,60 @@
+.orderHistory__card {
+	padding: 0.5rem 0;
+	border-bottom: 1px solid var(--font-color-dark);
+}
+
+.orderHistory__card-top {
+	display: flex;
+	justify-content: space-between;
+	font-family: 'MerriweatherSans';
+	font-size: 0.7rem;
+	padding-bottom: 0.5rem;
+}
+
+.orderHistory__card-link {
+	text-decoration: none;
+	color: var(--font-color-dark);
+}
+
+.orderHistory__cardList {
+	display: flex;
+	flex-direction: column;
+}
+
+.orderHistory__cardListItem {
+	font-family: 'anton';
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+}
+
+.orderHistory__card-bottom {
+	padding-top: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: 'MerriweatherSans';
+	font-size: 0.9rem;
+}
+
+.orderHistory__card-bottom-text {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.reorder-button {
+	padding: 0.5rem 1rem;
+	background: none;
+	cursor: pointer;
+	border-radius: 999px;
+	font-family: 'MerriweatherSans';
+	border: 1px solid var(--font-color-dark);
+	color: var(--font-color-dark);
+	font-size: 0.7rem;
+}
+
+.reorder-button:hover {
+	background-color: var(--font-color-dark);
+	color: var(--font-color-white);
+}

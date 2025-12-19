@@ -1,0 +1,96 @@
+.base-button {
+  font-family: "anton";
+  letter-spacing: var(--spacing-wide);
+  font-size: 20px;
+  text-transform: none;
+	text-decoration: none;
+
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+
+  border: none;
+  outline: none;
+
+
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+
+  box-sizing: border-box;
+}
+
+
+.base-button--full-width {
+  width: 100%;
+}
+
+
+/* primary Mörk knapp med vit text och vit border*/
+.base-button--primary {
+  background-color: transparent;      
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+/* secondary Ljus knapp med mörk text */
+.base-button--secondary {
+  background-color: #ffffff92;          
+  border: 1px solid white;
+}
+
+/* --- FILTER-KNAPPAR (Visa allt / Kött / Vego / Dryck / Tillbehör) --- */
+.base-button--filter,
+.base-button--filterActive {
+  font-family: "MerriweatherSans";
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+
+
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+
+/* Inaktiv: transparent med ljus text/border */
+.base-button--filter {
+  background-color: transparent;
+  color: #fff8e7;
+  border: 1px solid #fff8e7;
+}
+
+
+/* Aktiv: fylld med FFF8E7 och mörk text */
+.base-button--filterActive {
+  background-color: #fff8e7;
+  color: #020b28;
+  border: 1px solid #fff8e7;
+}
+
+
+.base-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* När man håller inne knappen */
+.base-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Disabled */
+.base-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

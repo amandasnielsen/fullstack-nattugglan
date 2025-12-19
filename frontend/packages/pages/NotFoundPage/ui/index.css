@@ -1,0 +1,27 @@
+.notfound {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--font-color-white);
+  text-align: center;
+}
+
+.notfound__image {
+  width: 220px;
+  height: auto;
+	margin-bottom: -2em;
+}
+
+.notfound__title {
+  font-family: "FjallaOne";
+  font-size: 1.5rem;
+  letter-spacing: var(--spacing-wide);
+}
+
+.notfound__text {
+  max-width: 260px;
+  font-family: "anton";
+  font-size: 16px;
+	letter-spacing: var(--spacing-wide);
+}
